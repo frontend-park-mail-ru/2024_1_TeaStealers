@@ -1,0 +1,12 @@
+{
+  "name": "2024_1_teastealers",
+  "version": "1.0.0",
+  "description": "CIAN reimagined",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
