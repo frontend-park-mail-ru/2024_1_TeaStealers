@@ -44,4 +44,5 @@ h2 {
     --color_filter_passive: white;
     --background_color_filter_active: #ebebeb;
     --color_filter_active: black; 
+    --placeholder_color: rgba(15, 22, 42, 0.5);
 }
