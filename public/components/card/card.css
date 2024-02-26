@@ -24,13 +24,13 @@
     justify-content: space-between;
 }
 
-.header-link {
+.card__header-link {
     font-size: var(--card-link-font-size);
     color: var(--color-card-link);
     text-decoration: none;
 }
 
-.header {
+.card__header {
     display: flex;
     flex-direction: column;
 }
@@ -42,9 +42,13 @@
     align-items: center;
 }
 
-.fullprice {
+.card__fullprice {
     color: var(--color-fullprice);
     font-size: var(--card-price-font-size); 
+}
+
+.card__fullprice::after {
+    content: '\20BD';
 }
 
 .card__price {
@@ -52,7 +56,11 @@
     flex-direction: column;
 }
 
-.price-per-metr {
+.ruble::after {
+    content: '\20BD';
+}
+
+.card__price-per-metr {
     color: var(--color-price-per-metr);
 }
 
