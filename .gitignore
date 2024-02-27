@@ -1,2 +1,7 @@
+/public/components/search/
+/public/static/images/
+.idea/
 .bin
 node_modules/
+templates.js
+
