@@ -1,3 +1,4 @@
-<button class="{{#if primary}}button_primary{{/if}}" type="button" id="{{id}}">
+<button class="{{#if true}}button_{{order}}{{/if}}{{#if selSize}}{{size}}{{/if}} {{#if selBorderSize}}{{borderSize}}{{/if}} 
+{{#if sizeSm}}button_size_sm button_border-radius_sm{{/if}}" style="{{#if selColor}}color: {{color}}{{/if}}" type="button" id="{{id}}">
     {{#if text}}{{text}}{{/if}}
 </button>

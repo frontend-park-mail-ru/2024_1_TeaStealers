@@ -31,35 +31,6 @@ input {
     padding: 0px 8px;
 }
 
-button {
-    outline: none;
-    border: none;
-    text-decoration: none;
-    white-space: nowrap;
-    font-family: var(--button-font-family-main);
-    font-size: var(--button-font-size);
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.button_primary {
-    background-color: var(--background-color-button-main);
-    color: var(--color-button-main);
-}
-
-.button_primary:hover {
-    background-color: var(--background-color-button-main-hover);
-}
-
-.button_size_sm {
-    padding: var(--button-padding_sm);
-    font-size: var(--button-font-size);
-}
-
-.button_border-radius_sm {
-    border-radius: var(--button-border-radius_sm)
-}
-
 :root {
     --button-font-family-main: Verdana, Geneva, Tahoma, sans-serif;
     --button-font-size: 16px;

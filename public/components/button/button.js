@@ -3,27 +3,31 @@ export class Button {
     text;
     color;
     borderRadius;
-    variant;
+    order;
     constructor(props = {}) {
         console.log(props);
-        const { id, text, variant, color, borderRadius, parentID } = props;
+        const { id, text, order, color, borderRadius, parentID } = props;
         this.id = id;
         this.text = text;
-        this.variant = variant;
+        this.order = order;
         this.parentID = parentID;
-        console.log(variant);
+        this.color = color;
     }
     render() {
         console.log(Handlebars);
         const template = Handlebars.templates["button.hbs"];
-        const app = document.querySelector(`#${this.parentID}`);
+        // const app = document.querySelector(`#${this.parentID}`);
+        const app = document.querySelector("#app");
         const config = {
             text: this.text,
             id: this.id,
+            color: this.color,
+            selColor: true,
         }
-        console.log(this.variant);
-        if (this.variant && this.variant === 'primary') {
-            config.primary = true;
+        console.log(this.order);
+        if (this.order) {
+            config.selOrder = true;
+            config.order = this.order;
         }
         console.log(config);
         app.innerHTML = template(config);
