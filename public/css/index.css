@@ -2,6 +2,7 @@
 @import url("../components/navbar/navbar.css");
 @import url("../components/search/search.css");
 @import url("../components/card/card.css");
+@import url('../components/button/button.css');
 * {
     box-sizing: border-box;
 }
@@ -34,11 +35,14 @@ input {
 :root {
     --button-font-family-main: Verdana, Geneva, Tahoma, sans-serif;
     --button-font-size: 16px;
+    --button-padding_md: 8px 15px;
+    --button-font-size_md: 16px;
     --card-price-font-size: 22px;
     --card-link-font-size: 22px;
     --background-color-main: #ffffffff;
     --h1-color: #ffffffff;
     --background-color-button-main: #0468ff;
+    --color-button-secodary: #0468ff;
     --color-button-main: white;
     --color-fullprice: black;
     --color-card-link: #0468ff;

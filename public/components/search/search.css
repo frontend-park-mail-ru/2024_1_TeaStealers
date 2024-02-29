@@ -35,17 +35,7 @@
     border-top-left-radius: 0;
 }
 
-.string_menu-button {
-    height: 100%;
-    border: none; 
-    outline: none; 
-    background: none; 
-    padding: 0;    
-    border-right: var(--nav-border-bottom-line-width) 
-    var(--nav-border-bottom-line-style) 
-    var(--nav-border-bottom-line-color);
-    border-top-left-radius: 0;
-}
+
 
 .search__input {
     border: none; 
@@ -94,8 +84,3 @@
     color: var(--color_filter_passive);
 }
 
-.search__button {
-    display: flex;
-    width: 100%;
-    flex-direction: row-reverse;
-}
