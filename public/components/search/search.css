@@ -35,27 +35,6 @@
     border-top-left-radius: 0;
 }
 
-
-
-.search__input {
-    border: none; 
-    outline: none; 
-    padding: 0;
-    padding-left: 10px; 
-    font-size: var(--button-font-size); 
-    font-family: var(--button-font-family-main);
-} 
-
-.input_border-radius_md {
-    border-radius: 6px;
-}
-
-.search__input::placeholder {
-    color: var(--placeholder_color); 
-    font-size: var(--button-font-size);   
-    font-family: var(--button-font-family-main);    
-}
-
 .search__filters {
     display: flex;
     list-style: none;

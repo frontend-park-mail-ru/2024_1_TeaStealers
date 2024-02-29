@@ -8,4 +8,15 @@ const button = new Button({
     color: "yellow",
     parentID: 'app',
 });
-button.render();
+// button.render();
+import { Input } from "./components/input/input.js";
+const input = new Input({
+    type: "text",
+    id: "inp",
+    size: 'md',
+    borderRadius: 'md',
+    parentID: 'app',
+    blockClass: 'search__input',
+    placeholder: 'Город, адрес, метро, район',
+});
+input.render();

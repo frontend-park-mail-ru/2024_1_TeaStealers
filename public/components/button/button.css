@@ -77,3 +77,14 @@ button {
 .button_secondary:hover {
     background-color: var(--background-color-button-secondary-hover);
 }
+
+.modal__close-button {
+    background-color: white;
+    font-size: 25px;
+    cursor: pointer;
+    font-family: var(--button-font-family-main);
+    color: var(--color_text_basic_secondary);
+    align-self: center;
+    justify-self: end;
+    margin-right: -25px;
+}

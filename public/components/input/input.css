@@ -1,0 +1,24 @@
+.input_border-radius_md {
+    border-radius: 6px;
+}
+
+.search__input {
+    border: none; 
+    outline: none; 
+    padding: 0;
+    padding-left: 10px; 
+    font-size: var(--button-font-size); 
+    font-family: var(--button-font-family-main);
+} 
+
+.search__input::placeholder {
+    color: var(--placeholder_color); 
+    font-size: var(--button-font-size);   
+    font-family: var(--button-font-family-main);    
+}
+
+.modal__input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

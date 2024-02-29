@@ -3,6 +3,7 @@
 @import url("../components/search/search.css");
 @import url("../components/card/card.css");
 @import url('../components/button/button.css');
+@import url('../components/span/span.css');
 * {
     box-sizing: border-box;
 }
