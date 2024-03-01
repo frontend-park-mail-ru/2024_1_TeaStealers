@@ -14,12 +14,6 @@
     display: flex;
 }
 
-.nav__linkbar {
-    display: flex;
-    list-style: none;
-    margin: 0;
-}
-
 .nav__link {
     float: left;
     display: flex;

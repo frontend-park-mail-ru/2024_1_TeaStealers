@@ -20,3 +20,10 @@ const input = new Input({
     placeholder: 'Город, адрес, метро, район',
 });
 input.render();
+import { Svg } from "./components/svg/svg.js";
+const svg = new Svg({
+    id: "inp",
+    parentID: 'app',
+    
+});
+input.render();
