@@ -28,7 +28,9 @@ export class Input {
             borderRadius: this.borderRadius,
             size: this.size,
         }
-        app.innerHTML = template(config);
+        // app.innerHTML = template(config);
+        app.insertAdjacentHTML('beforebegin', template(config));
+
         // app.insertAdjacentHTML
     }
 }

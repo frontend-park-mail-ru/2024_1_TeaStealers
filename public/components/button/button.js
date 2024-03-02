@@ -29,7 +29,8 @@ export class Button {
             order: this.order,
             size: this.size,
         }
-        app.innerHTML = template(config);
-        // app.insertAdjacentHTML
+        // console.log(template(config));
+        // app.innerHTML = template(config);
+        app.insertAdjacentHTML('beforebegin', template(config));
     }
 }

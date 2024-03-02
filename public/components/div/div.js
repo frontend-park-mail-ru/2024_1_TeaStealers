@@ -1,23 +1,24 @@
-export class Svg {
+export class Div {
     id;
-    svgHtml;
+    className;
     parentID;
     constructor(props = {}) {
-        const { id, svgHtml, parentID } = props;
+        const { id, className, parentID } = props;
         this.id = id;
-        this.svgHtml = svgHtml;
+        this.className = className;
         this.parentID = parentID;
     }
     render() {
-        const template = Handlebars.templates["svg.hbs"];
+        const template = Handlebars.templates["div.hbs"];
         const app = document.querySelector(`#${this.parentID}`);
         const config = {
             id: this.id,
-            svgHtml: this.svgHtml,
+            className: this.className,
             parentID: this.parentID,
         }
+        console.log(template(config));
         // app.innerHTML = template(config);
-        app.insertAdjacentHTML('beforebegin', template(config));
 
+        app.insertAdjacentHTML('beforeend',template(config));
     }
 }

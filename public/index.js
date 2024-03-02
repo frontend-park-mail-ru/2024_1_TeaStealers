@@ -19,11 +19,17 @@ const input = new Input({
     blockClass: 'search__input',
     placeholder: 'Город, адрес, метро, район',
 });
-input.render();
+// input.render();
 import { Svg } from "./components/svg/svg.js";
 const svg = new Svg({
     id: "inp",
     parentID: 'app',
     
 });
-input.render();
+// svg.render();
+import { Card } from "./components/card/card.js";
+const card = new Card ({
+    id: 'card',
+    parentID: 'app',
+});
+card.render();
