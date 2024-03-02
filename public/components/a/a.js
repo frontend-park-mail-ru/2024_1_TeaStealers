@@ -23,7 +23,7 @@ export class A {
             parentID: this.parentID,
         }
         // app.innerHTML = template(config);
-        app.insertAdjacentHTML('beforebegin', template(config));
+        app.insertAdjacentHTML('beforeend', template(config));
 
     }
 }

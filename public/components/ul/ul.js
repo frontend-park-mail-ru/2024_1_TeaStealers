@@ -16,6 +16,6 @@ export class Ul {
             className: this.className,
             parentID: this.parentID,
         }
-        app.innerHTML = template(config);
+        app.insertAdjacentHTML('beforeend', template(config));
     }
 }

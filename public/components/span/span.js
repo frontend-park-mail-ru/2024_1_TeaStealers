@@ -7,6 +7,7 @@ export class Span {
         const { className, id, text, parentID } = props;
         this.className = className;
         this.id = id;
+        this.text = text;
         this.parentID = parentID;
     }
     render() {
@@ -17,9 +18,8 @@ export class Span {
             className: this.className,
             id: this.id,
             text: this.text,
+            parentID: this.parentID,
         }
-        // app.innerHTML = template(config);
-        app.insertAdjacentHTML('beforebegin', template(config));
-
+        app.insertAdjacentHTML('beforeend', template(config));
     }
 }

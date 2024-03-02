@@ -29,7 +29,7 @@ export class Input {
             size: this.size,
         }
         // app.innerHTML = template(config);
-        app.insertAdjacentHTML('beforebegin', template(config));
+        app.insertAdjacentHTML('beforeend', template(config));
 
         // app.insertAdjacentHTML
     }

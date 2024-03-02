@@ -1,0 +1,3 @@
+.ruble::after {
+    content: '\20BD';
+}

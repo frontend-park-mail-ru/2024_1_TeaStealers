@@ -31,6 +31,6 @@ export class Button {
         }
         // console.log(template(config));
         // app.innerHTML = template(config);
-        app.insertAdjacentHTML('beforebegin', template(config));
+        app.insertAdjacentHTML('beforeend', template(config));
     }
 }
