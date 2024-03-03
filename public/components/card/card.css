@@ -9,6 +9,12 @@
     gap: 40px;
 }
 
+.card__picture {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .card__info {
     height: 100%;
     width: 100%;

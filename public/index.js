@@ -1,35 +1,22 @@
-import { Button } from "./components/button/button.js";
-const button = new Button({
-    text: "124",
-    id: "butt",
-    order: 'secondary',
-    size: 'md',
-    borderRadius: 'md',
-    color: "yellow",
-    parentID: 'app',
-});
-// button.render();
-import { Input } from "./components/input/input.js";
-const input = new Input({
-    type: "text",
-    id: "inp",
-    size: 'md',
-    borderRadius: 'md',
-    parentID: 'app',
-    blockClass: 'search__input',
-    placeholder: 'Город, адрес, метро, район',
-});
-// input.render();
-import { Svg } from "./components/svg/svg.js";
-const svg = new Svg({
-    id: "inp",
-    parentID: 'app',
-    
-});
-// svg.render();
 import { Card } from "./components/card/card.js";
+
 const card = new Card ({
     id: 'card',
     parentID: 'app',
-});
+    imgSrc: './static/images/room.jpeg',
+    cardLink: '',
+    shortDesc: '2-ух комнатная квартира 80 м',
+    releaseDate: '2 квартал 2024',
+    likeSrc: './static/images/save.svg',
+    adress: 'Москва, ЦАО, р-н Тверской, м. Площадь Революции, Ильинка 3/8 ЖК',
+    fullprice: '190 000 000',
+    pricePerMetr: '2 000 000',
+    description: `Светлая квартира площадью 85 кв. м с окнами на южной стороне. 
+    Продуманная планировка позволяет разместить одну или две отдельные спальные комнаты."Лаврушинский" 
+    - бескомпромиссный дом с лучшими видами на Кремль. Благодаря расположению всего в одном километре от 
+    Кремля, своей высоте и малоэтажной окружающей застройке, из квартир открываются поразительные прямые 
+    виды на главные достопримечательности центра Москвы, включая храм Христа Спасителя и собор Василия 
+    Блаженного. Расположение в глубине квартала, посередине парка, дает удивительное для центра ощущение 
+    тишины и простора. На закрытой территории находится самый ...`,
+})
 card.render();

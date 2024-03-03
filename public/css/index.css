@@ -4,6 +4,7 @@
 @import url("../components/card/card.css");
 @import url('../components/button/button.css');
 @import url('../components/span/span.css');
+@import url('../components/img/img.css');
 * {
     box-sizing: border-box;
 }

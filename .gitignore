@@ -4,4 +4,10 @@
 .bin
 node_modules/
 templates.js
-
+/public/components/a/
+/public/components/div/
+/public/components/img/
+/public/components/span/
+/public/components/sup/
+/public/components/svg/
+/public/components/ul/

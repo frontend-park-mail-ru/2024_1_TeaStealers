@@ -1,1 +1,32 @@
-<div class="card {{#if className}}{{className}}{{/if}}" id="{{#if id}}{{id}}{{/if}}"></div>
+    <div class="card">
+        <img src="{{#if imgSrc}}{{imgSrc}}{{/if}}" alt="Квартира мечты" class="card__picture">
+        <div class="card__info">
+            <div class="card__header-and-save">
+                <div class="card__header">
+                    <a href="{{#if cardLink}}{{cardLink}}{{/if}}" class="card__header-link">
+                        {{#if shortDesc}}{{shortDesc}}{{/if}}м<sup>2</sup>
+                    </a>
+                    <span class="card__header-description">
+                        {{#if releaseDate}}{{releaseDate}}{{/if}}
+                    </span>
+                </div>
+                <img src="{{#if likeSrc}}{{likeSrc}}{{/if}}" alt="likeButton">
+            </div>
+            <div class="card__adress">
+                {{#if adress}}{{adress}}{{/if}}
+            </div>
+            <div class="card__price">
+                <span class="card__fullprice">
+                    {{#if fullprice}}{{fullprice}}{{/if}}
+                </span>
+                <span class="card__price-per-metr">
+                    {{#if pricePerMetr}}{{pricePerMetr}}{{/if}}<span class="ruble"></span>/м<sup>2</sup>
+                </span>
+            </div>
+            <div class="card__description">
+                {{#if description}}{{description}}{{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
