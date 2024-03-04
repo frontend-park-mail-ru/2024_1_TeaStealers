@@ -1,0 +1,66 @@
+.card {
+    max-width: 1300px;
+    height: 400px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 30px;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.card__picture {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.card__info {
+    height: 100%;
+    width: 100%;
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.card__header {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__header-and-save {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card__price {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__header-link {
+    font-size: var(--card-link-font-size);
+    color: var(--color-card-link);
+    text-decoration: none;
+}
+
+.card__fullprice {
+    color: var(--color-fullprice);
+    font-size: var(--card-price-font-size); 
+}
+
+.card__fullprice::after {
+    content: '\20BD';
+}
+
+.card__price-per-metr {
+    color: var(--color-price-per-metr);
+}
+
+.card__adress {
+    color: var(--color-adress);
+}

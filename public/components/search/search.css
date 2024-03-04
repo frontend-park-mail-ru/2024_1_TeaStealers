@@ -32,7 +32,7 @@
     height: 60px;
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 3fr;
-    border-top-left-radius: 0;
+    border-top-left-radius: 0 !important; 
 }
 
 .search__filters {
@@ -62,4 +62,5 @@
     background-color: var(--background_color_filter_passive);
     color: var(--color_filter_passive);
 }
+
 
