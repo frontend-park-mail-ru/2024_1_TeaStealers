@@ -1,7 +1,6 @@
-import { Button } from "./components/button/button.js";
-const button = new Button({
-    text: "124",
-    id: "butt",
-    variant: 'primary',
-});
-button.render();
+import LoginAndSignupLayout from './pages/loginAndSignupLayout/loginAndSignupLayout.js';
+
+const root = document.querySelector('#app');
+
+const login = new LoginAndSignupLayout(root, 'login');
+login.render();

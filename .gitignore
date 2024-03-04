@@ -3,5 +3,4 @@
 .idea/
 .bin
 node_modules/
-templates.js
-
+public/templates/
