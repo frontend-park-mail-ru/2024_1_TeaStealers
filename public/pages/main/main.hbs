@@ -1,0 +1,2 @@
+<body id="app">
+</body>
