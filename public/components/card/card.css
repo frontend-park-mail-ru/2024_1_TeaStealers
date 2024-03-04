@@ -12,6 +12,7 @@
 .card__picture {
     aspect-ratio: 1 / 1;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .card__info {
@@ -22,12 +23,6 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-}
-
-.card__header-link {
-    font-size: var(--card-link-font-size);
-    color: var(--color-card-link);
-    text-decoration: none;
 }
 
 .card__header {
@@ -42,21 +37,23 @@
     align-items: center;
 }
 
+.card__price {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__header-link {
+    font-size: var(--card-link-font-size);
+    color: var(--color-card-link);
+    text-decoration: none;
+}
+
 .card__fullprice {
     color: var(--color-fullprice);
     font-size: var(--card-price-font-size); 
 }
 
 .card__fullprice::after {
-    content: '\20BD';
-}
-
-.card__price {
-    display: flex;
-    flex-direction: column;
-}
-
-.ruble::after {
     content: '\20BD';
 }
 
