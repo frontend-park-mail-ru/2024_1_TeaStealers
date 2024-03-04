@@ -1,5 +1,5 @@
-import Input from '../input/input';
-import Button from '../button/button';
+import Input from '../input/input.js';
+import Button from '../button/button.js';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
