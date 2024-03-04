@@ -2,6 +2,13 @@
 @import url("../components/navbar/navbar.css");
 @import url("../components/search/search.css");
 @import url("../components/card/card.css");
+@import url('../components/button/button.css');
+@import url('../components/span/span.css');
+@import url('../components/input/input.css');
+@import url('../components/loginForm/loginForm.css');
+@import url('../components/signupForm/signupForm.css');
+@import url('../pages/loginAndSignupLayout/loginAndSignupLayout.css');
+
 * {
     box-sizing: border-box;
 }
@@ -31,43 +38,17 @@ input {
     padding: 0px 8px;
 }
 
-button {
-    outline: none;
-    border: none;
-    text-decoration: none;
-    white-space: nowrap;
-    font-family: var(--button-font-family-main);
-    font-size: var(--button-font-size);
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.button_primary {
-    background-color: var(--background-color-button-main);
-    color: var(--color-button-main);
-}
-
-.button_primary:hover {
-    background-color: var(--background-color-button-main-hover);
-}
-
-.button_size_sm {
-    padding: var(--button-padding_sm);
-    font-size: var(--button-font-size);
-}
-
-.button_border-radius_sm {
-    border-radius: var(--button-border-radius_sm)
-}
-
 :root {
     --button-font-family-main: Verdana, Geneva, Tahoma, sans-serif;
     --button-font-size: 16px;
+    --button-padding_md: 8px 15px;
+    --button-font-size_md: 16px;
     --card-price-font-size: 22px;
     --card-link-font-size: 22px;
     --background-color-main: #ffffffff;
     --h1-color: #ffffffff;
     --background-color-button-main: #0468ff;
+    --color-button-secodary: #0468ff;
     --color-button-main: white;
     --color-fullprice: black;
     --color-card-link: #0468ff;
