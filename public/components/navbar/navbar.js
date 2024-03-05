@@ -8,6 +8,13 @@ const buttonPattern = {
   order: 'secondary',
 };
 
+const DEFAULT_NAVBAR = {
+  id: '',
+  parentID: '',
+  notice: '',
+  login: '',
+};
+
 /**
  * Класс компонента навигационной панели
  */

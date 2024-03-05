@@ -1,5 +1,6 @@
 import Card from '../../components/card/card.js';
 import Navbar from '../../components/navbar/navbar.js';
+import Search from '../../components/search/search.js';
 
 const DEFAULT_MAIN = {
   isAuthenticated: false,
@@ -34,6 +35,19 @@ export default class MainPage {
       notice: '+ Разместить объявление',
     });
     navbar.render();
+
+    const search = new Search(document.querySelector('#app'), {
+      id: 'search',
+      title: 'Найди мечту',
+      firstFilterLinkStatus: 'active',
+      secondFilterLinkStatus: 'passive',
+      firstFilterLinkDesc: 'Купить',
+      secondFilterLinkDesc: 'Снять',
+      homeType: 'Квартиру в новостройке или вторичке',
+      roomNumber: 'Комнат',
+      price: 'Цена',
+    });
+    search.render();
 
     if (this.state.cards && this.state.cards.length > 0) {
       this.state.cards.forEach((cardData) => {
