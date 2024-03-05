@@ -1,4 +1,4 @@
-import { Button } from '../button/button.js';
+import Button from '../button/button.js';
 
 const DEFAULT_NAVBAR = {
   id: '',
@@ -7,23 +7,26 @@ const DEFAULT_NAVBAR = {
   login: '',
 };
 /**
- * Класс компонента навигации
+ * Класс компонента навигационной панели
  */
-export class Navbar {
+export default class Navbar {
   state;
 
   #parent;
 
   /**
-     *
-     * @param {HTMLElement} parent - Родительский элемент
-     * @param {Object} [state = DEFAULT_NAVBAR] - Начальное состояние компонента навигации
-     */
+    * Создает новый экземпляр навигационной панели
+    * @param {HTMLElement} parent - Родительский элемент
+    * @param {Object} [state = DEFAULT_NAVBAR] - Начальное состояние компонента навигационной панели
+    */
   constructor(parent, state = {}) {
-    this.state = state;
+    this.state = { ...DEFAULT_NAVBAR, ...state };
     this.#parent = parent;
   }
 
+  /**
+   * Функция отрисовки навигационной панели
+   */
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',

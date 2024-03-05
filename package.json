@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run compile_hbs && node server/index.js",
     "compile_hbs": "globstar -- npx handlebars public/**/*.hbs -f public/templates/handlebars.precompiled.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint ."
   },
   "author": "",
   "license": "ISC",

@@ -15,21 +15,24 @@ const DEFAULT_CARD = {
 /**
  * Класс компонента карточки объявления
  */
-export class Card {
+export default class Card {
   state;
 
   #parent;
 
   /**
-     *
-     * @param {HTMLElement} parent - Родительский элемент
-     * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
-     */
+    * Создает новый экземпляр карточки объявления
+    * @param {HTMLElement} parent - Родительский элемент
+    * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
+    */
   constructor(parent, state = {}) {
-    this.state = state;
+    this.state = { ...DEFAULT_CARD, ...state };
     this.#parent = parent;
   }
 
+  /**
+   * Функция отрисовки карточки объявления
+   */
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
