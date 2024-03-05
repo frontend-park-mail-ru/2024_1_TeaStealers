@@ -1,6 +1,6 @@
-import { Card } from './components/card/card.js';
-import { Navbar } from './components/navbar/navbar.js';
-import { Search } from './components/search/search.js';
+import Card from '../../components/card/card.js';
+import Navbar from '../../components/navbar/navbar.js';
+import Search from '../../components/search/search.js';
 
 const navbar = new Navbar(document.querySelector('#app'), {
   id: 'navbar',

@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from './ajax';
+import { getRequest, postRequest } from './ajax.js';
 
 const BASE_URL = 'http://5.35.16.157/api';
 

@@ -1,5 +1,5 @@
-import { Button } from '../button/button.js';
-import { Input } from '../input/input.js';
+import Button from '../button/button.js';
+import Input from '../input/input.js';
 
 const SEARCH_DEFAULT = {
   title: '',
@@ -14,21 +14,24 @@ const SEARCH_DEFAULT = {
 /**
  * Класс компонента блока поиска
  */
-export class Search {
+export default class Search {
   state;
 
   #parent;
 
   /**
-     *
+     * Создает новый экземпляр блока поиска
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = SEARCH_DEFAULT] - Начальное состояние блока поиска
      */
   constructor(parent, state = {}) {
-    this.state = state;
+    this.state = { ...SEARCH_DEFAULT, ...state };
     this.#parent = parent;
   }
 
+  /**
+   * Функция отрисовки блока поиска
+   */
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
