@@ -2,6 +2,9 @@ export const checkLogin = (login) => {
   if (login.length < 4) {
     return ['Минимальная длина 4 символа', false];
   }
+  if (login.length > 30) {
+    return ['Максимальная длина 30 символа', false];
+  }
 
   let hasLetter = false;
 
@@ -24,6 +27,9 @@ export const checkLogin = (login) => {
 export const checkPassword = (password) => {
   if (password.length < 8) {
     return ['Минимальная длина 8 символов', false];
+  }
+  if (password.length > 30) {
+    return ['Максимальная длина 30 символа', false];
   }
 
   let hasLowercase = false;
