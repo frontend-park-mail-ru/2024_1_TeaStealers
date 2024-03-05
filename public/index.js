@@ -1,6 +1,20 @@
-import LoginAndSignupLayout from './pages/loginAndSignupLayout/loginAndSignupLayout.js';
+import MainPage from './pages/main/main.js';
+import { checkAuth } from './modules/api.js';
 
-const root = document.querySelector('#app');
+let isAuthenticated = false;
 
-const login = new LoginAndSignupLayout(root, 'login');
-login.render();
+async function checkAuthentication() {
+  const [statusCode, data] = await checkAuth();
+
+  if (statusCode === 200) {
+    console.log(data);
+    isAuthenticated = true;
+    return;
+  }
+  isAuthenticated = false;
+}
+checkAuthentication()
+  .then(() => {
+    const main = new MainPage(document.getElementById('app'), { isAuthenticated });
+    main.render();
+  });

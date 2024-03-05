@@ -1,13 +1,14 @@
 import { getRequest, postRequest } from './ajax.js';
 
 const BASE_URL = 'http://5.35.16.157/api';
+// const BASE_URL = 'http://localhost:8080/api';
 
 const API_CONST = {
-  LOGIN: `${BASE_URL}/auth/signin`,
+  LOGIN: `${BASE_URL}/auth/login`,
   SIGNUP: `${BASE_URL}/auth/signup`,
   LOGOUT: `${BASE_URL}/auth/logout`,
-  CHECK_AUTH: `${BASE_URL}/auth/checkAuth`,
-  GET_ADVERT_LIST: `${BASE_URL}/advert/get/list`,
+  CHECK_AUTH: `${BASE_URL}/auth/check_auth`,
+  GET_ADVERT_LIST: `${BASE_URL}/advert/get/list/with/images`,
 };
 
 /**
@@ -49,5 +50,15 @@ export const logout = () => {
  */
 export const getAdvertList = () => {
   const url = API_CONST.GET_ADVERT_LIST;
+  return getRequest(url);
+};
+
+/**
+ * GET-запрос для проверки авторизации пользователя
+ * @function checkAuth
+ * @returns {Promise<Object>} - Объект, представляющий результат запроса.
+ */
+export const checkAuth = () => {
+  const url = API_CONST.CHECK_AUTH;
   return getRequest(url);
 };

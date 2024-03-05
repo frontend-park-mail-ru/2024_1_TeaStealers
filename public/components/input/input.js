@@ -29,7 +29,7 @@ export default class Input {
   * Получение элемента инпута
   */
   get self() {
-    return document.getElementById(this.state.id).querySelector('input');
+    return document.getElementById(this.state.id);
   }
 
   /**
