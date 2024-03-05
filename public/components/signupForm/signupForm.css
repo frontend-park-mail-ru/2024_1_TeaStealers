@@ -29,6 +29,7 @@
     margin: 0;
 }
 .signup-form__button {
+    display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;

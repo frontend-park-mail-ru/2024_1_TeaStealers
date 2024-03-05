@@ -1,8 +1,11 @@
 import Input from '../input/input.js';
 import Button from '../button/button.js';
+import { checkLogin, checkPassword } from '../../modules/validation.js';
+import { login } from '../../modules/api.js';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
+  order: 'primary',
   text: 'Войти',
 };
 const LOGIN_INPUT = {
@@ -15,12 +18,15 @@ const PASSWORD_INPUT = {
   type: 'password',
   placeholder: 'Пароль',
 };
+const ERROR_LOGIN = 'Неверный логин или пароль';
 
 /**
  * Класс компонента формы авторизации.
  */
 export default class LoginForm {
   #parent;
+
+  state;
 
   login;
 
@@ -32,44 +38,78 @@ export default class LoginForm {
    * Создает новый экземпляр формы авторизации.
    * @param {HTMLElement} parent - Родительский элемент
    */
-  constructor(parent) {
+  constructor(parent, state) {
     this.#parent = parent;
+    this.state = state;
+    this.loginHandler = this.loginHandler.bind(this);
+  }
+
+  /**
+   * Получение элемента формы авторизации
+   */
+  get self() {
+    return this.#parent.querySelector('#login-form');
   }
 
   /**
    * Добавляет листенеры
    */
   addListeners() {
-    this.login.self.addEventListener('blur', this.validateLoginInput);
-    this.password.self.addEventListener('blur', this.validatePasswordInput);
+    this.button.self.addEventListener('click', this.loginHandler.bind(this));
   }
 
   /**
-   * Валидирует логин
+   * Обрабатывает действие кнопки "войти"
    */
-  validateLoginInput() {
-    this.login.renderError('Text error');
+  async loginHandler() {
+    const logValue = this.login.self.querySelector('input').value.trim();
+    const password = this.password.self.querySelector('input').value.trim();
+    const [, isValidLogin] = checkLogin(logValue);
+    const [, isValidPass] = checkPassword(password);
+    if (!isValidLogin || !isValidPass) {
+      this.addErr(ERROR_LOGIN);
+      return;
+    }
+    this.removeErr();
+    const data = { login: logValue, password };
+    const [statusCode, dataResp] = await login(data);
+    if (statusCode === 500 || statusCode === 400) {
+      this.addErr(ERROR_LOGIN);
+      return;
+    }
+    this.state.closeModal();
+    this.state.renderButtonLog(true);
   }
 
   /**
-   * Валидирует пароль
+   * Добавляет отрисовку ошибки
+   * @param {string} errorText - текст ошибки
    */
-  validatePasswordInput() {
-    this.password.renderError('error error error error');
+  addErr(errorText) {
+    this.self.querySelector('#error-message').textContent = errorText;
   }
 
-  validateLoginInput = this.validateLoginInput.bind(this);
+  /**
+   * Удаляет отрисовку ошибки
+   */
+  removeErr() {
+    this.self.querySelector('#error-message').textContent = '';
+  }
 
-  validatePasswordInput = this.validatePasswordInput.bind(this);
+  /**
+     * Удаление обработчиков событий
+     */
+  removeListeners() {
+    if (this.loginHandler !== undefined) {
+      this.button.self.removeEventListener('focusout', this.loginHandler.bind(this));
+    }
+  }
 
   /**
     * Отрисовка компонента формы авторизации
     */
   render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['loginForm.hbs'](),
-    );
+    this.#parent.innerHTML = window.Handlebars.templates['loginForm.hbs']();
 
     this.login = new Input(document.querySelector('.login-form__login'), LOGIN_INPUT);
     this.login.render();
@@ -77,8 +117,8 @@ export default class LoginForm {
     this.password = new Input(document.querySelector('.login-form__password'), PASSWORD_INPUT);
     this.password.render();
 
-    const button = new Button(document.querySelector('.login-form__button'), LOGIN_BUTTON);
-    button.render();
+    this.button = new Button(document.querySelector('.login-form__button'), LOGIN_BUTTON);
+    this.button.render();
 
     this.addListeners();
   }

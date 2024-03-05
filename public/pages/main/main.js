@@ -2,41 +2,58 @@ import Card from '../../components/card/card.js';
 import Navbar from '../../components/navbar/navbar.js';
 import Search from '../../components/search/search.js';
 
-const navbar = new Navbar(document.querySelector('#app'), {
-  id: 'navbar',
-  notice: '+ Разместить объявление',
-  login: 'Войти',
-});
-navbar.render();
-
-const search = new Search(document.querySelector('#app'), {
-  id: 'search',
+const DEFAULT_MAIN = {
+  isAuthenticated: false,
   title: 'Найди мечту',
-  firstFilterLinkStatus: 'active',
-  secondFilterLinkStatus: 'passive',
-  firstFilterLinkDesc: 'Купить',
-  secondFilterLinkDesc: 'Снять',
-  homeType: 'Квартиру в новостройке или вторичке',
-  roomNumber: 'Комнат',
-  price: 'Цена',
-});
-search.render();
+};
+/**
+ * Класс главной страницы страницы
+ */
+export default class MainPage {
+  #parent;
 
-const card = new Card(document.querySelector('#app'), {
-  imgSrc: './static/images/room.jpeg',
-  cardLink: '',
-  shortDesc: '2-ух комнатная квартира 80',
-  releaseDate: '2 квартал 2024',
-  likeSrc: './static/images/save.svg',
-  adress: 'Москва, ЦАО, р-н Тверской, м. Площадь Революции, Ильинка 3/8 ЖК',
-  fullprice: '190 000 000',
-  pricePerMetr: '2 000 000',
-  description: `Светлая квартира площадью 85 кв. м с окнами на южной стороне. 
-    Продуманная планировка позволяет разместить одну или две отдельные спальные комнаты."Лаврушинский" 
-    - бескомпромиссный дом с лучшими видами на Кремль. Благодаря расположению всего в одном километре от 
-    Кремля, своей высоте и малоэтажной окружающей застройке, из квартир открываются поразительные прямые 
-    виды на главные достопримечательности центра Москвы, включая храм Христа Спасителя и собор Василия 
-    Блаженного. Расположение в глубине квартала, посередине парка, дает удивительное для центра ощущение 
-    тишины и простора. На закрытой территории находится самый ...`,
-});
-card.render();
+  state;
+
+  /**
+     * Конструктор класса
+     * @param {HTMLElement} parent - Родительский элемент
+     * @param {Object} [state = DEFAULT_MAIN] - Начальное состояние главной страницы
+     */
+  constructor(parent, state = DEFAULT_MAIN) {
+    this.#parent = parent;
+    this.state = { ...DEFAULT_MAIN, ...state };
+  }
+
+  render() {
+    this.#parent.insertAdjacentHTML(
+      'beforeend',
+      window.Handlebars.templates['main.hbs'](this.state),
+    );
+    const navbar = new Navbar(document.querySelector('#app'), {
+      isAuthenticated: this.state.isAuthenticated,
+      id: 'navbar',
+      notice: '+ Разместить объявление',
+    });
+    navbar.render();
+
+    const search = new Search(document.querySelector('#app'), {
+      id: 'search',
+      title: this.state.title,
+      firstFilterLinkStatus: 'active',
+      secondFilterLinkStatus: 'passive',
+      firstFilterLinkDesc: 'Купить',
+      secondFilterLinkDesc: 'Снять',
+      homeType: 'Квартиру в новостройке или вторичке',
+      roomNumber: 'Комнат',
+      price: 'Цена',
+    });
+    search.render();
+
+    if (this.state.cards && this.state.cards.length > 0) {
+      this.state.cards.forEach((cardData) => {
+        const card = new Card(document.querySelector('#app'), cardData);
+        card.render();
+      });
+    }
+  }
+}

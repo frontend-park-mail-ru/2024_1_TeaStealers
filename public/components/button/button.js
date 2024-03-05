@@ -1,6 +1,6 @@
 const DEFAULT_BUTTON = {
   position: 'beforeend',
-  order: 'primary',
+  order: '',
   size: 'sm',
   borderRadius: 'sm',
   id: '',
@@ -23,6 +23,13 @@ export default class Button {
   constructor(parent, state = DEFAULT_BUTTON) {
     this.state = { ...DEFAULT_BUTTON, ...state };
     this.#parent = parent;
+  }
+
+  /**
+   * Получение элемента кнопки
+   */
+  get self() {
+    return document.getElementById(this.state.id);
   }
 
   /**
