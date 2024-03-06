@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from './ajax.js';
 
-// const BASE_URL = 'http://5.35.16.157/api';
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://5.35.16.157/api';
+// const BASE_URL = 'http://localhost:8080/api';
 
 const API_CONST = {
   LOGIN: `${BASE_URL}/auth/login`,
