@@ -7,6 +7,10 @@
     padding: 30px;
     flex-direction: row;
     gap: 40px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    margin-top: 1%;
+    margin: 1% auto;
 }
 
 .card__picture {
@@ -63,4 +67,8 @@
 
 .card__adress {
     color: var(--color-adress);
+}
+
+.card__description {
+    height: 140px;
 }

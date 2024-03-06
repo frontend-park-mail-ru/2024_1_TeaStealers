@@ -4,8 +4,8 @@
             <div class="card__header-and-save">
                 <div class="card__header">
                     {{#if shortDesc}}
-                    <a href="{{#if cardLink}}{{cardLink}}{{/if}}" class="card__header-link">
-                        {{shortDesc}}м<sup>2</sup>
+                    <a href="#" class="card__header-link">
+                        {{shortDesc}}
                     </a>
                     {{/if}}
                     {{#if releaseDate}}
@@ -35,11 +35,9 @@
                 </span>
                 {{/if}}
             </div>
-            {{#if description}}
             <div class="card__description">
                 {{description}}
             </div>
-            {{/if}}
         </div>
     </div>
 </body>

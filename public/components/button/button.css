@@ -43,6 +43,7 @@ button {
     var(--nav-border-bottom-line-style) 
     var(--nav-border-bottom-line-color);
     border-top-left-radius: 0;
+    font-weight: normal;
 }
 
 .button_size_md {
