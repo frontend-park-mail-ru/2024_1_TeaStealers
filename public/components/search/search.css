@@ -1,6 +1,6 @@
 .search {
     height: 480px;
-    background-image: url('../../static/images/KD490-6.jpg');
+    background-image: url('/static/fone.jpg');
     background-size: cover;
     display: flex;
     align-items: center;
