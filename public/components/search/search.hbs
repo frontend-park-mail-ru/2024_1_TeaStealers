@@ -1,0 +1,33 @@
+ <div class="search">
+        <div class="search__block">
+            <div class="search__main-message">
+                {{#if title}}
+                <h1>
+                    {{title}}
+                </h1>
+                {{/if}}
+            </div>
+            <div class="search__filter-and-search">
+                <ul class="search__filters">
+                    {{#if firstFilterLinkDesc}}
+                    <li class="search__filter-link filter-link_{{#if firstFilterLinkStatus}}{{firstFilterLinkStatus}}{{/if}}">
+                        <a>
+                            {{firstFilterLinkDesc}}
+                        </a>
+                    </li>
+                    {{/if}}
+                    {{#if secondFilterLinkDesc}}
+                    <li class="search__filter-link filter-link_{{#if secondFilterLinkStatus}}{{secondFilterLinkStatus}}{{/if}}">
+                        <a>
+                            {{secondFilterLinkDesc}}
+                        </a>
+                    </li>
+                    {{/if}}
+                </ul>
+                <div class="search__string button_border-radius_md" id="searchString">
+                </div>
+            </div>
+            <div class="search__button" id="searchButton">
+            </div>
+        </div>
+    </div>

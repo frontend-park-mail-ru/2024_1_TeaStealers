@@ -1,0 +1,24 @@
+{
+  "name": "2024_1_teastealers",
+  "version": "1.0.0",
+  "description": "CIAN reimagined",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run compile_hbs && node server/index.js",
+    "compile_hbs": "globstar -- npx handlebars public/**/*.hbs -f public/templates/handlebars.precompiled.js",
+    "test": "eslint ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "globstar": "^1.0.0",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1"
+  }
+}

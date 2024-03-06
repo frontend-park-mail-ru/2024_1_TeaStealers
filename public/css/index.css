@@ -1,0 +1,79 @@
+@import url("../components/layout/layout.css");
+@import url("../components/navbar/navbar.css");
+@import url("../components/search/search.css");
+@import url("../components/card/card.css");
+@import url('../components/button/button.css');
+@import url('../components/span/span.css');
+@import url('../components/input/input.css');
+@import url('../components/loginForm/loginForm.css');
+@import url('../components/signupForm/signupForm.css');
+@import url('../pages/loginAndSignupLayout/loginAndSignupLayout.css');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: var(--button-font-size);
+    font-weight: normal;
+    margin: 0px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+input {
+    width: 280px;
+    height: 40px;
+    border: 1px solid grey;
+    border-radius: var(--button-border-radius_sm);
+    font-size: 16px;
+    padding: 0px 8px;
+}
+
+:root {
+    --button-font-family-main: Verdana, Geneva, Tahoma, sans-serif;
+    --button-font-size: 16px;
+    --button-padding_md: 8px 15px;
+    --button-font-size_md: 16px;
+    --card-price-font-size: 22px;
+    --card-link-font-size: 22px;
+    --background-color-main: #ffffffff;
+    --h1-color: #ffffffff;
+    --background-color-button-main: #0468ff;
+    --color-button-secodary: #0468ff;
+    --color-button-main: white;
+    --color-fullprice: black;
+    --color-card-link: #0468ff;
+    --color-adress: rgba(38, 56, 107, 0.6);
+    --color-price-per-metr: rgba(38, 56, 107, 0.6);
+    --background-color-button-secondary: rgba(4,104,255,0.15);
+    --color-button-secondary: #0468ff;
+    --background-color-button-main-hover: #0661EC;
+    --background-color-button-secondary-hover: rgba(4,104,255,0.2);
+    --page-background-color: white;
+    --button-border-radius_sm: 4px;
+    --button-border-radius_md: 6px;
+    --button-padding_sm: 8px 15px;
+    --nav-border-bottom-line-width: 1px;
+    --nav-border-bottom-line-style: solid;
+    --nav-border-bottom-line-color: gray;
+    --background_color_filter_passive: rgba(37,37,37,0.65);
+    --color_filter_passive: white;
+    --background_color_filter_active: #ebebeb;
+    --color_filter_active: black;
+    --color_text_highlight: #0468FF;
+    --color_text_highlight_secondary: rgba(4, 104, 255, 0.15);
+    --color_text_basic: #152242;
+    --color_text_basic_secondary: rgba(21, 34, 66, 0.6);
+    --color_errors: #FF1F34;
+    --placeholder_color: rgba(15, 22, 42, 0.5);
+}
