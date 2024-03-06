@@ -19,6 +19,8 @@ const PASSWORD_INPUT = {
   placeholder: 'Пароль',
 };
 const ERROR_LOGIN = 'Неверный логин или пароль';
+const ERROE_LOG = 'Некорректный логин';
+const ERROE_PASS = 'Некорректный пароль';
 
 /**
  * Класс компонента формы авторизации.
@@ -56,6 +58,36 @@ export default class LoginForm {
    */
   addListeners() {
     this.button.self.addEventListener('click', this.loginHandler.bind(this));
+    this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
+    this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+  }
+
+  /**
+ * Валидирует логин
+ */
+  validateLoginInput() {
+    const loginVal = this.login.self.querySelector('input').value.trim();
+    const [, isValid] = checkLogin(loginVal);
+    if (isValid) {
+      this.login.removeError();
+      return true;
+    }
+    this.login.renderError(ERROE_LOG);
+    return false;
+  }
+
+  /**
+   * Валидирует пароль
+   */
+  validatePasswordInput() {
+    const pass = this.password.self.querySelector('input').value.trim();
+    const [, isValid] = checkPassword(pass);
+    if (isValid) {
+      this.password.removeError();
+      return true;
+    }
+    this.password.renderError(ERROE_PASS);
+    return false;
   }
 
   /**
@@ -66,8 +98,13 @@ export default class LoginForm {
     const password = this.password.self.querySelector('input').value.trim();
     const [, isValidLogin] = checkLogin(logValue);
     const [, isValidPass] = checkPassword(password);
+    if (!isValidLogin) {
+      this.login.renderError(ERROE_LOG);
+    }
+    if (!isValidLogin) {
+      this.password.renderError(ERROE_PASS);
+    }
     if (!isValidLogin || !isValidPass) {
-      this.addErr(ERROR_LOGIN);
       return;
     }
     this.removeErr();

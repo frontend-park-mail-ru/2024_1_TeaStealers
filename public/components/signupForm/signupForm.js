@@ -41,8 +41,6 @@ export default class SignupForm {
 
   repeatPassword;
 
-  isValidate;
-
   /**
    * Конструктор класса
    * @param {HTMLElement} parent - Родительский элемент
@@ -63,9 +61,9 @@ export default class SignupForm {
  * Добавляет листенеры
  */
   addListeners() {
-    this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
-    this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
-    this.repeatPassword.self.querySelector('input').addEventListener('blur', this.validatePasswordRepeatInput.bind(this));
+    this.login.self.querySelector('input').addEventListener('input', this.validateLoginInput.bind(this));
+    this.password.self.querySelector('input').addEventListener('input', this.validatePasswordInput.bind(this));
+    this.repeatPassword.self.querySelector('input').addEventListener('input', this.validatePasswordRepeatInput.bind(this));
     this.button.self.addEventListener('click', this.signupHandler.bind(this));
   }
 
@@ -77,11 +75,10 @@ export default class SignupForm {
     const [err, isValid] = checkLogin(login);
     if (isValid) {
       this.login.removeError();
-      this.isValidate = true;
-      return;
+      return true;
     }
     this.login.renderError(err);
-    this.isValidate = false;
+    return false;
   }
 
   /**
@@ -92,11 +89,10 @@ export default class SignupForm {
     const [err, isValid] = checkPassword(pass);
     if (isValid) {
       this.password.removeError();
-      this.isValidate = true;
-      return;
+      return true;
     }
     this.password.renderError(err);
-    this.isValidate = false;
+    return false;
   }
 
   /**
@@ -108,11 +104,10 @@ export default class SignupForm {
     const [err, isValid] = checkRepeatPassword(pass, passRepeat);
     if (isValid) {
       this.repeatPassword.removeError();
-      this.isValidate = true;
-      return;
+      return true;
     }
     this.repeatPassword.renderError(err);
-    this.isValidate = false;
+    return false;
   }
 
   /**
@@ -120,8 +115,11 @@ export default class SignupForm {
    * @param {Event} event - событие, которое вызвало обработчик
    */
   async signupHandler(event) {
+    const valLog = this.validateLoginInput();
+    const valPass = this.validatePasswordInput();
+    const valPassRe = this.validatePasswordRepeatInput();
     event.preventDefault();
-    if (!this.isValidate) {
+    if (!valLog || !valPass || !valPassRe) {
       return;
     }
     this.removeErr();
@@ -158,13 +156,13 @@ export default class SignupForm {
  */
   removeListeners() {
     if (this.validateLoginInput !== undefined) {
-      this.login.self.querySelector('input').removeEventListener('blur', this.validateLoginInput.bind(this));
+      this.login.self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
     }
     if (this.validatePasswordInput !== undefined) {
-      this.password.self.querySelector('input').removeEventListener('blur', this.validatePasswordInput.bind(this));
+      this.password.self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
     }
     if (this.validatePasswordRepeatInput !== undefined) {
-      this.repeatPassword.self.querySelector('input').removeEventListener('blur', this.validatePasswordRepeatInput.bind(this));
+      this.repeatPassword.self.querySelector('input').removeEventListener('input', this.validatePasswordRepeatInput.bind(this));
     }
     if (this.signupHandler !== undefined) {
       this.button.self.removeEventListener('click', this.signupHandler.bind(this));
