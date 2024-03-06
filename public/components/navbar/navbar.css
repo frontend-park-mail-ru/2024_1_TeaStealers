@@ -4,7 +4,10 @@
     var(--nav-border-bottom-line-color);
     height: 60px;
     display: flex;
-    padding: 0 60px 0 60px;
+    padding: 0 150px;
+    width: 100%;
+    align-self: center;
+    justify-self: center;
 }
 
 .nav__linkbar {
@@ -42,4 +45,11 @@
     grid-template-columns: auto auto;
     align-items: center;
     justify-content: flex-start;
+}
+
+.nav__brand {
+    font-size: 36px;
+    color: var(--color_text_highlight);
+    align-self: center;
+    justify-self: center;
 }
