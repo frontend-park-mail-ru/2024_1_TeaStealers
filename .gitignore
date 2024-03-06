@@ -2,3 +2,4 @@
 .bin
 node_modules/
 public/templates/
+public/componentrs/templates.js
