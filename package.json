@@ -4,9 +4,10 @@
   "description": "CIAN reimagined",
   "main": "index.js",
   "scripts": {
-    "start": "npm run compile_hbs && node server/index.js",
+    "start": "npm run compile_scss && npm run compile_hbs && node server/index.js",
     "build": "webpack --config webpack.config.js",
     "compile_hbs": "globstar -- npx handlebars public/**/*.hbs -f public/templates/handlebars.precompiled.js",
+    "compile_scss": "sass scss/index.scss style/style.css",
     "test": "eslint ."
   },
   "author": "",
@@ -15,7 +16,8 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "globstar": "^1.0.0",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "sass": "^1.71.1"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",
