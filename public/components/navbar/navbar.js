@@ -68,8 +68,7 @@ export default class Navbar {
   async logout(event) {
     event.preventDefault();
     this.removeLostenerLogout();
-    const [codeStatus, data] = await logout();
-    console.log(codeStatus);
+    const [codeStatus, ,] = await logout();
     if (codeStatus === 200) {
       this.renderButtonLog(false);
     }
@@ -112,7 +111,6 @@ export default class Navbar {
    * Отрисовывает кнопку Войти\Выйти
    */
   renderButtonLog(isAuth) {
-    console.log('renderButtonlog', isAuth);
     let buttonLoginLogout = {
       ...buttonPattern,
       id: 'login-button',

@@ -126,12 +126,11 @@ export default class SignupForm {
     const log = this.login.self.querySelector('input').value.trim();
     const pass = this.password.self.querySelector('input').value.trim();
     const data = { login: log, password: pass };
-    const [statusCode, dataResp] = await signup(data);
+    const [statusCode, ,] = await signup(data);
     if (statusCode === 500 || statusCode === 400) {
       this.addErr(SIGNUP_ERROR);
       return;
     }
-    console.log(this.state);
     this.state.closeModal();
     this.state.renderButtonLog(true);
   }

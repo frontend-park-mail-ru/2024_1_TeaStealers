@@ -12,10 +12,9 @@ let cardsData = [{
 }];
 
 async function checkAuthentication() {
-  const [statusCode, data] = await checkAuth();
+  const [statusCode, ,] = await checkAuth();
 
   if (statusCode === 200) {
-    console.log(data);
     isAuthenticated = true;
     return;
   }

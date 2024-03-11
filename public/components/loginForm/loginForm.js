@@ -109,7 +109,7 @@ export default class LoginForm {
     }
     this.removeErr();
     const data = { login: logValue, password };
-    const [statusCode, dataResp] = await login(data);
+    const [statusCode, ,] = await login(data);
     if (statusCode === 500 || statusCode === 400) {
       this.addErr(ERROR_LOGIN);
       return;
