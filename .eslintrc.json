@@ -15,6 +15,16 @@
            {
              "js": "always"
            }
-        ]
-     }
+        ],
+        "prefer-regex-literals": [
+            "error", 
+            {"disallowRedundantWrapping": true}]
+    },
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+      },
 }

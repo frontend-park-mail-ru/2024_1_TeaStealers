@@ -1,3 +1,5 @@
+import button from './button.hbs';
+
 const DEFAULT_BUTTON = {
   position: 'beforeend',
   order: '',
@@ -10,7 +12,7 @@ const DEFAULT_BUTTON = {
 /**
  * Класс кнопки
  */
-export default class Button {
+export class Button {
   state;
 
   #parent;
@@ -38,7 +40,7 @@ export default class Button {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['button.hbs'](this.state),
+      button(this.state),
     );
   }
 }

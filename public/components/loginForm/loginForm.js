@@ -1,7 +1,6 @@
-import Input from '../input/input.js';
-import Button from '../button/button.js';
-import { checkLogin, checkPassword } from '../../modules/validation.js';
-import { login } from '../../modules/api.js';
+import loginForm from './loginForm.hbs';
+import { Input, Button } from '@components';
+import { checkLogin, checkPassword, login } from '@modules';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
@@ -25,7 +24,7 @@ const ERROE_PASS = 'Некорректный пароль';
 /**
  * Класс компонента формы авторизации.
  */
-export default class LoginForm {
+export class LoginForm {
   #parent;
 
   state;
@@ -146,7 +145,7 @@ export default class LoginForm {
     * Отрисовка компонента формы авторизации
     */
   render() {
-    this.#parent.innerHTML = window.Handlebars.templates['loginForm.hbs']();
+    this.#parent.innerHTML = loginForm();
 
     this.login = new Input(document.querySelector('.login-form__login'), LOGIN_INPUT);
     this.login.render();

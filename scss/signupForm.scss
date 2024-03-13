@@ -7,32 +7,34 @@
     align-items: center;
     width: 100%;
     grid-template-rows: 60px 240px 40px 40px 30px;
-}
 
-.signup-form__inputs {
-    display: flex;
-    flex-direction: column;
-    align-self: start;
-}
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+    }
 
-.signup-form__link {
-    color: $color_text_highlight;
-    height: 20px;
-    font-size: $button-font-size;
-    font-family: $button-font-family-main;
-    cursor: pointer;
-    justify-self: center;
-    align-self: self-end;
-    text-decoration: none;
-}
-.signup-form__title {
-    color: $color_basic;
-    justify-self: center;
-    margin: 0;
-}
-.signup-form__button {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+    &__link {
+        color: $color_text_highlight;
+        height: 20px;
+        font-size: $button-font-size;
+        font-family: $button-font-family-main;
+        cursor: pointer;
+        justify-self: center;
+        align-self: self-end;
+        text-decoration: none;
+    }
+
+    &__title {
+        color: $color_basic;
+        justify-self: center;
+        margin: 0;
+    }
+
+    &__button {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
 }
