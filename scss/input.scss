@@ -9,7 +9,9 @@
     border-radius: 6px;
 }
 
-.search__input {
+.search {
+
+    &__input {
     border: none; 
     outline: none; 
     padding: 0;
@@ -18,24 +20,29 @@
     font-family: $button-font-family-main;
     height: 100%;
     width: 100%;
+    }
+
+    &__input::placeholder {
+        color: $placeholder_color; 
+        font-size: $button-font-size;   
+        font-family: $button-font-family-main;    
+    }
+
 } 
 
-.search__input::placeholder {
-    color: $placeholder_color; 
-    font-size: $button-font-size;   
-    font-family: $button-font-family-main;    
-}
+.error {
 
-.error-message {
+    &-message {
     color: $color_errors;
     width: 100%;
     height: 36px;
     margin: 2px 0px;
     padding-left: 8px;
-}
+    }
 
-.error-border {
-    border: 1px solid $color_errors;
+    &-border {
+        border: 1px solid $color_errors;
+    }
 }
 
 .modal__input {

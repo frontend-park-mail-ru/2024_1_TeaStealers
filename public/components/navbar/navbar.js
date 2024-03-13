@@ -138,7 +138,6 @@ export class Navbar {
     this.#parent.insertAdjacentHTML(
       'beforeend',
       navbar(this.state),
-      navbar(this.state),
     );
 
     const noticeButton = new Button(document.querySelector('#rightside'), {

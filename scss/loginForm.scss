@@ -7,32 +7,34 @@
     align-items: center;
     width: 100%;
     grid-template-rows: 60px 240px 40px 40px 30px;
-}
 
-.login-form__inputs {
-    display: flex;
-    flex-direction: column;
-    align-self: start;
-}
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+    }
 
-.login-form__link {
-    color: $color_text_highlight;
-    height: 20px;
-    font-size: $button-font-size;
-    font-family: $button-font-family-main;
-    cursor: pointer;
-    justify-self: center;
-    align-self: self-end;
-    text-decoration: none;
-}
-.login-form__title {
-    color: $color_basic;
-    justify-self: center;
-    margin: 0;
-}
-.login-form__button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    &__link {
+        color: $color_text_highlight;
+        height: 20px;
+        font-size: $button-font-size;
+        font-family: $button-font-family-main;
+        cursor: pointer;
+        justify-self: center;
+        align-self: self-end;
+        text-decoration: none;
+    }
+
+    &__title {
+        color: $color_basic;
+        justify-self: center;
+        margin: 0;
+    }
+
+    &__button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
