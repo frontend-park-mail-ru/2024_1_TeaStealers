@@ -17,10 +17,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, './public/components/'),
-      '@modules': path.resolve(__dirname, './public/modules/'),
-      '@pages': path.resolve(__dirname, './public/pages/'),
-      '@': path.resolve(__dirname, './public/'),
+      '@components': path.resolve(__dirname, '/public/components/'),
+      '@modules': path.resolve(__dirname, '/public/modules/'),
+      '@pages': path.resolve(__dirname, '/public/pages/'),
+      '@models': path.resolve(__dirname, '/public/models/'),
+      '@views': path.resolve(__dirname, '/public/views/'),
+      '@controllers': path.resolve(__dirname, '/public/controllers/'),
     },
   },
   plugins: [
