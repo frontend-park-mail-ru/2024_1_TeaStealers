@@ -8,7 +8,7 @@ const DEFAULT_MAIN = {
 /**
  * Класс главной страницы страницы
  */
-export default class MainPage {
+export class MainPage {
   #parent;
 
   state;

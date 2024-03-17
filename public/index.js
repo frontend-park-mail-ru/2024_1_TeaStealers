@@ -1,6 +1,6 @@
-import MainPage from './pages/main/main.js';
-import { checkAuth, getAdvertList } from '@modules';
-import '../scss/index.scss'
+import { MainPage } from './pages/index.js';
+import { checkAuth, getAdvertList } from './modules/index.js';
+// import '../scss/index.scss';
 
 const HTTP_STATUS_OK = 200;
 // 404 500 400 403
@@ -40,10 +40,10 @@ async function getAdverts() {
     fullprice: ad.price,
   }));
 }
-
+let main;
 (async () => {
   await Promise.all([checkAuthentication(), getAdverts()]);
-  const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
+  main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
 
   main.render();
 })();

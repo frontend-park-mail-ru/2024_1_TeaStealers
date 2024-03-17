@@ -11,10 +11,21 @@ const SEARCH_DEFAULT = {
   roomNumber: '',
   price: '',
 };
+
+const buttonPattern = {
+  blockClass: 'string_menu-button',
+};
+
+listeners = {
+  click: () => {
+    console.log('searchButton');
+  }
+}
+
 /**
  * Класс компонента блока поиска
  */
-export class Search {
+export class Search extends BaseComponent {
   state;
 
   #parent;
@@ -24,53 +35,37 @@ export class Search {
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = SEARCH_DEFAULT] - Начальное состояние блока поиска
      */
-  constructor(parent, state = {}) {
-    this.state = { ...SEARCH_DEFAULT, ...state };
-    this.#parent = parent;
-  }
-
-  /**
-   * Функция отрисовки блока поиска
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      search(this.state),
-    );
-
-    const buttonPattern = {
-      blockClass: 'string_menu-button',
-    };
+  constructor(parent, state = DEFAULT_BUTTON) {
+    template = new search;
+    state = { ...DEFAULT_BUTTON, ...state };
     const HomeTypeMenu = new Button(document.querySelector('#searchString'), {
       ...buttonPattern,
       text: this.state.homeType,
     });
-    HomeTypeMenu.render();
     const roomNumberMenu = new Button(document.querySelector('#searchString'), {
       ...buttonPattern,
       text: this.state.roomNumber,
     });
-    roomNumberMenu.render();
-
     const priceMenu = new Button(document.querySelector('#searchString'), {
       ...buttonPattern,
       text: this.state.price,
     });
-    priceMenu.render();
-
     const inputMenu = new Input(document.querySelector('#searchString'), {
       placeholder: 'Город, адрес, метро, район',
       type: 'text',
       blockClass: 'search__input',
     });
-    inputMenu.render();
-
     const findButton = new Button(document.querySelector('#searchButton'), {
       text: 'Найти',
       order: 'primary',
       size: 'sm',
       borderRadius: 'sm',
     });
-    findButton.render();
+    innerComponents = [HomeTypeMenu, roomNumberMenu, priceMenu, inputMenu, findButton];
+    super({parent, template, state, innerComponents});
+  }
+
+  componentDidMount() {
+    this.innerComponents[4].AddEventListener(click, listeners[click]);
   }
 }

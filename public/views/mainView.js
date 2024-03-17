@@ -28,7 +28,7 @@ export class MainPage extends BaseComponent {
     this.#parent = parent;
   }
 
-  super(components)
+  super(components);
 
   render() {
     this.#parent.insertAdjacentHTML(
