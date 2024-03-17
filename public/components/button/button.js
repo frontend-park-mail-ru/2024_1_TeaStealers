@@ -8,7 +8,9 @@ const DEFAULT_BUTTON = {
   id: '',
   text: '',
 };
-
+listeners = {
+  
+}
 /**
  * Класс кнопки
  */

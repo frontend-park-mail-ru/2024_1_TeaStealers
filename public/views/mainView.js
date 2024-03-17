@@ -5,6 +5,11 @@ const DEFAULT_MAIN = {
   isAuthenticated: false,
   title: 'Найди мечту',
 };
+export class View {
+  // BaseComponent
+  // ...
+}
+//eventBus отслеживает у model, усть изменения - перерендер
 /**
  * Класс главной страницы страницы
  */
@@ -22,6 +27,8 @@ export class MainPage extends BaseComponent {
     super({ ...DEFAULT_MAIN, ...state });
     this.#parent = parent;
   }
+
+  super(components)
 
   render() {
     this.#parent.insertAdjacentHTML(
