@@ -2,6 +2,11 @@ import { MainPage } from '@pages';
 import { checkAuth, getAdvertList } from '@modules';
 import './index.scss'
 
+const HTTP_STATUS_OK = 200;
+// 404 500 400 403
+
+// создаю роутер и регаю роуты, создаю вьюшки и контроллнры, потом старт роутера
+
 let isAuthenticated = false;
 let skeleton = true;
 let cardsData = [{
@@ -20,7 +25,7 @@ skeleton = false;
 async function checkAuthentication() {
   const [statusCode, data] = await checkAuth();
 
-  if (statusCode === 200) {
+  if (statusCode === HTTP_STATUS_OK) {
     isAuthenticated = true;
     return;
   }
@@ -29,7 +34,7 @@ async function checkAuthentication() {
 
 async function getAdverts() {
   const [statusCode, data] = await getAdvertList();
-  if (statusCode !== 200) {
+  if (statusCode !== HTTP_STATUS_OK) {
     return;
   }
   cardsData = data.map((ad, index) => ({

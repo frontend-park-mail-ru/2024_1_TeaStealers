@@ -5,7 +5,6 @@ class Router {
     constructor() {
 
         this.routes = {};
-        this.state = {};
         this.currentRoute = window.location.pathname;
         
     }
@@ -13,7 +12,7 @@ class Router {
     /**
      * Функция регистрации (добавления) роутера
      * @param {string} path - путь до модели View
-     * @param {View} view - сама модель View
+     * @param {View} view - сама модель View или BaseCompontent
      */
     register(path, view) {
 
@@ -40,6 +39,8 @@ class Router {
         if (path !== window.location.pathname) {
             window.history.pushState(this.state, '', path);
         }
+        // clean у вьюшки у текущей
+        // renderAndMount у this.routs[path]
     }
 
     /**
