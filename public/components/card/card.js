@@ -1,4 +1,5 @@
 import card from './card.hbs';
+import { BaseComponent } from '@components';
 
 const DEFAULT_CARD = {
   id: '',
@@ -17,7 +18,7 @@ const DEFAULT_CARD = {
 /**
  * Класс компонента карточки объявления
  */
-export class Card {
+export class Card extends BaseComponent {
   state;
 
   #parent;
@@ -27,18 +28,14 @@ export class Card {
     * @param {HTMLElement} parent - Родительский элемент
     * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
     */
-  constructor(parent, state = {}) {
-    this.state = { ...DEFAULT_CARD, ...state };
-    this.#parent = parent;
+  constructor(parent, state = DEFAULT_BUTTON) {
+    template = new card;
+    state = { ...DEFAULT_BUTTON, ...state };
+    super({parent, template, state});
   }
 
   /**
    * Функция отрисовки карточки объявления
    */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      card(this.state),
-    );
-  }
+  
 }

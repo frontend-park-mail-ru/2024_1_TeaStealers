@@ -1,34 +1,30 @@
-nav_listeners = {
-    butlog: {
-        event: sdfs
-    },
-    AdjBut: {
-
-    },
-    click: () => {},
-    scroll: () => {},
-}
-
-listeners = {
-    nav: nav_listeners,
-
-}
-
 class BaseComponent {
-    constructor({parent, template, listeners, state = {}, innerComponents = []}) {
+    constructor({parent, template, listeners = {}, state = {}, innerComponents = []}) {
         this.parent = parent;
         this.template = template;
         this.listeners = listeners;
         this.state = state;
         this.innerComponents = innerComponents;
     }
-    renderAndDidMount() {
 
+    checkState(state) {
+        for (let key of Object.keys(this.state)) {
+            if (this.state[key] !== state[key]) {
+                return false;
+            }
+        }
+        return true;
     }
+
+    renderAndDidMount() {
+        this.render();
+        this.componentDidMount();
+    }
+
     render() {
         this.parent.insertAdjacentHTML(
             'beforeend',
-            main(this.state),
+            template(this.state),
         );
         this.componentLink = this.parent.firstChild;
         this.innerComponents.forEach(component => {
@@ -38,8 +34,8 @@ class BaseComponent {
     }
 
     componentDidMount(){
-        this.componentLink.a
-        this.innerComponents[0].addListener(...);
+        this.componentLink.addEventListener()
+        // this.innerComponents[0].addEventListener(...);
         this.innerComponents.forEach(component => {
             component.componentDidMount();
         });
@@ -47,7 +43,7 @@ class BaseComponent {
     }
 
     componentDidUpdate(state) {
-        if (this.state === state) { // проверка внутренних элементов
+        if (checkState(state)) { // проверка внутренних элементов
             return;
         }
         this.state = state;
@@ -56,7 +52,10 @@ class BaseComponent {
     }
 
     componentWillUnmount() {
-        //убираем листенеры
+        this.componentLink.addEventListener();
+        this.innerComponents.forEach(component => {
+            component.addEventListener();
+        });
     }
 
     clean() {

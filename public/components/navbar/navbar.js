@@ -1,5 +1,5 @@
 import navbar from './navbar.hbs';
-import { Button } from '@components';
+import { Button, BaseComponent } from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { logout } from '@modules';
 
@@ -17,10 +17,16 @@ const DEFAULT_NAVBAR = {
   skeleton: false,
 };
 
+listeners = {
+  loginListener: (event) => {
+
+  },
+}
+
 /**
  * Класс компонента навигационной панели
  */
-export class Navbar {
+export class Navbar extends BaseComponent {
   state;
 
   #parent;
@@ -34,16 +40,36 @@ export class Navbar {
    * @param {HTMLElement} parent - родительский элемент
    * @param {Object} state - состояния компонента
    */
-  constructor(parent, state = {}) {
-    this.state = { ...DEFAULT_NAVBAR, ...state };
-    this.#parent = parent;
+  constructor(parent, state = DEFAULT_BUTTON) {
+    template = new navbar;
+    state = { ...DEFAULT_BUTTON, ...state };
+    const noticeButton = new Button(document.querySelector('#rightside'), {
+      ...buttonPattern,
+      order: 'primary',
+      text: this.state.notice,
+    });
+    let buttonLoginLogout = {
+      ...buttonPattern,
+      id: 'login-button',
+      text: 'Войти',
+    };
+    if (isAuth) {
+      buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
+    }
+    if (this.login !== undefined) {
+      this.login.self.remove();
+    }
+    this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
+    innerComponents = [noticeButton, buttonLoginLogout];
+    super({parent, template, state, innerComponents});
   }
 
   /**
    * Добавляет обработчик события открытия модального окна
    */
-  addListeners() {
+  componentDidMount() {
     if (document.querySelector('#login-button') !== null) {
+      // this.innerComponents[0].addEventListener('click', listeners['loginListener'])
       document.querySelector('#login-button').addEventListener('click', this.openModal.bind(this));
     }
     if (document.querySelector('#logout-button') !== null) {
@@ -69,7 +95,7 @@ export class Navbar {
 
   async logout(event) {
     event.preventDefault();
-    this.removeLostenerLogout();
+    this.removeListenerLogout();
     const [codeStatus, data] = await logout();
     if (codeStatus === 200) {
       this.renderButtonLog(false);
@@ -85,7 +111,7 @@ export class Navbar {
     this.modal = undefined;
   }
 
-  removeLostenerLogout() {
+  removeListenerLogout() {
     if (document.querySelector('#logout-button') !== undefined) {
       document.querySelector('#logout-button').removeEventListener('click', this.logout.bind(this));
     }
@@ -129,23 +155,5 @@ export class Navbar {
     if (skeleton === false) {
       this.addListeners();
     }
-  }
-
-  /**
-   * Отрисовка компонента навбар
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      navbar(this.state),
-    );
-
-    const noticeButton = new Button(document.querySelector('#rightside'), {
-      ...buttonPattern,
-      order: 'primary',
-      text: this.state.notice,
-    });
-    noticeButton.render();
-    this.renderButtonLog(this.state.isAuthenticated, this.state.skeleton);
   }
 }

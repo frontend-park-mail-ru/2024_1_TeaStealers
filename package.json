@@ -8,7 +8,9 @@
     "build": "webpack --mode development",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "compile_hbs": "globstar -- npx handlebars public/**/*.hbs -f public/templates/handlebars.precompiled.js",
     "dev": "webpack serve"
+    
   },
   "author": "",
   "license": "ISC",

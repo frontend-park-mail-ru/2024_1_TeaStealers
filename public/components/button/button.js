@@ -1,5 +1,5 @@
 import button from './button.hbs';
-
+import { BaseComponent } from '@components';
 const DEFAULT_BUTTON = {
   position: 'beforeend',
   order: '',
@@ -8,16 +8,15 @@ const DEFAULT_BUTTON = {
   id: '',
   text: '',
 };
-listeners = {
-  
-}
+
 /**
  * Класс кнопки
  */
-export class Button {
+export class Button extends BaseComponent {
   state;
 
   #parent;
+
 
   /**
    * Создает новый экземпляр кнопки.
@@ -25,8 +24,9 @@ export class Button {
    * @param {Object} [state=DEFAULT_BUTTON] - Начальное состояние кнопки.
    */
   constructor(parent, state = DEFAULT_BUTTON) {
-    this.state = { ...DEFAULT_BUTTON, ...state };
-    this.#parent = parent;
+    template = new button;
+    state = { ...DEFAULT_BUTTON, ...state };
+    super({parent, template, state});
   }
 
   /**
@@ -34,15 +34,5 @@ export class Button {
    */
   get self() {
     return document.getElementById(this.state.id);
-  }
-
-  /**
-   * Отрисовка компонента кнопки
-  */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      button(this.state),
-    );
   }
 }

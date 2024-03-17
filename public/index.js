@@ -45,7 +45,7 @@ async function getAdverts() {
     fullprice: ad.price,
   }));
 }
-
+let main;
 (async () => {
   await Promise.all([checkAuthentication(), getAdverts()]);
   main.delete();
