@@ -13,10 +13,6 @@ const DEFAULT_BUTTON = {
  * Класс кнопки
  */
 export class Button extends BaseComponent {
-  state;
-
-  #parent;
-
 
   /**
    * Создает новый экземпляр кнопки.
