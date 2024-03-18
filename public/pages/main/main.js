@@ -1,6 +1,5 @@
-import Card from '../../components/card/card.js';
-import Navbar from '../../components/navbar/navbar.js';
-import Search from '../../components/search/search.js';
+import main from './main.hbs';
+import { Card, Navbar, Search } from '@components';
 
 const DEFAULT_MAIN = {
   isAuthenticated: false,
@@ -27,7 +26,7 @@ export default class MainPage {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['main.hbs'](this.state),
+      main(this.state),
     );
     const navbar = new Navbar(document.querySelector('#app'), {
       isAuthenticated: this.state.isAuthenticated,

@@ -1,5 +1,6 @@
 import MainPage from './pages/main/main.js';
-import { checkAuth, getAdvertList } from './modules/api.js';
+import { checkAuth, getAdvertList } from '@modules';
+import '../scss/index.scss'
 
 let isAuthenticated = false;
 let cardsData = [{
@@ -35,8 +36,9 @@ async function getAdverts() {
   }));
 }
 
-Promise.all([checkAuthentication(), getAdverts()])
-  .then(() => {
-    const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
-    main.render();
-  });
+(async () => {
+  await Promise.all([checkAuthentication(), getAdverts()]);
+  const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
+
+  main.render();
+})();

@@ -1,7 +1,6 @@
-import Input from '../input/input.js';
-import Button from '../button/button.js';
-import { checkLogin, checkPassword, checkRepeatPassword } from '../../modules/validation.js';
-import { signup } from '../../modules/api.js';
+import signupForm from './signupForm.hbs';
+import { Input, Button } from '@components';
+import { checkLogin, checkPassword, checkRepeatPassword, signup } from '@modules';
 
 const SIGNUP_BUTTON = {
   id: 'signup_button',
@@ -30,7 +29,7 @@ const SIGNUP_ERROR = 'Такой логиин уже зарегистриров�
 /**
  * Класс компонента формы авторизации.
  */
-export default class SignupForm {
+export class SignupForm {
   #parent;
 
   state;
@@ -172,7 +171,7 @@ export default class SignupForm {
     * Отрисовка компонента формы регистрации
     */
   render() {
-    this.#parent.innerHTML = window.Handlebars.templates['signupForm.hbs']();
+    this.#parent.innerHTML = signupForm();
 
     this.login = new Input(document.querySelector('.signup-form__login'), LOGIN_INPUT);
     this.login.render();
