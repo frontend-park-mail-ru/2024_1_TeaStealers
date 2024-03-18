@@ -1,6 +1,7 @@
-import Button from '../button/button.js';
-import LoginAndSignupLayout from '../../pages/loginAndSignupLayout/loginAndSignupLayout.js';
-import { logout } from '../../modules/api.js';
+import navbar from './navbar.hbs';
+import { Button } from '@components';
+import { LoginAndSignupLayout } from '@pages';
+import { logout } from '@modules';
 
 const buttonPattern = {
   borderRadius: 'sm',
@@ -18,7 +19,7 @@ const DEFAULT_NAVBAR = {
 /**
  * Класс компонента навигационной панели
  */
-export default class Navbar {
+export class Navbar {
   state;
 
   #parent;
@@ -135,7 +136,7 @@ export default class Navbar {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['navbar.hbs'](this.state),
+      navbar(this.state),
     );
 
     const noticeButton = new Button(document.querySelector('#rightside'), {

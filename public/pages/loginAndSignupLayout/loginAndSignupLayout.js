@@ -1,11 +1,10 @@
-import LoginForm from '../../components/loginForm/loginForm.js';
-import SignupForm from '../../components/signupForm/signupForm.js';
-import '../../templates/handlebars.precompiled.js';
+import LoginAndSignupLayoutTemplate from './loginAndSignupLayout.hbs';
+import { LoginForm, SignupForm } from '@components';
 
 /**
  * Класс страницы логина или регистрации
  */
-export default class LoginAndSignupLayout {
+export class LoginAndSignupLayout {
   state;
 
   #parent;
@@ -95,7 +94,7 @@ export default class LoginAndSignupLayout {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['loginAndSignupLayout.hbs'](),
+      LoginAndSignupLayoutTemplate(),
     );
     this.page = new LoginForm(document.querySelector('.modal__form'), { closeModal: this.state.closeModal, renderButtonLog: this.state.renderButtonLog });
     this.page.render();
