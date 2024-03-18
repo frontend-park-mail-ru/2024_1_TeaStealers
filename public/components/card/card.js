@@ -20,9 +20,7 @@ const DEFAULT_CARD = {
  */
 export class Card extends BaseComponent {
   state;
-
-  #parent;
-
+  
   /**
     * Создает новый экземпляр карточки объявления
     * @param {HTMLElement} parent - Родительский элемент

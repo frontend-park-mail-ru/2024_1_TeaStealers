@@ -1,13 +1,11 @@
 import LoginAndSignupLayoutTemplate from './loginAndSignupLayout.hbs';
-import { LoginForm, SignupForm } from '@components';
+import { LoginForm, SignupForm, BaseComponent } from '@components';
 
 /**
  * Класс страницы логина или регистрации
  */
-export class LoginAndSignupLayout {
+export class LoginAndSignupLayout extends BaseComponent {
   state;
-
-  #parent;
 
   page;
 
@@ -17,15 +15,15 @@ export class LoginAndSignupLayout {
    * @param {Object} [state] - Флаг оттрисовки логина или регистрации
    */
   constructor(parent, state) {
-    this.#parent = parent;
-    this.state = state;
+    const template = new LoginAndSignupLayoutTemplate;
+    super({parent, state, template});
   }
 
   /**
    * Возвращает элесент страницы логина или регистрации
    */
   get self() {
-    return this.#parent.querySelector('.modal');
+    return this.parent.querySelector('.modal');
   }
 
   /**
@@ -92,7 +90,7 @@ export class LoginAndSignupLayout {
     * Отрисовка страницы модального окна авторизации/регистрации
     */
   render() {
-    this.#parent.insertAdjacentHTML(
+    this.parent.insertAdjacentHTML(
       'beforeend',
       LoginAndSignupLayoutTemplate(),
     );

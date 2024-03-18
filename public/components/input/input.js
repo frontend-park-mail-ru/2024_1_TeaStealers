@@ -14,9 +14,6 @@ const DEFAULT_INPUT = {
  * Класс компонента инпута
  */
 export class Input extends BaseComponent {
-  state;
-
-  #parent;
 
   /**
    * Создает новый экземпляр инпута.
@@ -27,13 +24,6 @@ export class Input extends BaseComponent {
     template = new input;
     state = { ...DEFAULT_BUTTON, ...state };
     super({parent, template, state});
-  }
-
-  /**
-  * Получение элемента инпута
-  */
-  get self() {
-    return document.getElementById(this.state.id);
   }
 
   /**
