@@ -1,7 +1,8 @@
 /**
  * класс Роутера
  */
-class Router {
+export class Router {
+    currentView;
     constructor() {
 
         this.routes = {};
@@ -12,10 +13,11 @@ class Router {
     /**
      * Функция регистрации (добавления) роутера
      * @param {string} path - путь до модели View
-     * @param {View} view - сама модель View или BaseCompontent
+     * @param {View} view - сама модель View, представляющая собой BaseCompontent
      */
     register(path, view) {
-
+        this.currentView = view;
+        this.routes[path] = view;
     }
 
     /**
@@ -28,7 +30,6 @@ class Router {
             this.go(window.location.pathname);
             
         });
-        
     }
 
     /**
@@ -39,8 +40,9 @@ class Router {
         if (path !== window.location.pathname) {
             window.history.pushState(this.state, '', path);
         }
-        // clean у вьюшки у текущей
-        // renderAndMount у this.routs[path]
+        this.currentView?.unmountAndClean();
+        this.currentView = this.routes[path];
+        this.currentView.renderAndDidMount();
     }
 
     /**
