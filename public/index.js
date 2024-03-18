@@ -1,13 +1,13 @@
 import { MainPage } from '@pages';
-import { checkAuth, getAdvertList } from '@modules';
-// import '../scss/index.scss';
+import { checkAuth, getAdvertList, Router } from '@modules';
+import '../scss/index.scss';
 
 const HTTP_STATUS_OK = 200;
 const HTTP_STATUS_NOT_FOUND = 404;
 
 // 404 500 400 403
 
-// создаю роутер и регаю роуты, создаю вьюшки и контроллнры, потом старт роутера
+// создаю роутер и регаю роуты, создаю вьюшки и контроллеры, потом старт роутера
 
 let isAuthenticated = false;
 let cardsData = [{
@@ -42,7 +42,13 @@ async function getAdverts() {
     fullprice: ad.price,
   }));
 }
+
+const router = new Router();
+
+// router.register();
+
 let main;
+
 (async () => {
   await Promise.all([checkAuthentication(), getAdverts()]);
   main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
