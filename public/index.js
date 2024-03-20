@@ -1,6 +1,8 @@
-import { MainPage } from '@pages';
+// import { MainPage } from '@pages';
 import { checkAuth, getAdvertList, Router } from '@modules';
 import '../scss/index.scss';
+import { mainView } from '@views';
+import { mainControler } from '@controllers';
 
 const HTTP_STATUS_OK = 200;
 const HTTP_STATUS_NOT_FOUND = 404;
@@ -45,8 +47,8 @@ async function getAdverts() {
 
 const router = new Router();
 
-// router.register();
-
+router.register('/', mainView);
+router.start();
 let main;
 
 (async () => {

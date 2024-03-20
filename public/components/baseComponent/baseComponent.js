@@ -72,7 +72,7 @@ export class BaseComponent {
             return;
         }
         this.state = state;
-        this.clean();
+        this.unmountAndClean();
         this.renderAndDidMount();
     }
 
