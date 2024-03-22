@@ -1,3 +1,5 @@
+import card from './card.hbs';
+
 const DEFAULT_CARD = {
   id: '',
   parentID: '',
@@ -15,7 +17,7 @@ const DEFAULT_CARD = {
 /**
  * Класс компонента карточки объявления
  */
-export default class Card {
+export class Card {
   state;
 
   #parent;
@@ -36,7 +38,7 @@ export default class Card {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['card.hbs'](this.state),
+      card(this.state),
     );
   }
 }

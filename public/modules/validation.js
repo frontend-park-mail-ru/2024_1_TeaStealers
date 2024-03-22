@@ -8,7 +8,7 @@ export const checkLogin = (login) => {
 
   let hasLetter = false;
 
-  for (let i = 0; i < login.length; i++) {
+  for (let i = 0; i < login.length; i += 1) {
     const char = login[i];
     if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
       hasLetter = true;
@@ -36,7 +36,7 @@ export const checkPassword = (password) => {
   let hasUppercase = false;
   let hasDigit = false;
 
-  for (let i = 0; i < password.length; i++) {
+  for (let i = 0; i < password.length; i += 1) {
     const char = password[i];
     if (char >= 'a' && char <= 'z') {
       hasLowercase = true;

@@ -1,3 +1,5 @@
+import input from './input.hbs';
+
 const DEFAULT_INPUT = {
   position: 'beforeend',
   id: '',
@@ -10,7 +12,7 @@ const DEFAULT_INPUT = {
 /**
  * Класс компонента инпута
  */
-export default class Input {
+export class Input {
   state;
 
   #parent;
@@ -55,7 +57,7 @@ export default class Input {
   render() {
     this.#parent.insertAdjacentHTML(
       this.state.position,
-      window.Handlebars.templates['input.hbs'](this.state),
+      input(this.state),
     );
   }
 }

@@ -1,0 +1,78 @@
+@use "@/variables.scss";
+
+$ruble-code: '\20BD';
+
+.card {
+    max-width: 1300px;
+    height: 400px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 30px;
+    flex-direction: row;
+    gap: 40px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    margin-top: 1%;
+    margin: 1% auto;
+
+    &__picture {
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    &__info {
+        height: 100%;
+        width: 100%;
+        min-width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header-and-save {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__price {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header-link {
+        font-size: $card-link-font-size;
+        color: $color-card-link;
+        text-decoration: none;
+    }
+
+    &__fullprice {
+        color: $color-fullprice;
+        font-size: $card-price-font-size; 
+    }
+
+    &__fullprice::after {
+        content: $ruble-code;
+    }
+
+    &__price-per-metr {
+        color: $color-price-per-metr;
+    }
+
+    &__adress {
+        color: $color-adress;
+    }
+
+    &__description {
+        height: 140px;
+    }
+}

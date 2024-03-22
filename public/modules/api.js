@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from './ajax.js';
+import { getRequest, postRequest } from '@modules';
 
 // const BASE_URL = 'http://5.35.16.157/api';
 const BASE_URL = 'http://localhost:8080/api';

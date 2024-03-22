@@ -1,6 +1,7 @@
-import Button from '../button/button.js';
-import LoginAndSignupLayout from '../../pages/loginAndSignupLayout/loginAndSignupLayout.js';
-import { logout } from '../../modules/api.js';
+import navbar from './navbar.hbs';
+import { Button } from '@components';
+import { LoginAndSignupLayout } from '@pages';
+import { logout } from '@modules';
 
 const buttonPattern = {
   borderRadius: 'sm',
@@ -13,12 +14,13 @@ const DEFAULT_NAVBAR = {
   parentID: '',
   notice: '',
   login: '',
+  skeleton: false,
 };
 
 /**
  * Класс компонента навигационной панели
  */
-export default class Navbar {
+export class Navbar {
   state;
 
   #parent;
@@ -69,7 +71,6 @@ export default class Navbar {
     event.preventDefault();
     this.removeLostenerLogout();
     const [codeStatus, data] = await logout();
-    console.log(codeStatus);
     if (codeStatus === 200) {
       this.renderButtonLog(false);
     }
@@ -111,8 +112,7 @@ export default class Navbar {
   /**
    * Отрисовывает кнопку Войти\Выйти
    */
-  renderButtonLog(isAuth) {
-    console.log('renderButtonlog', isAuth);
+  renderButtonLog(isAuth, skeleton) {
     let buttonLoginLogout = {
       ...buttonPattern,
       id: 'login-button',
@@ -126,7 +126,9 @@ export default class Navbar {
     }
     this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
     this.login.render();
-    this.addListeners();
+    if (skeleton === false) {
+      this.addListeners();
+    }
   }
 
   /**
@@ -135,7 +137,7 @@ export default class Navbar {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['navbar.hbs'](this.state),
+      navbar(this.state),
     );
 
     const noticeButton = new Button(document.querySelector('#rightside'), {
@@ -144,7 +146,6 @@ export default class Navbar {
       text: this.state.notice,
     });
     noticeButton.render();
-
-    this.renderButtonLog(this.state.isAuthenticated);
+    this.renderButtonLog(this.state.isAuthenticated, this.state.skeleton);
   }
 }

@@ -1,7 +1,9 @@
-import MainPage from './pages/main/main.js';
-import { checkAuth, getAdvertList } from './modules/api.js';
+import { MainPage } from '@pages';
+import { checkAuth, getAdvertList } from '@modules';
+import './index.scss'
 
 let isAuthenticated = false;
+let skeleton = true;
 let cardsData = [{
   imgSrc: '',
   shortDesc: '',
@@ -10,12 +12,15 @@ let cardsData = [{
   fullprise: '',
   description: '',
 }];
+let main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData, skeleton });
+main.render();
 
+
+skeleton = false;
 async function checkAuthentication() {
-  const [statusCode, data] = await checkAuth();
+  const [statusCode, ,] = await checkAuth();
 
   if (statusCode === 200) {
-    console.log(data);
     isAuthenticated = true;
     return;
   }
@@ -36,8 +41,30 @@ async function getAdverts() {
   }));
 }
 
-Promise.all([checkAuthentication(), getAdverts()])
-  .then(() => {
-    const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
-    main.render();
+(async () => {
+  await Promise.all([checkAuthentication(), getAdverts()]);
+  main.delete();
+  main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
+  main.render();
+  const [searchFilterAndString, inDevelop] = [
+    document.querySelector('#filter-and-search'), document.querySelector('#search__in-develop'),
+  ];
+  
+  searchFilterAndString.addEventListener('mouseover', (e) => {
+    if (true) {
+      searchFilterAndString.style.display = 'none';
+      console.log(e.target.closest('div'));
+      inDevelop.style.display = 'block';
+    }
   });
+  
+  inDevelop.addEventListener('mouseout', (e) => {
+    if (true) {
+      inDevelop.style.display = 'none';
+      console.log(e.target.closest('div'));
+      searchFilterAndString.style.display = 'block';
+    }
+  });
+})();
+
+

@@ -1,5 +1,5 @@
-import Button from '../button/button.js';
-import Input from '../input/input.js';
+import search from './search.hbs';
+import { Button, Input } from '@components';
 
 const SEARCH_DEFAULT = {
   title: '',
@@ -14,7 +14,7 @@ const SEARCH_DEFAULT = {
 /**
  * Класс компонента блока поиска
  */
-export default class Search {
+export class Search {
   state;
 
   #parent;
@@ -35,7 +35,7 @@ export default class Search {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
-      window.Handlebars.templates['search.hbs'](this.state),
+      search(this.state),
     );
 
     const buttonPattern = {
