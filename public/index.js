@@ -18,8 +18,7 @@ main.render();
 
 skeleton = false;
 async function checkAuthentication() {
-  const [statusCode, ,] = await checkAuth();
-  const [statusCode, ,] = await checkAuth();
+  const [statusCode, data] = await checkAuth();
 
   if (statusCode === 200) {
     isAuthenticated = true;
