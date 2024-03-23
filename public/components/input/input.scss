@@ -1,4 +1,4 @@
-@use "variables.scss";
+@use "@/variables.scss";
 
 .input-container {
     display: flex;
@@ -6,7 +6,7 @@
 }
 
 .input_border-radius_md {
-    border-radius: 6px;
+    border-radius: $input-border-radius_md;
 }
 
 .search {

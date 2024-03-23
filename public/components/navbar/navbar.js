@@ -14,6 +14,7 @@ const DEFAULT_NAVBAR = {
   parentID: '',
   notice: '',
   login: '',
+  skeleton: false,
 };
 
 /**
@@ -69,7 +70,7 @@ export class Navbar {
   async logout(event) {
     event.preventDefault();
     this.removeLostenerLogout();
-    const [codeStatus, ,] = await logout();
+    const [codeStatus, data] = await logout();
     if (codeStatus === 200) {
       this.renderButtonLog(false);
     }
@@ -111,7 +112,7 @@ export class Navbar {
   /**
    * Отрисовывает кнопку Войти\Выйти
    */
-  renderButtonLog(isAuth) {
+  renderButtonLog(isAuth, skeleton) {
     let buttonLoginLogout = {
       ...buttonPattern,
       id: 'login-button',
@@ -125,7 +126,9 @@ export class Navbar {
     }
     this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
     this.login.render();
-    this.addListeners();
+    if (skeleton === false) {
+      this.addListeners();
+    }
   }
 
   /**
@@ -135,6 +138,7 @@ export class Navbar {
     this.#parent.insertAdjacentHTML(
       'beforeend',
       navbar(this.state),
+      navbar(this.state),
     );
 
     const noticeButton = new Button(document.querySelector('#rightside'), {
@@ -143,7 +147,6 @@ export class Navbar {
       text: this.state.notice,
     });
     noticeButton.render();
-
-    this.renderButtonLog(this.state.isAuthenticated);
+    this.renderButtonLog(this.state.isAuthenticated, this.state.skeleton);
   }
 }

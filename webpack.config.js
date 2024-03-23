@@ -20,6 +20,7 @@ module.exports = {
       '@components': path.resolve(__dirname, './public/components/'),
       '@modules': path.resolve(__dirname, './public/modules/'),
       '@pages': path.resolve(__dirname, './public/pages/'),
+      '@': path.resolve(__dirname, './public/'),
     },
   },
   plugins: [

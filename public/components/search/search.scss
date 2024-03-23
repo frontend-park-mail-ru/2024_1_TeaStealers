@@ -1,4 +1,4 @@
-@use "variables.scss";
+@use "@/variables.scss";
 
 .search {
     height: 480px;
@@ -41,7 +41,7 @@
         display: flex;
         list-style: none;
         padding-left: 0%;
-        height: 50px;
+        height: 40px;
         margin-block-start: 0;
         margin-block-end: 0;
     }
@@ -54,16 +54,23 @@
         border-top-left-radius: $button-border-radius_md;
         border-top-right-radius: $button-border-radius_md;
     }
+
+    &__in-develop {
+        display: none;
+        background-color: white;
+    }
 }
 
-.filter-link_active {
-    background-color: $background_color_filter_active;
-    color: $color_filter_active;
+.filter-link {
+
+    &_active {
+        background-color: $background_color_filter_active;
+        color: $color_filter_active;
+    }
+
+    &_passive {
+        background-color: $background_color_filter_passive;
+        color: $color_filter_passive;
+    }
+    
 }
-
-.filter-link_passive {
-    background-color: $background_color_filter_passive;
-    color: $color_filter_passive;
-}
-
-

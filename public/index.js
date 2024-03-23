@@ -1,8 +1,9 @@
-import MainPage from './pages/main/main.js';
+import { MainPage } from '@pages';
 import { checkAuth, getAdvertList } from '@modules';
-import '../scss/index.scss'
+import './index.scss'
 
 let isAuthenticated = false;
+let skeleton = true;
 let cardsData = [{
   imgSrc: '',
   shortDesc: '',
@@ -11,9 +12,13 @@ let cardsData = [{
   fullprise: '',
   description: '',
 }];
+let main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData, skeleton });
+main.render();
 
+
+skeleton = false;
 async function checkAuthentication() {
-  const [statusCode, ,] = await checkAuth();
+  const [statusCode, data] = await checkAuth();
 
   if (statusCode === 200) {
     isAuthenticated = true;
@@ -38,7 +43,26 @@ async function getAdverts() {
 
 (async () => {
   await Promise.all([checkAuthentication(), getAdverts()]);
-  const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
-
+  main.delete();
+  main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
   main.render();
+  const [searchFilterAndString, inDevelop] = [
+    document.querySelector('#filter-and-search'), document.querySelector('#search__in-develop'),
+  ];
+  
+  searchFilterAndString.addEventListener('mouseover', (e) => {
+    if (true) {
+      searchFilterAndString.style.display = 'none';
+      inDevelop.style.display = 'block';
+    }
+  });
+  
+  inDevelop.addEventListener('mouseout', (e) => {
+    if (true) {
+      inDevelop.style.display = 'none';
+      searchFilterAndString.style.display = 'block';
+    }
+  });
 })();
+
+
