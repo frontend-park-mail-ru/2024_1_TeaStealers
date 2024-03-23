@@ -68,6 +68,7 @@ export class MainPage {
     this.#parent.insertAdjacentHTML(
       'beforeend',
       main(this.state),
+      main(this.state),
     );
     const navbar = new Navbar(document.querySelector('#app'), {
       isAuthenticated: this.state.isAuthenticated,

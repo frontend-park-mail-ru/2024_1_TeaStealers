@@ -2,6 +2,10 @@ import navbar from './navbar.hbs';
 import { Button } from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { logout } from '@modules';
+import navbar from './navbar.hbs';
+import { Button } from '@components';
+import { LoginAndSignupLayout } from '@pages';
+import { logout } from '@modules';
 
 const buttonPattern = {
   borderRadius: 'sm',
@@ -20,6 +24,7 @@ const DEFAULT_NAVBAR = {
 /**
  * Класс компонента навигационной панели
  */
+export class Navbar {
 export class Navbar {
   state;
 
@@ -137,6 +142,7 @@ export class Navbar {
   render() {
     this.#parent.insertAdjacentHTML(
       'beforeend',
+      navbar(this.state),
       navbar(this.state),
     );
 
