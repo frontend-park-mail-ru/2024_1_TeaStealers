@@ -53,7 +53,6 @@ async function getAdverts() {
   searchFilterAndString.addEventListener('mouseover', (e) => {
     if (true) {
       searchFilterAndString.style.display = 'none';
-      console.log(e.target.closest('div'));
       inDevelop.style.display = 'block';
     }
   });
@@ -61,7 +60,6 @@ async function getAdverts() {
   inDevelop.addEventListener('mouseout', (e) => {
     if (true) {
       inDevelop.style.display = 'none';
-      console.log(e.target.closest('div'));
       searchFilterAndString.style.display = 'block';
     }
   });
