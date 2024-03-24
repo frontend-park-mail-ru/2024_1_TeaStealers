@@ -1,6 +1,9 @@
 import card from './card.hbs';
 import { BaseComponent } from '@components';
 
+import card from './card.hbs';
+import { BaseComponent } from '@components';
+
 const DEFAULT_CARD = {
   id: '',
   parentID: '',
