@@ -1,4 +1,4 @@
-// import { MainPage } from '@pages';
+import { MainPage } from '@pages';
 import { checkAuth, getAdvertList, Router } from '@modules';
 import '../scss/index.scss';
 import { mainView } from '@views';
@@ -54,7 +54,6 @@ const router = new Router();
 
 router.register('/', mainView);
 router.start();
-let main;
 
 (async () => {
   await Promise.all([checkAuthentication(), getAdverts()]);
