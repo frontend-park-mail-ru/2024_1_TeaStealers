@@ -1,7 +1,6 @@
 import button from './button.hbs';
 import { BaseComponent } from '@components';
-import button from './button.hbs';
-import { BaseComponent } from '@components';
+
 const DEFAULT_BUTTON = {
   position: 'beforeend',
   order: '',
@@ -14,7 +13,6 @@ const DEFAULT_BUTTON = {
 /**
  * Класс кнопки
  */
-export class Button extends BaseComponent {
 export class Button extends BaseComponent {
 
   /**

@@ -1,9 +1,6 @@
 import input from './input.hbs';
 import { BaseComponent } from '@components'
 
-import input from './input.hbs';
-import { BaseComponent } from '@components'
-
 const DEFAULT_INPUT = {
   position: 'beforeend',
   id: '',
@@ -16,7 +13,6 @@ const DEFAULT_INPUT = {
 /**
  * Класс компонента инпута
  */
-export class Input extends BaseComponent {
 export class Input extends BaseComponent {
 
   /**
