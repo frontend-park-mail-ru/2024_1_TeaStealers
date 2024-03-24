@@ -19,6 +19,7 @@ async function getAdverts() {
 
 class MainModel extends MainPage {
   constructor() {
+      super();
       this.observers = []; // Массив наблюдателей
       this.adverts = cardsData; // Данные модели
       this.init();

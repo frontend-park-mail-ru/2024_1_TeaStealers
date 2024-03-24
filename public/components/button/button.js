@@ -20,7 +20,7 @@ export class Button extends BaseComponent {
    * @param {Object} [state=DEFAULT_BUTTON] - Начальное состояние кнопки.
    */
   constructor(parent, state = DEFAULT_BUTTON) {
-    template = new button;
+    const template = button;
     state = { ...DEFAULT_BUTTON, ...state };
     super({parent, template, state});
   }

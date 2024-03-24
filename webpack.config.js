@@ -23,6 +23,7 @@ module.exports = {
       '@models': path.resolve(__dirname, './public/models/'),
       '@views': path.resolve(__dirname, './public/views/'),
       '@controllers': path.resolve(__dirname, './public/controllers/'),
+      '@': path.resolve(__dirname, './public/'),
     },
   },
   plugins: [

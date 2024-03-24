@@ -40,9 +40,9 @@ export class BaseComponent {
      * Производит рендер элемента
      */
     render() {
-        this.parent.insertAdjacentHTML(
+        document.getElementById(this.parent).insertAdjacentHTML(
             'beforeend',
-            template(this.state),
+            this.template(this.state),
         );
         this.componentLink = this.parent.firstChild;
         this.innerComponents.forEach(component => {
@@ -54,8 +54,7 @@ export class BaseComponent {
      * Добавление листенеров
      */
     componentDidMount(){
-        this.componentLink.addEventListener();
-        // this.innerComponents[0].addEventListener(...);
+        // this.componentLink.addEventListener();
         this.innerComponents.forEach(component => {
             component.componentDidMount();
         });

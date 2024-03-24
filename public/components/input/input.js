@@ -20,9 +20,9 @@ export class Input extends BaseComponent {
    * @param {HTMLElement} parent - Родительский элемент, к которому будет добавлен инпут.
    * @param {Object} [state=DEFAULT_INPUT] - Начальное состояние инпута.
    */
-  constructor(parent, state = DEFAULT_BUTTON) {
-    template = new input;
-    state = { ...DEFAULT_BUTTON, ...state };
+  constructor(parent, state = DEFAULT_INPUT) {
+    const template = input;
+    state = { ...DEFAULT_INPUT, ...state };
     super({parent, template, state});
   }
 

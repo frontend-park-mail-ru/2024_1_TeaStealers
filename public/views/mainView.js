@@ -7,7 +7,7 @@ export class MainView {
   constructor() {
     this.parent = 'app';
     mainModel.addObserver(this);
-    this.mainPage = new MainPage(parent, {});
+    this.mainPage = new MainPage(this.parent, {});
   }
 
   /**
@@ -19,6 +19,7 @@ export class MainView {
   }
 
   render() {
+    console.log('render view');
     this.mainPage.renderAndDidMount();
   }
 

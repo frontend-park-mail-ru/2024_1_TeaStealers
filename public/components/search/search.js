@@ -1,7 +1,7 @@
 import search from './search.hbs';
-import { Button, Input } from '@components';
+import { Button, Input, BaseComponent } from '@components';
 
-const SEARCH_DEFAULT = {
+const DEFAULT_SEARCH = {
   title: '',
   firstFilterLinkStatus: '',
   secondFilterLinkStatus: '',
@@ -16,8 +16,8 @@ const buttonPattern = {
   blockClass: 'string_menu-button',
 };
 
-listeners = {
-  click: () => {
+const listeners = {
+  'click': () => {
     console.log('searchButton');
   }
 }
@@ -26,46 +26,44 @@ listeners = {
  * Класс компонента блока поиска
  */
 export class Search extends BaseComponent {
-  state;
-
-  #parent;
 
   /**
      * Создает новый экземпляр блока поиска
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = SEARCH_DEFAULT] - Начальное состояние блока поиска
      */
-  constructor(parent, state = DEFAULT_BUTTON) {
-    template = new search;
-    state = { ...DEFAULT_BUTTON, ...state };
-    const HomeTypeMenu = new Button(document.querySelector('#searchString'), {
+  constructor(parent, state = DEFAULT_SEAECH) {
+    const template = search;
+    state = { ...DEFAULT_SEARCH, ...state };
+    const HomeTypeMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.homeType,
+      text: state.homeType,
     });
-    const roomNumberMenu = new Button(document.querySelector('#searchString'), {
+    const roomNumberMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.roomNumber,
+      text: state.roomNumber,
     });
-    const priceMenu = new Button(document.querySelector('#searchString'), {
+    const priceMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.price,
+      text: state.price,
     });
-    const inputMenu = new Input(document.querySelector('#searchString'), {
+    const inputMenu = new Input('searchString', {
       placeholder: 'Город, адрес, метро, район',
       type: 'text',
       blockClass: 'search__input',
     });
-    const findButton = new Button(document.querySelector('#searchButton'), {
+    const findButton = new Button('searchButton', {
       text: 'Найти',
       order: 'primary',
       size: 'sm',
       borderRadius: 'sm',
+      id: 'searchBtn',
     });
-    innerComponents = [HomeTypeMenu, roomNumberMenu, priceMenu, inputMenu, findButton];
+    const innerComponents = [HomeTypeMenu, roomNumberMenu, priceMenu, inputMenu, findButton];
     super({parent, template, state, innerComponents});
   }
 
   componentDidMount() {
-    this.innerComponents[4].AddEventListener(click, listeners[click]);
+    document.querySelector('#searchBtn').addEventListener('click', listeners['click']);
   }
 }

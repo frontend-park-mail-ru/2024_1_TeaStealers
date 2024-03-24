@@ -30,6 +30,8 @@ export class Router {
             this.go(window.location.pathname);
             
         });
+        this.currentView.render();
+        window.history.pushState(this.state, '', this.currentRoute);
     }
 
     /**

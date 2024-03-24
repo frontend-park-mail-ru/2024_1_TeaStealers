@@ -17,7 +17,7 @@ const DEFAULT_NAVBAR = {
   skeleton: false,
 };
 
-listeners = {
+const listeners = {
   loginListener: (event) => {
 
   },
@@ -27,9 +27,6 @@ listeners = {
  * Класс компонента навигационной панели
  */
 export class Navbar extends BaseComponent {
-  state;
-
-  #parent;
 
   login;
 
@@ -40,27 +37,24 @@ export class Navbar extends BaseComponent {
    * @param {HTMLElement} parent - родительский элемент
    * @param {Object} state - состояния компонента
    */
-  constructor(parent, state = DEFAULT_BUTTON) {
-    template = new navbar;
-    state = { ...DEFAULT_BUTTON, ...state };
-    const noticeButton = new Button(document.querySelector('#rightside'), {
+  constructor(parent, state = DEFAULT_NAVBAR) {
+    const template = navbar;
+    // state = { ...DEFAULT_BUTTON, ...state };
+    const noticeButton = new Button('rightside', {
       ...buttonPattern,
       order: 'primary',
-      text: this.state.notice,
+      text: state.notice,
     });
-    let buttonLoginLogout = {
+    let buttonLoginLogout = new Button('rightside', {
       ...buttonPattern,
       id: 'login-button',
       text: 'Войти',
-    };
-    if (isAuth) {
+    });
+    if (state.isAuth) {
       buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
     }
-    if (this.login !== undefined) {
-      this.login.self.remove();
-    }
-    this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
-    innerComponents = [noticeButton, buttonLoginLogout];
+    // this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
+    let innerComponents = [noticeButton, buttonLoginLogout];
     super({parent, template, state, innerComponents});
   }
 

@@ -26,9 +26,9 @@ export class Card extends BaseComponent {
     * @param {HTMLElement} parent - Родительский элемент
     * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
     */
-  constructor(parent, state = DEFAULT_BUTTON) {
-    template = new card;
-    state = { ...DEFAULT_BUTTON, ...state };
+  constructor(parent, state = DEFAULT_CARD) {
+    const template = card;
+    state = { ...DEFAULT_CARD, ...state };
     super({parent, template, state});
   }
 
