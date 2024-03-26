@@ -1,11 +1,10 @@
 import LoginAndSignupLayoutTemplate from './loginAndSignupLayout.hbs';
-import { LoginForm, SignupForm, BaseComponent } from '@components';
+import { BaseComponent, LoginForm, SignupForm } from '@components';
 
 /**
  * Класс страницы логина или регистрации
  */
 export class LoginAndSignupLayout extends BaseComponent {
-  state;
 
   page;
 
@@ -16,7 +15,9 @@ export class LoginAndSignupLayout extends BaseComponent {
    */
   constructor(parent, state) {
     const template = new LoginAndSignupLayoutTemplate;
-    super({parent, state, template});
+    loginForm = new LoginForm('modalForm', { closeModal: this.state.closeModal, renderButtonLog: this.state.renderButtonLog });
+    innerComponents = [loginForm];
+    super({parent, state, template, innerComponents});
   }
 
   /**
@@ -24,6 +25,14 @@ export class LoginAndSignupLayout extends BaseComponent {
    */
   get self() {
     return this.parent.querySelector('.modal');
+  }
+
+  /**
+   * Добавление обработчиков
+   */
+  componentDidMount() {
+    this.addListenerLogin();
+    this.addListenerSignup();
   }
 
   /**
@@ -77,7 +86,7 @@ export class LoginAndSignupLayout extends BaseComponent {
   /**
  * Удаляет обработчики событий
  */
-  removeListeners() {
+  componentWillUnmount() {
     if (this.goToLogin !== undefined) {
       this.page.self.querySelector('.login-form__link').removeEventListener('click', this.goToLogin.bind(this));
     }

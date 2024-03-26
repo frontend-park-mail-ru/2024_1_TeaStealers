@@ -1,5 +1,5 @@
 import loginForm from './loginForm.hbs';
-import { Input, Button } from '@components';
+import { BaseComponent, Input, Button } from '@components';
 import { checkLogin, checkPassword, login } from '@modules';
 
 const LOGIN_BUTTON = {
@@ -24,41 +24,38 @@ const ERROE_PASS = 'Некорректный пароль';
 /**
  * Класс компонента формы авторизации.
  */
-export class LoginForm {
-  #parent;
-
-  state;
-
-  login;
-
-  password;
-
-  button;
+export class LoginForm extends BaseComponent {
 
   /**
    * Создает новый экземпляр формы авторизации.
-   * @param {HTMLElement} parent - Родительский элемент
+   * @param {HTMLElement} parent - Родительский элемент (id)
    */
   constructor(parent, state) {
-    this.#parent = parent;
-    this.state = state;
-    this.loginHandler = this.loginHandler.bind(this);
-  }
 
-  /**
-   * Получение элемента формы авторизации
-   */
-  get self() {
-    return this.#parent.querySelector('#login-form');
+    const template = loginForm;
+
+    const login = new Input('loginFormLogin', LOGIN_INPUT);
+    
+    const password = new Input('loginFormPassword', PASSWORD_INPUT);
+    
+    const button = new Button('confirmButton', LOGIN_BUTTON);
+    
+    const innerComponents = [login, password, button];
+    
+    super({parent, template, state, innerComponents});
+    this.loginHandler = this.loginHandler.bind(this);
   }
 
   /**
    * Добавляет листенеры
    */
-  addListeners() {
-    this.button.self.addEventListener('click', this.loginHandler.bind(this));
-    this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
-    this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+  componentDidMount() {
+    // this.button.self.addEventListener('click', this.loginHandler.bind(this));
+    // this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
+    // this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+    this.innerComponents[0].self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
+    this.innerComponents[1].self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+    this.innerComponents[2].self.addEventListener('click', this.loginHandler.bind(this));
   }
 
   /**
@@ -135,27 +132,9 @@ export class LoginForm {
   /**
      * Удаление обработчиков событий
      */
-  removeListeners() {
+  componentWillUnmount() {
     if (this.loginHandler !== undefined) {
       this.button.self.removeEventListener('focusout', this.loginHandler.bind(this));
     }
-  }
-
-  /**
-    * Отрисовка компонента формы авторизации
-    */
-  render() {
-    this.#parent.innerHTML = loginForm();
-
-    this.login = new Input(document.querySelector('.login-form__login'), LOGIN_INPUT);
-    this.login.render();
-
-    this.password = new Input(document.querySelector('.login-form__password'), PASSWORD_INPUT);
-    this.password.render();
-
-    this.button = new Button(document.querySelector('.login-form__button'), LOGIN_BUTTON);
-    this.button.render();
-
-    this.addListeners();
   }
 }
