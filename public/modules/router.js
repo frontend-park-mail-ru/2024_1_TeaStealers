@@ -31,7 +31,6 @@ export class Router {
             
         });
         this.currentView.render();
-        window.history.pushState(this.state, '', this.currentRoute);
     }
 
     /**
@@ -42,10 +41,8 @@ export class Router {
         if (path !== window.location.pathname) {
             window.history.pushState(this.state, '', path);
         }
-        this.currentView?.clean();
-        // this.currentView?.unmountAndClean();
+        this.currentView.clean();
         this.currentView = this.routes[path];
-        // this.currentView.renderAndDidMount();
         this.currentView.render();
     }
 

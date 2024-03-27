@@ -1,12 +1,12 @@
 import { getAdvertList, checkAuth } from '@modules';
 import { MainPage } from '@pages';
-import { globalVariables } from '@models';
+// import { globalVariables } from '@models';
 
 let cardsData;
 
 async function getAdverts() {
     const [statusCode, data] = await getAdvertList();
-    if (statusCode !== globalVariables.HTTP_STATUS_OK) {
+    if (statusCode !== 200) {
       return;
     }
     cardsData = data.map((ad, index) => ({
@@ -18,9 +18,8 @@ async function getAdverts() {
     }));
 }
 
-class MainModel extends MainPage {
+class MainModel {
   constructor() {
-      super();
       this.observers = []; // Массив наблюдателей
       this.adverts = cardsData; // Данные модели
       this.init();
@@ -36,7 +35,8 @@ class MainModel extends MainPage {
    */
   updateState () {
     getAdverts();
-    this.updateAdverts(cardsData);
+    this.adverts = cardsData;
+    this.updateAdverts(this.adverts);
   }
   /**
    * Добавление наблюдателя

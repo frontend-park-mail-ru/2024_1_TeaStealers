@@ -3,7 +3,7 @@
 
 import { mainModel } from '@models';
 
-export class MainController {
+class MainController {
     constructor() {
     }
 

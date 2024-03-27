@@ -1,7 +1,7 @@
 import signupForm from './signupForm.hbs';
 import { BaseComponent, Input, Button } from '@components';
 import { checkLogin, checkPassword, checkRepeatPassword, signup } from '@modules';
-import { globalVariables } from '@models';
+// import { globalVariables } from '@models';
 
 const SIGNUP_BUTTON = {
   id: 'signup_button',
@@ -130,7 +130,7 @@ export class SignupForm extends BaseComponent {
     const pass = this.innerComponents[1].self.querySelector('input').value.trim();
     const data = { login: log, password: pass };
     const [statusCode, ,] = await signup(data);
-    if (statusCode === globalVariables.HTTP_INTERNAL_SERVER_ERROR || statusCode === globalVariables.HTTP_BAD_REQUEST) {
+    if (statusCode === 500 || statusCode === 400) {
       this.addErr(SIGNUP_ERROR);
       return;
     }

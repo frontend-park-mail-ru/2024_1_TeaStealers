@@ -60,6 +60,8 @@ const router = new Router();
 router.register('/', mainView);
 router.start();
 
+mainControler.updateMainModel();
+
 // (async () => {
 //   await Promise.all([checkAuthentication(), getAdverts()]);
 //   main.delete();

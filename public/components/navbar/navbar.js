@@ -2,7 +2,7 @@ import navbar from './navbar.hbs';
 import { Button, BaseComponent } from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { logout } from '@modules';
-import { globalVariables } from '@models';
+// import { globalVariables } from '@models';
 
 const buttonPattern = {
   borderRadius: 'sm',
@@ -88,7 +88,7 @@ export class Navbar extends BaseComponent {
     event.preventDefault();
     this.removeListenerLogout();
     const [codeStatus, data] = await logout();
-    if (codeStatus === globalVariables.HTTP_STATUS_OK) {
+    if (codeStatus === 200) {
       this.renderButtonLog(false);
     }
   }

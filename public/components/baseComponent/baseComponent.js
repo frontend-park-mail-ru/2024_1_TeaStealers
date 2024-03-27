@@ -6,6 +6,13 @@ export class BaseComponent {
         this.state = state;
         this.innerComponents = innerComponents;
     }
+    
+    /**
+     * Получение элемента
+     */
+    get self() {
+        return document.getElementById(this.state.id);
+    }
 
     /**
      * Проверяет равенство объектов состояния
@@ -19,13 +26,6 @@ export class BaseComponent {
             }
         }
         return true;
-    }
-    
-    /**
-     * Получение элемента
-     */
-    get self() {
-        return document.getElementById(this.state.id);
     }
 
     /**
@@ -67,7 +67,10 @@ export class BaseComponent {
      * @returns 
      */
     componentDidUpdate(state) {
-        if (checkState(state)) { // проверка внутренних элементов
+        if (state === undefined) {
+            return;
+        }
+        if (this.checkState(state)) { // проверка внутренних элементов
             return;
         }
         this.state = state;
@@ -87,7 +90,6 @@ export class BaseComponent {
      * Удаление листенеров
      */
     componentWillUnmount() {
-        this.componentLink.removeEventListener();
         this.innerComponents.forEach(component => component.componentWillUnmount());
     }
 

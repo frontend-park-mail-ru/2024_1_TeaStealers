@@ -1,4 +1,4 @@
-import { globalVariables } from '@models';
+// import { globalVariables } from '@models';
 
 /**
    * GET-запрос
@@ -23,7 +23,7 @@ export const getRequest = async (url) => {
     }
     return [response.status, body];
   } catch (error) {
-    return [globalVariables.HTTP_INTERNAL_SERVER_ERROR, error];
+    return [500, error];
   }
 };
 
@@ -53,7 +53,7 @@ export const postRequest = async (url, data) => {
 
     return [response.status, body];
   } catch (error) {
-    return [globalVariables.HTTP_INTERNAL_SERVER_ERROR, error];
+    return [500, error];
   }
 };
 
@@ -84,7 +84,7 @@ export const putRequest = async (url, data) => {
 
     return [response.status, body];
   } catch (error) {
-    return [globalVariables.HTTP_INTERNAL_SERVER_ERROR, error];
+    return [500, error];
   }
 };
 
@@ -113,6 +113,6 @@ export const deleteRequest = async (url) => {
 
     return [response.status, body];
   } catch (error) {
-    return [globalVariables.HTTP_INTERNAL_SERVER_ERROR, error];
+    return [500, error];
   }
 };
