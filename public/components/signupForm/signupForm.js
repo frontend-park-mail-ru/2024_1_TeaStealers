@@ -67,7 +67,6 @@ export class SignupForm extends BaseComponent {
     this.innerComponents[1].self.querySelector('input').addEventListener('input', this.validatePasswordInput.bind(this));
     this.innerComponents[2].self.querySelector('input').addEventListener('input', this.validatePasswordRepeatInput.bind(this));
     this.innerComponents[3].self.addEventListener('click', this.signupHandler.bind(this));
-    console.log('component did moun sign up form')
   }
 
   /**
@@ -169,6 +168,5 @@ export class SignupForm extends BaseComponent {
     if (this.signupHandler !== undefined) {
       this.innerComponents[3].self.removeEventListener('click', this.signupHandler.bind(this));
     }
-    console.log('remove listeners signup form')
   }
 }

@@ -72,7 +72,6 @@ export class Navbar extends BaseComponent {
   openModal(event) {
     // this.removeListenersOpen();
     event.preventDefault();
-    console.log("open login")
     this.modal = new LoginAndSignupLayout('modal', {
       id: 'modal',
       page: 'login',
@@ -97,10 +96,6 @@ export class Navbar extends BaseComponent {
    * Закрывает модальное окно
    */
   closeModal() {
-    console.log("closw modal")
-    // this.removeListenersClose();self
-    // this.modal.self.remove();
-    // this.modal = undefined;
     this.modal.unmountAndClean();
   }
 

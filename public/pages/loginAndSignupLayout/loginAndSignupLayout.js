@@ -20,11 +20,6 @@ export class LoginAndSignupLayout extends BaseComponent {
       // closeModal: this.state.closeModal, 
       // renderButtonLog: this.state.renderButtonLog 
     });
-    // const signupForm = new SignupForm('modalForm', { 
-    //   id: 'signup-form'
-    //   // closeModal: this.state.closeModal, 
-    //   // renderButtonLog: this.state.renderButtonLog 
-    // });
     const innerComponents = [loginForm];
     super({parent, template, state, innerComponents});
 
@@ -93,7 +88,6 @@ export class LoginAndSignupLayout extends BaseComponent {
  * Удаляет обработчики событий
  */
   componentWillUnmount() {
-    console.log(this.page)
     if (this.page.self.querySelector('.login-form__link') !== null) {
       this.page.self.querySelector('.login-form__link').removeEventListener('click', this.goToLogin.bind(this));
     }
@@ -102,19 +96,9 @@ export class LoginAndSignupLayout extends BaseComponent {
     }
     console.log("remove listeners in layout")
   }
-
-  /**
-    * Отрисовка страницы модального окна авторизации/регистрации
-  //   */
-  // render() {
-  //   document.getElementById(this.parent).insertAdjacentHTML(
-  //     'beforeend',
-  //     LoginAndSignupLayoutTemplate(),
-  //   );
-  //   this.page = new LoginForm(document.querySelector('.modal__form'), { closeModal: this.state.closeModal, renderButtonLog: this.state.renderButtonLog });
-  //   this.page.render();
-
-  //   this.addListenerSignup();
-  // }
+  clean() {
+    this.page.clean();
+    document.getElementById(this.parent).innerHTML = ''
+  }
 
 }

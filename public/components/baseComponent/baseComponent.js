@@ -95,7 +95,6 @@ export class BaseComponent {
      * Удаление элемента
      */
     clean() {
-        console.log(this.innerComponents, this.state.id)
         this.innerComponents.forEach(component => component.clean());
         document.getElementById(this.parent).innerHTML = ''
     }

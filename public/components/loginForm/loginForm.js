@@ -144,6 +144,5 @@ export class LoginForm extends BaseComponent {
     if (this.loginHandler !== undefined) {
       this.innerComponents[2].self.removeEventListener('click', this.loginHandler.bind(this));
     }
-    console.log('remove listener in login form')
   }
 }
