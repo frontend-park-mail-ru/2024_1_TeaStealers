@@ -27,11 +27,7 @@ const listeners = {
  * Класс компонента навигационной панели
  */
 export class Navbar extends BaseComponent {
-
-  login;
-
   modal;
-
   /**
    * Конструктор класса навбара
    * @param {HTMLElement} parent - родительский элемент
@@ -53,7 +49,6 @@ export class Navbar extends BaseComponent {
     if (state.isAuth) {
       buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
     }
-    // this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
     let innerComponents = [noticeButton, buttonLoginLogout];
     super({parent, template, state, innerComponents});
   }
@@ -63,7 +58,6 @@ export class Navbar extends BaseComponent {
    */
   componentDidMount() {
     if (document.querySelector('#login-button') !== null) {
-      // this.innerComponents[0].addEventListener('click', listeners['loginListener'])
       document.querySelector('#login-button').addEventListener('click', this.openModal.bind(this));
     }
     if (document.querySelector('#logout-button') !== null) {
@@ -76,14 +70,17 @@ export class Navbar extends BaseComponent {
    * @param {Event} event - событие, которое вызвало обработчик
    */
   openModal(event) {
-    this.removeListenersOpen();
+    // this.removeListenersOpen();
     event.preventDefault();
-    this.modal = new LoginAndSignupLayout(document.querySelector('#modal'), {
+    console.log("open login")
+    this.modal = new LoginAndSignupLayout('modal', {
+      id: 'modal',
       page: 'login',
-      closeModal: this.closeModal.bind(this),
-      renderButtonLog: this.renderButtonLog.bind(this),
+      // closeModal: this.closeModal.bind(this),
+      // renderButtonLog: this.renderButtonLog.bind(this),
     });
-    this.modal.render();
+
+    this.modal.renderAndDidMount();
     document.querySelector('.modal__close-button').addEventListener('click', this.closeModal.bind(this));
   }
 
@@ -100,9 +97,11 @@ export class Navbar extends BaseComponent {
    * Закрывает модальное окно
    */
   closeModal() {
-    this.removeListenersClose();
-    this.modal.self.remove();
-    this.modal = undefined;
+    console.log("closw modal")
+    // this.removeListenersClose();self
+    // this.modal.self.remove();
+    // this.modal = undefined;
+    this.modal.unmountAndClean();
   }
 
   removeListenerLogout() {
@@ -132,22 +131,22 @@ export class Navbar extends BaseComponent {
   /**
    * Отрисовывает кнопку Войти\Выйти
    */
-  renderButtonLog(isAuth, skeleton) {
-    let buttonLoginLogout = {
-      ...buttonPattern,
-      id: 'login-button',
-      text: 'Войти',
-    };
-    if (isAuth) {
-      buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
-    }
-    if (this.login !== undefined) {
-      this.login.self.remove();
-    }
-    this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
-    this.login.render();
-    if (skeleton === false) {
-      this.addListeners();
-    }
-  }
+  // renderButtonLog(isAuth, skeleton) {
+  //   let buttonLoginLogout = {
+  //     ...buttonPattern,
+  //     id: 'login-button',
+  //     text: 'Войти',
+  //   };
+  //   if (isAuth) {
+  //     buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
+  //   }
+  //   if (this.login !== undefined) {
+  //     this.login.self.remove();
+  //   }
+  //   this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
+  //   this.login.render();
+  //   if (skeleton === false) {
+  //     this.addListeners();
+  //   }
+  // }
 }

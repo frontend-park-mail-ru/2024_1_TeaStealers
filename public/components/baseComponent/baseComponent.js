@@ -44,7 +44,7 @@ export class BaseComponent {
             'beforeend',
             this.template(this.state),
         );
-        this.componentLink = this.parent.firstChild;
+        this.componentLink = document.getElementById(this.parent).lastChild;
         this.innerComponents.forEach(component => {
             component.render();
         });
@@ -95,7 +95,8 @@ export class BaseComponent {
      * Удаление элемента
      */
     clean() {
+        console.log(this.innerComponents, this.state.id)
         this.innerComponents.forEach(component => component.clean());
-        this.parent.innerHTML = '';
+        document.getElementById(this.parent).innerHTML = ''
     }
 }

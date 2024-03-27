@@ -32,7 +32,7 @@ export class Search extends BaseComponent {
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = SEARCH_DEFAULT] - Начальное состояние блока поиска
      */
-  constructor(parent, state = DEFAULT_SEAECH) {
+  constructor(parent, state = DEFAULT_SEARCH) {
     const template = search;
     state = { ...DEFAULT_SEARCH, ...state };
     const HomeTypeMenu = new Button('searchString', {

@@ -31,10 +31,5 @@ export class Card extends BaseComponent {
     const template = card;
     state = { ...DEFAULT_CARD, ...state };
     super({parent, template, state});
-  }
-
-  /**
-   * Функция отрисовки карточки объявления
-   */
-  
+  }  
 }

@@ -30,7 +30,7 @@ const SIGNUP_ERROR = 'Такой логиин уже зарегистриров�
  * Класс компонента формы авторизации.
  */
 export class SignupForm extends BaseComponent {
-
+  innerComponents;
   /**
    * Конструктор класса
    * @param {HTMLElement} parent - Родительский элемент
@@ -50,6 +50,8 @@ export class SignupForm extends BaseComponent {
     const innerComponents = [login, password, repeatPassword, signupButton];
     
     super({parent, template, state, innerComponents});
+
+    this.innerComponents = [login, password, repeatPassword, signupButton];
   }
 
   /**
@@ -65,19 +67,20 @@ export class SignupForm extends BaseComponent {
     this.innerComponents[1].self.querySelector('input').addEventListener('input', this.validatePasswordInput.bind(this));
     this.innerComponents[2].self.querySelector('input').addEventListener('input', this.validatePasswordRepeatInput.bind(this));
     this.innerComponents[3].self.addEventListener('click', this.signupHandler.bind(this));
+    console.log('component did moun sign up form')
   }
 
   /**
  * Валидирует логин
  */
   validateLoginInput() {
-    const login = this.login.self.querySelector('input').value.trim();
+    const login = this.innerComponents[0].self.querySelector('input').value.trim();
     const [err, isValid] = checkLogin(login);
     if (isValid) {
-      this.login.removeError();
+      this.innerComponents[0].removeError();
       return true;
     }
-    this.login.renderError(err);
+    this.innerComponents[0].renderError(err);
     return false;
   }
 
@@ -85,13 +88,13 @@ export class SignupForm extends BaseComponent {
  * Валидирует пароль
  */
   validatePasswordInput() {
-    const pass = this.password.self.querySelector('input').value.trim();
+    const pass = this.innerComponents[1].self.querySelector('input').value.trim();
     const [err, isValid] = checkPassword(pass);
     if (isValid) {
-      this.password.removeError();
+      this.innerComponents[1].removeError();
       return true;
     }
-    this.password.renderError(err);
+    this.innerComponents[1].renderError(err);
     return false;
   }
 
@@ -99,14 +102,14 @@ export class SignupForm extends BaseComponent {
  * Валидирует повтор пароля
  */
   validatePasswordRepeatInput() {
-    const pass = this.password.self.querySelector('input').value.trim();
-    const passRepeat = this.repeatPassword.self.querySelector('input').value.trim();
+    const pass = this.innerComponents[1].self.querySelector('input').value.trim();
+    const passRepeat = this.innerComponents[2].self.querySelector('input').value.trim();
     const [err, isValid] = checkRepeatPassword(pass, passRepeat);
     if (isValid) {
-      this.repeatPassword.removeError();
+      this.innerComponents[2].removeError();
       return true;
     }
-    this.repeatPassword.renderError(err);
+    this.innerComponents[2].renderError(err);
     return false;
   }
 
@@ -123,8 +126,8 @@ export class SignupForm extends BaseComponent {
       return;
     }
     this.removeErr();
-    const log = this.login.self.querySelector('input').value.trim();
-    const pass = this.password.self.querySelector('input').value.trim();
+    const log = this.innerComponents[0].self.querySelector('input').value.trim();
+    const pass = this.innerComponents[1].self.querySelector('input').value.trim();
     const data = { login: log, password: pass };
     const [statusCode, ,] = await signup(data);
     if (statusCode === 500 || statusCode === 400) {
@@ -140,14 +143,14 @@ export class SignupForm extends BaseComponent {
    * @param {string} errorText - текст ошибки
    */
   addErr(errorText) {
-    this.self.querySelector('#error-message').textContent = errorText;
+    document.getElementById('error-message').textContent = errorText;
   }
 
   /**
      * Удаляет отрисовку ошибки
      */
   removeErr() {
-    this.self.querySelector('#error-message').textContent = '';
+    document.getElementById('error-message').textContent = '';
   }
 
   /**
@@ -155,16 +158,17 @@ export class SignupForm extends BaseComponent {
  */
   componentWillUnmount() {
     if (this.validateLoginInput !== undefined) {
-      this.login.self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
+      this.innerComponents[0].self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
     }
     if (this.validatePasswordInput !== undefined) {
-      this.password.self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
+      this.innerComponents[1].self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
     }
     if (this.validatePasswordRepeatInput !== undefined) {
-      this.repeatPassword.self.querySelector('input').removeEventListener('input', this.validatePasswordRepeatInput.bind(this));
+      this.innerComponents[2].self.querySelector('input').removeEventListener('input', this.validatePasswordRepeatInput.bind(this));
     }
     if (this.signupHandler !== undefined) {
-      this.button.self.removeEventListener('click', this.signupHandler.bind(this));
+      this.innerComponents[3].self.removeEventListener('click', this.signupHandler.bind(this));
     }
+    console.log('remove listeners signup form')
   }
 }

@@ -25,7 +25,7 @@ const ERROE_PASS = 'Некорректный пароль';
  * Класс компонента формы авторизации.
  */
 export class LoginForm extends BaseComponent {
-
+  innerComponents;
   /**
    * Создает новый экземпляр формы авторизации.
    * @param {HTMLElement} parent - Родительский элемент (id)
@@ -43,6 +43,8 @@ export class LoginForm extends BaseComponent {
     const innerComponents = [login, password, button];
     
     super({parent, template, state, innerComponents});
+
+    this.innerComponents = [login, password, button];
     this.loginHandler = this.loginHandler.bind(this);
   }
 
@@ -62,13 +64,13 @@ export class LoginForm extends BaseComponent {
  * Валидирует логин
  */
   validateLoginInput() {
-    const loginVal = this.login.self.querySelector('input').value.trim();
+    const loginVal = this.innerComponents[0].self.querySelector('input').value.trim();
     const [, isValid] = checkLogin(loginVal);
     if (isValid) {
-      this.login.removeError();
+      this.innerComponents[0].removeError();
       return true;
     }
-    this.login.renderError(ERROE_LOG);
+    this.innerComponents[0].renderError(ERROE_LOG);
     return false;
   }
 
@@ -76,13 +78,13 @@ export class LoginForm extends BaseComponent {
    * Валидирует пароль
    */
   validatePasswordInput() {
-    const pass = this.password.self.querySelector('input').value.trim();
+    const pass = this.innerComponents[1].self.querySelector('input').value.trim();
     const [, isValid] = checkPassword(pass);
     if (isValid) {
-      this.password.removeError();
+      this.innerComponents[1].removeError();
       return true;
     }
-    this.password.renderError(ERROE_PASS);
+    this.innerComponents[1].renderError(ERROE_PASS);
     return false;
   }
 
@@ -90,15 +92,15 @@ export class LoginForm extends BaseComponent {
    * Обрабатывает действие кнопки "войти"
    */
   async loginHandler() {
-    const logValue = this.login.self.querySelector('input').value.trim();
-    const password = this.password.self.querySelector('input').value.trim();
+    const logValue = this.innerComponents[0].self.querySelector('input').value.trim();
+    const password = this.innerComponents[1].self.querySelector('input').value.trim();
     const [, isValidLogin] = checkLogin(logValue);
     const [, isValidPass] = checkPassword(password);
     if (!isValidLogin) {
-      this.login.renderError(ERROE_LOG);
+      this.innerComponents[0].renderError(ERROE_LOG);
     }
     if (!isValidLogin) {
-      this.password.renderError(ERROE_PASS);
+      this.innerComponents[1].renderError(ERROE_PASS);
     }
     if (!isValidLogin || !isValidPass) {
       return;
@@ -119,22 +121,29 @@ export class LoginForm extends BaseComponent {
    * @param {string} errorText - текст ошибки
    */
   addErr(errorText) {
-    this.self.querySelector('#error-message').textContent = errorText;
+    document.getElementById('error-message').textContent = errorText;
   }
 
   /**
    * Удаляет отрисовку ошибки
    */
   removeErr() {
-    this.self.querySelector('#error-message').textContent = '';
+    document.getElementById('error-message').textContent = '';
   }
 
   /**
      * Удаление обработчиков событий
      */
   componentWillUnmount() {
-    if (this.loginHandler !== undefined) {
-      this.button.self.removeEventListener('focusout', this.loginHandler.bind(this));
+    if (this.validateLoginInput !== undefined) {
+      this.innerComponents[0].self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
     }
+    if (this.validatePasswordInput !== undefined) {
+      this.innerComponents[1].self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
+    }
+    if (this.loginHandler !== undefined) {
+      this.innerComponents[2].self.removeEventListener('click', this.loginHandler.bind(this));
+    }
+    console.log('remove listener in login form')
   }
 }

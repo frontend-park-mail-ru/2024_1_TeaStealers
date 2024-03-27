@@ -42,9 +42,11 @@ export class Router {
         if (path !== window.location.pathname) {
             window.history.pushState(this.state, '', path);
         }
-        this.currentView?.unmountAndClean();
+        this.currentView?.clean();
+        // this.currentView?.unmountAndClean();
         this.currentView = this.routes[path];
-        this.currentView.renderAndDidMount();
+        // this.currentView.renderAndDidMount();
+        this.currentView.render();
     }
 
     /**
