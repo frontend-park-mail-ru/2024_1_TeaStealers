@@ -1,3 +1,5 @@
+// import { globalVariables } from '@models';
+
 /**
    * GET-запрос
    * @async

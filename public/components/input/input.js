@@ -1,4 +1,5 @@
 import input from './input.hbs';
+import { BaseComponent } from '@components'
 
 const DEFAULT_INPUT = {
   position: 'beforeend',
@@ -12,10 +13,7 @@ const DEFAULT_INPUT = {
 /**
  * Класс компонента инпута
  */
-export class Input {
-  state;
-
-  #parent;
+export class Input extends BaseComponent {
 
   /**
    * Создает новый экземпляр инпута.
@@ -23,15 +21,9 @@ export class Input {
    * @param {Object} [state=DEFAULT_INPUT] - Начальное состояние инпута.
    */
   constructor(parent, state = DEFAULT_INPUT) {
-    this.state = { ...DEFAULT_INPUT, ...state };
-    this.#parent = parent;
-  }
-
-  /**
-  * Получение элемента инпута
-  */
-  get self() {
-    return document.getElementById(this.state.id);
+    const template = input;
+    state = { ...DEFAULT_INPUT, ...state };
+    super({parent, template, state});
   }
 
   /**
@@ -54,10 +46,4 @@ export class Input {
   /**
    * Отрисовывает элемент ввода и добавляет его к родительскому элементу.
    */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      this.state.position,
-      input(this.state),
-    );
-  }
 }

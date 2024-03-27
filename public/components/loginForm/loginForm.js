@@ -1,6 +1,7 @@
 import loginForm from './loginForm.hbs';
-import { Input, Button } from '@components';
+import { BaseComponent, Input, Button } from '@components';
 import { checkLogin, checkPassword, login } from '@modules';
+// import { globalVariables } from '@models';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
@@ -24,54 +25,53 @@ const ERROE_PASS = 'Некорректный пароль';
 /**
  * Класс компонента формы авторизации.
  */
-export class LoginForm {
-  #parent;
-
-  state;
-
-  login;
-
-  password;
-
-  button;
-
+export class LoginForm extends BaseComponent {
+  innerComponents;
   /**
    * Создает новый экземпляр формы авторизации.
-   * @param {HTMLElement} parent - Родительский элемент
+   * @param {HTMLElement} parent - Родительский элемент (id)
    */
   constructor(parent, state) {
-    this.#parent = parent;
-    this.state = state;
-    this.loginHandler = this.loginHandler.bind(this);
-  }
 
-  /**
-   * Получение элемента формы авторизации
-   */
-  get self() {
-    return this.#parent.querySelector('#login-form');
+    const template = loginForm;
+
+    const login = new Input('loginFormLogin', LOGIN_INPUT);
+    
+    const password = new Input('loginFormPassword', PASSWORD_INPUT);
+    
+    const button = new Button('confirmButton', LOGIN_BUTTON);
+    
+    const innerComponents = [login, password, button];
+    
+    super({parent, template, state, innerComponents});
+
+    this.innerComponents = [login, password, button];
+    this.loginHandler = this.loginHandler.bind(this);
   }
 
   /**
    * Добавляет листенеры
    */
-  addListeners() {
-    this.button.self.addEventListener('click', this.loginHandler.bind(this));
-    this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
-    this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+  componentDidMount() {
+    // this.button.self.addEventListener('click', this.loginHandler.bind(this));
+    // this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
+    // this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+    this.innerComponents[0].self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
+    this.innerComponents[1].self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
+    this.innerComponents[2].self.addEventListener('click', this.loginHandler.bind(this));
   }
 
   /**
  * Валидирует логин
  */
   validateLoginInput() {
-    const loginVal = this.login.self.querySelector('input').value.trim();
+    const loginVal = this.innerComponents[0].self.querySelector('input').value.trim();
     const [, isValid] = checkLogin(loginVal);
     if (isValid) {
-      this.login.removeError();
+      this.innerComponents[0].removeError();
       return true;
     }
-    this.login.renderError(ERROE_LOG);
+    this.innerComponents[0].renderError(ERROE_LOG);
     return false;
   }
 
@@ -79,13 +79,13 @@ export class LoginForm {
    * Валидирует пароль
    */
   validatePasswordInput() {
-    const pass = this.password.self.querySelector('input').value.trim();
+    const pass = this.innerComponents[1].self.querySelector('input').value.trim();
     const [, isValid] = checkPassword(pass);
     if (isValid) {
-      this.password.removeError();
+      this.innerComponents[1].removeError();
       return true;
     }
-    this.password.renderError(ERROE_PASS);
+    this.innerComponents[1].renderError(ERROE_PASS);
     return false;
   }
 
@@ -93,15 +93,15 @@ export class LoginForm {
    * Обрабатывает действие кнопки "войти"
    */
   async loginHandler() {
-    const logValue = this.login.self.querySelector('input').value.trim();
-    const password = this.password.self.querySelector('input').value.trim();
+    const logValue = this.innerComponents[0].self.querySelector('input').value.trim();
+    const password = this.innerComponents[1].self.querySelector('input').value.trim();
     const [, isValidLogin] = checkLogin(logValue);
     const [, isValidPass] = checkPassword(password);
     if (!isValidLogin) {
-      this.login.renderError(ERROE_LOG);
+      this.innerComponents[0].renderError(ERROE_LOG);
     }
     if (!isValidLogin) {
-      this.password.renderError(ERROE_PASS);
+      this.innerComponents[1].renderError(ERROE_PASS);
     }
     if (!isValidLogin || !isValidPass) {
       return;
@@ -122,40 +122,28 @@ export class LoginForm {
    * @param {string} errorText - текст ошибки
    */
   addErr(errorText) {
-    this.self.querySelector('#error-message').textContent = errorText;
+    document.getElementById('error-message').textContent = errorText;
   }
 
   /**
    * Удаляет отрисовку ошибки
    */
   removeErr() {
-    this.self.querySelector('#error-message').textContent = '';
+    document.getElementById('error-message').textContent = '';
   }
 
   /**
      * Удаление обработчиков событий
      */
-  removeListeners() {
-    if (this.loginHandler !== undefined) {
-      this.button.self.removeEventListener('focusout', this.loginHandler.bind(this));
+  componentWillUnmount() {
+    if (this.validateLoginInput !== undefined) {
+      this.innerComponents[0].self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
     }
-  }
-
-  /**
-    * Отрисовка компонента формы авторизации
-    */
-  render() {
-    this.#parent.innerHTML = loginForm();
-
-    this.login = new Input(document.querySelector('.login-form__login'), LOGIN_INPUT);
-    this.login.render();
-
-    this.password = new Input(document.querySelector('.login-form__password'), PASSWORD_INPUT);
-    this.password.render();
-
-    this.button = new Button(document.querySelector('.login-form__button'), LOGIN_BUTTON);
-    this.button.render();
-
-    this.addListeners();
+    if (this.validatePasswordInput !== undefined) {
+      this.innerComponents[1].self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
+    }
+    if (this.loginHandler !== undefined) {
+      this.innerComponents[2].self.removeEventListener('click', this.loginHandler.bind(this));
+    }
   }
 }

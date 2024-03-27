@@ -1,5 +1,5 @@
 import main from './main.hbs';
-import { Card, Navbar, Search, GridCard } from '@components';
+import { BaseComponent, Card, Navbar, Search, GridCard } from '@components';
 
 const DEFAULT_MAIN = {
   isAuthenticated: false,
@@ -49,7 +49,7 @@ const DEFAULT_GRIDCARD = {
 /**
  * Класс главной страницы страницы
  */
-export class MainPage {
+export class MainPage extends BaseComponent {
   #parent;
 
   state;
@@ -60,26 +60,17 @@ export class MainPage {
      * @param {Object} [state = DEFAULT_MAIN] - Начальное состояние главной страницы
      */
   constructor(parent, state = DEFAULT_MAIN) {
-    this.#parent = parent;
-    this.state = { ...DEFAULT_MAIN, ...DEFAULT_GRIDCARD, ...state };
-  }
+    const template = main;
+    state = { ...DEFAULT_MAIN, ...DEFAULT_GRIDCARD, ...state };
 
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      main(this.state),
-      main(this.state),
-    );
-    const navbar = new Navbar(document.querySelector('#app'), {
-      isAuthenticated: this.state.isAuthenticated,
+    const navbar = new Navbar('app', {
+      isAuthenticated: state.isAuthenticated,
       id: 'navbar',
       notice: '+ Разместить объявление',
-      skeleton: this.state.skeleton,
+      skeleton: state.skeleton,
     });
 
-    navbar.render();
-
-    const search = new Search(document.querySelector('#app'), {
+    const search = new Search('app', {
       id: 'search',
       title: 'Найди мечту',
       firstFilterLinkStatus: 'active',
@@ -89,23 +80,42 @@ export class MainPage {
       homeType: 'Квартиру в новостройке или вторичке',
       roomNumber: 'Комнат',
       price: 'Цена',
-      skeleton: this.state.skeleton,
+      skeleton: state.skeleton,
     });
-    search.render();
 
-    const gridCard = new GridCard(document.querySelector('#app'), this.state);
-    gridCard.render();
+    const gridCard = new GridCard('app', state);
+    
+    const card = new Card('app', state);
 
-    if (this.state.skeleton === true) {
-      const card = new Card(document.querySelector('#app'), this.state);
-      card.render();
-    } else if (this.state.cards && this.state.cards.length > 0) {
-      this.state.cards.forEach((cardData) => {
-        const card = new Card(document.querySelector('#app'), cardData);
-        card.render();
-      });
-    }
+    const innerComponents = [navbar, search, gridCard, card];
+    super({parent, template, state, innerComponents});
   }
+
+  // render() {
+  //   document.getElementById(this.#parent).insertAdjacentHTML(
+  //     'beforeend',
+  //     main(this.state),
+  //   );
+    
+
+  //   navbar.render();
+
+    
+  //   search.render();
+
+    
+  //   gridCard.render();
+
+  //   if (this.state.skeleton === true) {
+  //     const card = new Card(document.querySelector('#app'), this.state);
+  //     card.render();
+  //   } else if (this.state.cards && this.state.cards.length > 0) {
+  //     this.state.cards.forEach((cardData) => {
+  //       const card = new Card(document.querySelector('#app'), cardData);
+  //       card.render();
+  //     });
+  //   }
+  // }
 
   delete() {
     this.#parent.innerHTML = '';

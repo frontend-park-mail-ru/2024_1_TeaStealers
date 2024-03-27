@@ -1,3 +1,4 @@
+export * from './baseComponent/baseComponent.js';
 export * from './button/button.js';
 export * from './card/card.js';
 export * from './input/input.js';
