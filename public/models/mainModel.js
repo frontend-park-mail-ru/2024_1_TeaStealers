@@ -1,11 +1,12 @@
 import { getAdvertList, checkAuth } from '@modules';
 import { MainPage } from '@pages';
+import { globalVariables } from '@models';
 
 let cardsData;
 
 async function getAdverts() {
     const [statusCode, data] = await getAdvertList();
-    if (statusCode !== 200) {
+    if (statusCode !== globalVariables.HTTP_STATUS_OK) {
       return;
     }
     cardsData = data.map((ad, index) => ({

@@ -1,6 +1,7 @@
 import loginForm from './loginForm.hbs';
 import { BaseComponent, Input, Button } from '@components';
 import { checkLogin, checkPassword, login } from '@modules';
+import { globalVariables } from '@models';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
@@ -108,7 +109,7 @@ export class LoginForm extends BaseComponent {
     this.removeErr();
     const data = { login: logValue, password };
     const [statusCode, ,] = await login(data);
-    if (statusCode === 500 || statusCode === 400) {
+    if (statusCode === globalVariables.HTTP_INTERNAL_SERVER_ERROR || statusCode === globalVariables.HTTP_BAD_REQUEST) {
       this.addErr(ERROR_LOGIN);
       return;
     }
