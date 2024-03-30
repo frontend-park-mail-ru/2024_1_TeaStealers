@@ -1,5 +1,6 @@
-/public/static/images/
 .idea/
 .bin
 node_modules/
 public/templates/
+public/componentrs/templates.js
+dist/

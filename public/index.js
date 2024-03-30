@@ -1,6 +1,13 @@
-import LoginAndSignupLayout from './pages/loginAndSignupLayout/loginAndSignupLayout.js';
+import { Router } from '@modules';
+import './index.scss';
+import { mainView } from '@views';
+import { mainControler } from '@controllers';
 
-const root = document.querySelector('#app');
+// создаю роутер и регаю роуты, создаю вьюшки и контроллеры, потом старт роутера
 
-const login = new LoginAndSignupLayout(root, 'login');
-login.render();
+const router = new Router();
+
+router.register('/', mainView);
+router.start();
+
+mainControler.updateMainModel();

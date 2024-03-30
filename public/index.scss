@@ -1,0 +1,62 @@
+@import "variables.scss";
+@import "@components/button/button.scss";
+@import "@components/card/card.scss";
+@import "@components/gridCard/gridCard.scss";
+@import "@components/search/search.scss";
+@import "@components/input/input.scss";
+@import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
+@import "@components/loginForm/loginForm.scss";
+@import "@pages/main/main.scss";
+@import "@components/navbar/navbar.scss";
+@import "@components/signupForm/signupForm.scss";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: $button-font-size;
+    font-weight: normal;
+    margin: 0px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+input {
+    width: 280px;
+    height: 40px;
+    border: 1px solid grey;
+    border-radius: $button-border-radius_sm;
+    font-size: 16px;
+    padding: 0px 8px;
+}
+
+.skeleton {
+	background-color: #e2e5e7;
+	background-image:			
+			linear-gradient(
+				90deg, 
+				rgba(#fff, 0), 
+				rgba(#fff, 0.5),
+				rgba(#fff, 0)
+			);
+	background-size: $shine-width 100%;
+	background-repeat: no-repeat; 
+	background-position: left -1 * $shine-width top 0;
+	animation: shine 1s ease infinite;
+}
+
+@keyframes shine {
+	to {
+		background-position: right -1 * $shine-width top 0;
+	}
+}

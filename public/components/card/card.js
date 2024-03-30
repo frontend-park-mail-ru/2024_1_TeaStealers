@@ -1,3 +1,6 @@
+import { BaseComponent } from '@components';
+import card from './card.hbs';
+
 const DEFAULT_CARD = {
   id: '',
   parentID: '',
@@ -15,25 +18,17 @@ const DEFAULT_CARD = {
 /**
  * Класс компонента карточки объявления
  */
-export class Card {
+export class Card extends BaseComponent {
   state;
 
-  #parent;
-
   /**
-     *
-     * @param {HTMLElement} parent - Родительский элемент
-     * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
-     */
-  constructor(parent, state = {}) {
-    this.state = state;
-    this.#parent = parent;
-  }
-
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['card.hbs'](this.state),
-    );
+    * Создает новый экземпляр карточки объявления
+    * @param {HTMLElement} parent - Родительский элемент
+    * @param {Object} [state = DEFAULT_CARD] - Начальное состояние карточки объявления
+    */
+  constructor(parent, state = DEFAULT_CARD) {
+    const template = card;
+    state = { ...DEFAULT_CARD, ...state };
+    super({ parent, template, state });
   }
 }
