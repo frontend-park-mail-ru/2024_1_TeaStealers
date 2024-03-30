@@ -24,6 +24,10 @@ const DEFAULT_NAVBAR = {
 export class Navbar extends BaseComponent {
   modal;
 
+  login;
+
+  modal;
+
   /**
    * Конструктор класса навбара
    * @param {HTMLElement} parent - родительский элемент

@@ -7,6 +7,8 @@ import LoginAndSignupLayoutTemplate from './loginAndSignupLayout.hbs';
 export class LoginAndSignupLayout extends BaseComponent {
   page;
 
+  page;
+
   /**
    * Конструктор класса
    * @param {HTMLElement} parent - Родительский элемент
