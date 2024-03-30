@@ -1,28 +1,17 @@
+import { BaseComponent } from '@components';
+import gridCard from './gridCard.hbs';
+
 /**
    * Класс компонента сетки объявлений
    */
-export class GridCard {
-  state;
-
-  #parent;
-
+export class GridCard extends BaseComponent {
   /**
       * Создает новый экземпляр карточки объявления
       * @param {HTMLElement} parent - Родительский элемент
       * @param {Object} [state] - Начальное состояние карточки объявления
       */
   constructor(parent, state = {}) {
-    this.state = { ...state };
-    this.#parent = parent;
-  }
-
-  /**
-     * Функция отрисовки карточки объявления
-     */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['gridCard.hbs'](this.state),
-    );
+    const template = gridCard;
+    super({ parent, template, state });
   }
 }

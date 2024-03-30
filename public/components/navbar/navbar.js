@@ -1,7 +1,8 @@
-import navbar from './navbar.hbs';
-import { Button } from '@components';
+import { Button, BaseComponent } from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { logout } from '@modules';
+import { globalVariables } from '@models';
+import navbar from './navbar.hbs';
 
 const buttonPattern = {
   borderRadius: 'sm',
@@ -20,10 +21,8 @@ const DEFAULT_NAVBAR = {
 /**
  * Класс компонента навигационной панели
  */
-export class Navbar {
-  state;
-
-  #parent;
+export class Navbar extends BaseComponent {
+  modal;
 
   login;
 
@@ -34,15 +33,31 @@ export class Navbar {
    * @param {HTMLElement} parent - родительский элемент
    * @param {Object} state - состояния компонента
    */
-  constructor(parent, state = {}) {
-    this.state = { ...DEFAULT_NAVBAR, ...state };
-    this.#parent = parent;
+  constructor(parent, state = DEFAULT_NAVBAR) {
+    const template = navbar;
+    const noticeButton = new Button('rightside', {
+      ...buttonPattern,
+      order: 'primary',
+      text: state.notice,
+    });
+    let buttonLoginLogout = new Button('rightside', {
+      ...buttonPattern,
+      id: 'login-button',
+      text: 'Войти',
+    });
+    if (state.isAuth) {
+      buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
+    }
+    const innerComponents = [noticeButton, buttonLoginLogout];
+    super({
+      parent, template, state, innerComponents,
+    });
   }
 
   /**
    * Добавляет обработчик события открытия модального окна
    */
-  addListeners() {
+  componentDidMount() {
     if (document.querySelector('#login-button') !== null) {
       document.querySelector('#login-button').addEventListener('click', this.openModal.bind(this));
     }
@@ -56,22 +71,21 @@ export class Navbar {
    * @param {Event} event - событие, которое вызвало обработчик
    */
   openModal(event) {
-    this.removeListenersOpen();
     event.preventDefault();
-    this.modal = new LoginAndSignupLayout(document.querySelector('#modal'), {
+    this.modal = new LoginAndSignupLayout('modal', {
+      id: 'modal',
       page: 'login',
-      closeModal: this.closeModal.bind(this),
-      renderButtonLog: this.renderButtonLog.bind(this),
     });
-    this.modal.render();
+
+    this.modal.renderAndDidMount();
     document.querySelector('.modal__close-button').addEventListener('click', this.closeModal.bind(this));
   }
 
   async logout(event) {
     event.preventDefault();
-    this.removeLostenerLogout();
-    const [codeStatus, data] = await logout();
-    if (codeStatus === 200) {
+    this.removeListenerLogout();
+    const [codeStatus, ,] = await logout();
+    if (codeStatus === globalVariables.HTTP_STATUS_OK) {
       this.renderButtonLog(false);
     }
   }
@@ -80,12 +94,10 @@ export class Navbar {
    * Закрывает модальное окно
    */
   closeModal() {
-    this.removeListenersClose();
-    this.modal.self.remove();
-    this.modal = undefined;
+    this.modal.unmountAndClean();
   }
 
-  removeLostenerLogout() {
+  removeListenerLogout() {
     if (document.querySelector('#logout-button') !== undefined) {
       document.querySelector('#logout-button').removeEventListener('click', this.logout.bind(this));
     }
@@ -107,46 +119,5 @@ export class Navbar {
     if (this.closeModal !== undefined) {
       document.querySelector('.modal__close-button').removeEventListener('click', this.closeModal.bind(this));
     }
-  }
-
-  /**
-   * Отрисовывает кнопку Войти\Выйти
-   */
-  renderButtonLog(isAuth, skeleton) {
-    let buttonLoginLogout = {
-      ...buttonPattern,
-      id: 'login-button',
-      text: 'Войти',
-    };
-    if (isAuth) {
-      buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
-    }
-    if (this.login !== undefined) {
-      this.login.self.remove();
-    }
-    this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
-    this.login.render();
-    if (skeleton === false) {
-      this.addListeners();
-    }
-  }
-
-  /**
-   * Отрисовка компонента навбар
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      navbar(this.state),
-      navbar(this.state),
-    );
-
-    const noticeButton = new Button(document.querySelector('#rightside'), {
-      ...buttonPattern,
-      order: 'primary',
-      text: this.state.notice,
-    });
-    noticeButton.render();
-    this.renderButtonLog(this.state.isAuthenticated, this.state.skeleton);
   }
 }

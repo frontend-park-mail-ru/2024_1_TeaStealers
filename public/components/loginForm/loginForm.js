@@ -1,6 +1,7 @@
-import loginForm from './loginForm.hbs';
-import { Input, Button } from '@components';
+import { BaseComponent, Input, Button } from '@components';
 import { checkLogin, checkPassword, login } from '@modules';
+import { globalVariables } from '@models';
+import loginForm from './loginForm.hbs';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
@@ -24,54 +25,51 @@ const ERROE_PASS = 'Некорректный пароль';
 /**
  * Класс компонента формы авторизации.
  */
-export class LoginForm {
-  #parent;
-
-  state;
-
-  login;
-
-  password;
-
-  button;
-
+export class LoginForm extends BaseComponent {
   /**
    * Создает новый экземпляр формы авторизации.
-   * @param {HTMLElement} parent - Родительский элемент
+   * @param {HTMLElement} parent - Родительский элемент (id)
    */
   constructor(parent, state) {
-    this.#parent = parent;
-    this.state = state;
-    this.loginHandler = this.loginHandler.bind(this);
-  }
+    const template = loginForm;
 
-  /**
-   * Получение элемента формы авторизации
-   */
-  get self() {
-    return this.#parent.querySelector('#login-form');
+    const loginInput = new Input('loginFormLogin', LOGIN_INPUT);
+
+    const password = new Input('loginFormPassword', PASSWORD_INPUT);
+
+    const button = new Button('confirmButton', LOGIN_BUTTON);
+
+    const innerComponents = [loginInput, password, button];
+
+    super({
+      parent, template, state, innerComponents,
+    });
+
+    [this.loginInput, this.password, this.button] = this.innerComponents;
+
+    this.loginHandler = this.loginHandler.bind(this);
   }
 
   /**
    * Добавляет листенеры
    */
-  addListeners() {
+  componentDidMount() {
+    this.addListener(this.loginInput, 'input', 'blur', this.validateLoginInput.bind(this));
+    this.addListener(this.password, 'input', 'blur', this.validatePasswordInput.bind(this));
     this.button.self.addEventListener('click', this.loginHandler.bind(this));
-    this.login.self.querySelector('input').addEventListener('blur', this.validateLoginInput.bind(this));
-    this.password.self.querySelector('input').addEventListener('blur', this.validatePasswordInput.bind(this));
   }
 
   /**
  * Валидирует логин
  */
   validateLoginInput() {
-    const loginVal = this.login.self.querySelector('input').value.trim();
+    const loginVal = this.loginInput.self.querySelector('input').value.trim();
     const [, isValid] = checkLogin(loginVal);
     if (isValid) {
-      this.login.removeError();
+      this.loginInput.removeError();
       return true;
     }
-    this.login.renderError(ERROE_LOG);
+    this.loginInput.renderError(ERROE_LOG);
     return false;
   }
 
@@ -93,12 +91,12 @@ export class LoginForm {
    * Обрабатывает действие кнопки "войти"
    */
   async loginHandler() {
-    const logValue = this.login.self.querySelector('input').value.trim();
+    const logValue = this.loginInput.self.querySelector('input').value.trim();
     const password = this.password.self.querySelector('input').value.trim();
     const [, isValidLogin] = checkLogin(logValue);
     const [, isValidPass] = checkPassword(password);
     if (!isValidLogin) {
-      this.login.renderError(ERROE_LOG);
+      this.loginInput.renderError(ERROE_LOG);
     }
     if (!isValidLogin) {
       this.password.renderError(ERROE_PASS);
@@ -109,7 +107,8 @@ export class LoginForm {
     this.removeErr();
     const data = { login: logValue, password };
     const [statusCode, ,] = await login(data);
-    if (statusCode === 500 || statusCode === 400) {
+    if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
+      || statusCode === globalVariables.HTTP_BAD_REQUEST) {
       this.addErr(ERROR_LOGIN);
       return;
     }
@@ -122,40 +121,28 @@ export class LoginForm {
    * @param {string} errorText - текст ошибки
    */
   addErr(errorText) {
-    this.self.querySelector('#error-message').textContent = errorText;
+    document.getElementById('error-message').textContent = errorText;
   }
 
   /**
    * Удаляет отрисовку ошибки
    */
   removeErr() {
-    this.self.querySelector('#error-message').textContent = '';
+    document.getElementById('error-message').textContent = '';
   }
 
   /**
      * Удаление обработчиков событий
      */
-  removeListeners() {
-    if (this.loginHandler !== undefined) {
-      this.button.self.removeEventListener('focusout', this.loginHandler.bind(this));
+  componentWillUnmount() {
+    if (!this.validateLoginInput) {
+      this.removeListener(this.loginInput, 'input', 'blur', this.validateLoginInput.bind(this));
     }
-  }
-
-  /**
-    * Отрисовка компонента формы авторизации
-    */
-  render() {
-    this.#parent.innerHTML = loginForm();
-
-    this.login = new Input(document.querySelector('.login-form__login'), LOGIN_INPUT);
-    this.login.render();
-
-    this.password = new Input(document.querySelector('.login-form__password'), PASSWORD_INPUT);
-    this.password.render();
-
-    this.button = new Button(document.querySelector('.login-form__button'), LOGIN_BUTTON);
-    this.button.render();
-
-    this.addListeners();
+    if (!this.validatePasswordInput) {
+      this.removeListener(this.password, 'input', 'blur', this.validatePasswordInput.bind(this));
+    }
+    if (!this.loginHandler) {
+      this.button.self.removeEventListener('click', this.loginHandler.bind(this));
+    }
   }
 }

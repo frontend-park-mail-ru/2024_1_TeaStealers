@@ -1,68 +1,13 @@
-import { MainPage } from '@pages';
-import { checkAuth, getAdvertList } from '@modules';
-import './index.scss'
+import { Router } from '@modules';
+import './index.scss';
+import { mainView } from '@views';
+import { mainControler } from '@controllers';
 
-let isAuthenticated = false;
-let skeleton = true;
-let cardsData = [{
-  imgSrc: '',
-  shortDesc: '',
-  likeSrc: '',
-  adress: '',
-  fullprise: '',
-  description: '',
-}];
-let main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData, skeleton });
-main.render();
+// создаю роутер и регаю роуты, создаю вьюшки и контроллеры, потом старт роутера
 
+const router = new Router();
 
-skeleton = false;
-async function checkAuthentication() {
-  const [statusCode, data] = await checkAuth();
+router.register('/', mainView);
+router.start();
 
-  if (statusCode === 200) {
-    isAuthenticated = true;
-    return;
-  }
-  isAuthenticated = false;
-}
-
-async function getAdverts() {
-  const [statusCode, data] = await getAdvertList();
-  if (statusCode !== 200) {
-    return;
-  }
-  cardsData = data.map((ad, index) => ({
-    imgSrc: `/static/room${index + 1}.jpg`,
-    shortDesc: ad.description,
-    likeSrc: '/static/save.svg',
-    adress: ad.location,
-    fullprice: ad.price,
-  }));
-}
-
-(async () => {
-  await Promise.all([checkAuthentication(), getAdverts()]);
-  main.delete();
-  main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
-  main.render();
-  const [searchFilterAndString, inDevelop] = [
-    document.querySelector('#filter-and-search'), document.querySelector('#search__in-develop'),
-  ];
-  
-  searchFilterAndString.addEventListener('mouseover', (e) => {
-    if (true) {
-      searchFilterAndString.style.display = 'none';
-      inDevelop.style.display = 'block';
-    }
-  });
-  
-  inDevelop.addEventListener('mouseout', (e) => {
-    if (true) {
-      inDevelop.style.display = 'none';
-      searchFilterAndString.style.display = 'block';
-    }
-  });
-})();
-
-
+mainControler.updateMainModel();

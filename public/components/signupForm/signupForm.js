@@ -1,6 +1,9 @@
+import { BaseComponent, Input, Button } from '@components';
+import {
+  checkLogin, checkPassword, checkRepeatPassword, signup,
+} from '@modules';
+import { globalVariables } from '@models';
 import signupForm from './signupForm.hbs';
-import { Input, Button } from '@components';
-import { checkLogin, checkPassword, checkRepeatPassword, signup } from '@modules';
 
 const SIGNUP_BUTTON = {
   id: 'signup_button',
@@ -29,41 +32,39 @@ const SIGNUP_ERROR = 'Такой логиин уже зарегистриров�
 /**
  * Класс компонента формы авторизации.
  */
-export class SignupForm {
-  #parent;
-
-  state;
-
-  login;
-
-  password;
-
-  repeatPassword;
-
+export class SignupForm extends BaseComponent {
   /**
    * Конструктор класса
    * @param {HTMLElement} parent - Родительский элемент
    */
   constructor(parent, state) {
-    this.#parent = parent;
-    this.state = state;
-  }
+    const template = signupForm;
 
-  /**
- *Возвращает элемент формы регистрации
- */
-  get self() {
-    return this.#parent.querySelector('#signup-form');
+    const login = new Input('signupFormLogin', LOGIN_INPUT);
+
+    const password = new Input('signupFormPassword', PASSWORD_INPUT);
+
+    const repeatPassword = new Input('repeatPassword', PASSWORD_REPEAT_INPUT);
+
+    const signupButton = new Button('signupButton', SIGNUP_BUTTON);
+
+    const innerComponents = [login, password, repeatPassword, signupButton];
+
+    super({
+      parent, template, state, innerComponents,
+    });
+
+    [this.login, this.password, this.repeatPassword, this.signupButton] = this.innerComponents;
   }
 
   /**
  * Добавляет листенеры
  */
-  addListeners() {
-    this.login.self.querySelector('input').addEventListener('input', this.validateLoginInput.bind(this));
-    this.password.self.querySelector('input').addEventListener('input', this.validatePasswordInput.bind(this));
-    this.repeatPassword.self.querySelector('input').addEventListener('input', this.validatePasswordRepeatInput.bind(this));
-    this.button.self.addEventListener('click', this.signupHandler.bind(this));
+  componentDidMount() {
+    this.addListener(this.login, 'input', 'input', this.validateLoginInput.bind(this));
+    this.addListener(this.password, 'input', 'input', this.validatePasswordInput.bind(this));
+    this.addListener(this.repeatPassword, 'input', 'input', this.validatePasswordRepeatInput.bind(this));
+    this.signupButton.self.addEventListener('click', this.signupHandler.bind(this));
   }
 
   /**
@@ -126,7 +127,8 @@ export class SignupForm {
     const pass = this.password.self.querySelector('input').value.trim();
     const data = { login: log, password: pass };
     const [statusCode, ,] = await signup(data);
-    if (statusCode === 500 || statusCode === 400) {
+    if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
+      || statusCode === globalVariables.HTTP_BAD_REQUEST) {
       this.addErr(SIGNUP_ERROR);
       return;
     }
@@ -139,52 +141,31 @@ export class SignupForm {
    * @param {string} errorText - текст ошибки
    */
   addErr(errorText) {
-    this.self.querySelector('#error-message').textContent = errorText;
+    document.getElementById('error-message').textContent = errorText;
   }
 
   /**
      * Удаляет отрисовку ошибки
      */
   removeErr() {
-    this.self.querySelector('#error-message').textContent = '';
+    document.getElementById('error-message').textContent = '';
   }
 
   /**
  *Удаляет листенеры
  */
-  removeListeners() {
+  componentWillUnmount() {
     if (this.validateLoginInput !== undefined) {
-      this.login.self.querySelector('input').removeEventListener('input', this.validateLoginInput.bind(this));
+      this.removeListener(this.login, 'input', 'input', this.validateLoginInput.bind(this));
     }
     if (this.validatePasswordInput !== undefined) {
-      this.password.self.querySelector('input').removeEventListener('input', this.validatePasswordInput.bind(this));
+      this.removeListener(this.password, 'input', 'input', this.validatePasswordInput.bind(this));
     }
     if (this.validatePasswordRepeatInput !== undefined) {
-      this.repeatPassword.self.querySelector('input').removeEventListener('input', this.validatePasswordRepeatInput.bind(this));
+      this.removeListener(this.repeatPassword, 'input', 'input', this.validatePasswordRepeatInput.bind(this));
     }
     if (this.signupHandler !== undefined) {
-      this.button.self.removeEventListener('click', this.signupHandler.bind(this));
+      this.signupButton.self.removeEventListener('click', this.signupHandler.bind(this));
     }
-  }
-
-  /**
-    * Отрисовка компонента формы регистрации
-    */
-  render() {
-    this.#parent.innerHTML = signupForm();
-
-    this.login = new Input(document.querySelector('.signup-form__login'), LOGIN_INPUT);
-    this.login.render();
-
-    this.password = new Input(document.querySelector('.signup-form__password'), PASSWORD_INPUT);
-    this.password.render();
-
-    this.repeatPassword = new Input(document.querySelector('.signup-form__password-repeat'), PASSWORD_REPEAT_INPUT);
-    this.repeatPassword.render();
-
-    this.button = new Button(document.querySelector('.signup-form__button'), SIGNUP_BUTTON);
-    this.button.render();
-
-    this.addListeners();
   }
 }

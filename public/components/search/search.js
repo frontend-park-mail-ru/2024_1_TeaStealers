@@ -1,7 +1,7 @@
+import { Button, Input, BaseComponent } from '@components';
 import search from './search.hbs';
-import { Button, Input } from '@components';
 
-const SEARCH_DEFAULT = {
+const DEFAULT_SEARCH = {
   title: '',
   firstFilterLinkStatus: '',
   secondFilterLinkStatus: '',
@@ -11,66 +11,60 @@ const SEARCH_DEFAULT = {
   roomNumber: '',
   price: '',
 };
+
+const buttonPattern = {
+  blockClass: 'string_menu-button',
+};
+
+const listeners = {
+  click: () => {
+    console.log('searchButton');
+  },
+};
+
 /**
  * Класс компонента блока поиска
  */
-export class Search {
-  state;
-
-  #parent;
-
+export class Search extends BaseComponent {
   /**
      * Создает новый экземпляр блока поиска
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = SEARCH_DEFAULT] - Начальное состояние блока поиска
      */
-  constructor(parent, state = {}) {
-    this.state = { ...SEARCH_DEFAULT, ...state };
-    this.#parent = parent;
-  }
-
-  /**
-   * Функция отрисовки блока поиска
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      search(this.state),
-    );
-
-    const buttonPattern = {
-      blockClass: 'string_menu-button',
-    };
-    const HomeTypeMenu = new Button(document.querySelector('#searchString'), {
+  constructor(parent, state = DEFAULT_SEARCH) {
+    const template = search;
+    state = { ...DEFAULT_SEARCH, ...state };
+    const HomeTypeMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.homeType,
+      text: state.homeType,
     });
-    HomeTypeMenu.render();
-    const roomNumberMenu = new Button(document.querySelector('#searchString'), {
+    const roomNumberMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.roomNumber,
+      text: state.roomNumber,
     });
-    roomNumberMenu.render();
-
-    const priceMenu = new Button(document.querySelector('#searchString'), {
+    const priceMenu = new Button('searchString', {
       ...buttonPattern,
-      text: this.state.price,
+      text: state.price,
     });
-    priceMenu.render();
-
-    const inputMenu = new Input(document.querySelector('#searchString'), {
+    const inputMenu = new Input('searchString', {
       placeholder: 'Город, адрес, метро, район',
       type: 'text',
       blockClass: 'search__input',
     });
-    inputMenu.render();
-
-    const findButton = new Button(document.querySelector('#searchButton'), {
+    const findButton = new Button('searchButton', {
       text: 'Найти',
       order: 'primary',
       size: 'sm',
       borderRadius: 'sm',
+      id: 'searchBtn',
     });
-    findButton.render();
+    const innerComponents = [HomeTypeMenu, roomNumberMenu, priceMenu, inputMenu, findButton];
+    super({
+      parent, template, state, innerComponents,
+    });
+  }
+
+  componentDidMount() {
+    document.querySelector('#searchBtn').addEventListener('click', listeners.click);
   }
 }

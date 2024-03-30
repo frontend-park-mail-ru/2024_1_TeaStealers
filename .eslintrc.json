@@ -16,15 +16,23 @@
              "js": "always"
            }
         ],
+        "import/no-cycle": "off", 
         "prefer-regex-literals": [
             "error", 
-            {"disallowRedundantWrapping": true}]
+            {"disallowRedundantWrapping": true}
+        ],
+        "import/prefer-default-export": [
+          "off", { "target": "single" }
+        ],
+        "no-param-reassign": "off",
+        "class-methods-use-this": "off",
+        "arrow-body-style": ["error", "always"]
     },
     "settings": {
-        "import/resolver": {
-          "node": {
-            "extensions": [".js", ".jsx", ".ts", ".tsx"]
-          }
+      "import/resolver": {
+        "webpack": {
+          "config": "./webpack.config.js"
         }
-      },
+      }
+    }
 }
