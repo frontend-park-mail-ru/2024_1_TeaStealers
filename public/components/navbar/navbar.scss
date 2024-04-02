@@ -10,6 +10,11 @@
     width: 100%;
     align-self: center;
     justify-self: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 50;
 
     &__linkbar {
         display: flex;

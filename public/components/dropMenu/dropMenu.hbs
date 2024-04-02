@@ -1,0 +1,36 @@
+{{#if homeType}}
+    <div class="dropMenu hidden" id="{{id}}">
+        <ul class="home-type_list">
+            {{#each types}}
+                <li class="home-type_checkbox">
+                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
+                    <label>
+                        {{this.label}}
+                    </label>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+{{#if roomNumber}}
+    <div class="dropMenu hidden" id="{{id}}">
+        <ul class="room-number_list">
+            {{#each roomCount}}
+                <li class="room-number_checkbox">
+                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
+                    <label>
+                        {{this.label}}
+                    </label>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+{{#if priceRange}}
+    <div class="dropMenu hidden" id="{{id}}">
+        <div class="dropMenu__price-range">
+            <input type="text" placeholder="от">
+            <input type="text" placeholder="до">
+        </div>
+    </div>
+{{/if}}

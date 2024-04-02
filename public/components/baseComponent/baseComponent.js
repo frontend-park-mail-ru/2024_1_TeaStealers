@@ -72,8 +72,12 @@ export class BaseComponent {
    * @param {func} handler - обработчик события
    */
   addListener(component, selector, event, handler) {
-    component.self.querySelector(selector)
-      .addEventListener(event, handler);
+    if (!selector) {
+      component.self.addEventListener(event, handler);
+    } else {
+      component.self.querySelector(selector)
+        .addEventListener(event, handler);
+    }
   }
 
   /**

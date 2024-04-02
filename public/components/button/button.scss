@@ -78,7 +78,8 @@ button {
 }
 
 .string_menu-button {
-    height: 100%;
+    position: relative;
+    height: 60px;
     border: none;
     outline: none;
     background: none;
@@ -87,7 +88,14 @@ button {
         $nav-border-bottom-line-style
         $nav-border-bottom-line-color;
     border-top-left-radius: 0;
-    font-weight: normal;
+    
+    button {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        font-weight: normal;
+    }
 }
 
-
+.button-container {
+}
