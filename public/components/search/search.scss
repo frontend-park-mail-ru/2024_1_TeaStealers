@@ -28,7 +28,7 @@
     }
 
     &__string {
-        background-color: white;
+        background-color: $background-color-main;
         width: 100%;
         height: 60px;
         display: grid;
@@ -57,7 +57,14 @@
 
     &__in-develop {
         display: none;
-        background-color: white;
+        background-color: $background-color-main;
+    }
+
+    &__menues {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr 3fr;
+        border-top-left-radius: 0 !important;
     }
 }
 

@@ -7,6 +7,7 @@
     background-color: #00000070;
     top: 0;
     left: 0;
+    z-index: 100;
 
     &.open {
         opacity: 1;
@@ -33,7 +34,7 @@
     }
 
     &__close-button {
-        background-color: white;
+        background-color: $background-color-main;
         font-size: 25px;
         cursor: pointer;
         font-family: $button-font-family-main;

@@ -26,8 +26,6 @@ export class Navbar extends BaseComponent {
 
   login;
 
-  modal;
-
   /**
    * Конструктор класса навбара
    * @param {HTMLElement} parent - родительский элемент

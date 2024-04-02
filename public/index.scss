@@ -1,6 +1,7 @@
 @import "variables.scss";
 @import "@components/button/button.scss";
 @import "@components/card/card.scss";
+@import "@components/dropMenu/dropMenu.scss";
 @import "@components/gridCard/gridCard.scss";
 @import "@components/search/search.scss";
 @import "@components/input/input.scss";
@@ -19,6 +20,7 @@ body {
     font-size: $button-font-size;
     font-weight: normal;
     margin: 0px;
+    z-index: 10;
 }
 
 h1 {
