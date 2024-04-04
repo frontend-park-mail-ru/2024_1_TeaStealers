@@ -1,0 +1,77 @@
+@use "@/variables.scss";
+
+.advert-page {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding: 0 20px;
+    padding-top: 120px;
+    gap: 20px;
+
+    &__characteristics {
+        display: grid;
+        width: 80%;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    &__description {
+        div {
+            padding-bottom: 20px;
+        }
+        
+    }
+
+    &__img {
+
+        img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+    }
+
+    &__price {
+        width: 70%;
+        height: 105px;
+        display: flex;
+        flex-direction: column;
+        // text-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: $subtitle-font-size;
+        border-radius: $references-border-radius;
+        border: 1px solid black;
+    }
+
+}
+.description-short {
+    font-weight: $subtitle-font-weight;
+    font-size: $subtitle-font-size;
+}
+.characteristic-name {
+    font-weight: $subtitle-font-weight;
+}
+
+.location_info {
+    font-weight: $subtitle-font-weight;
+    font-size: $subtitle-font-size;
+}
+
+.reference-copmplex {
+    width: 70%;
+    height: 105px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $references-border-radius;
+    border: 1px solid black;
+    img {
+        height: 50px;
+        width: 70px;
+        padding: 0 10px;
+    }
+}
+
+.location_inscription {
+    color: $color-secondary;
+}

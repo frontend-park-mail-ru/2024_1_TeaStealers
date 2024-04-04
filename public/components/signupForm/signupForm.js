@@ -8,7 +8,7 @@ import signupForm from './signupForm.hbs';
 const SIGNUP_BUTTON = {
   id: 'signup_button',
   text: 'Зарегистрироваться',
-  order: 'primary',
+  mode: 'primary',
   size: 'sm',
   borderRadius: 'sm',
 };

@@ -3,7 +3,7 @@ import button from './button.hbs';
 
 const DEFAULT_BUTTON = {
   position: 'beforeend',
-  order: '',
+  mode: '',
   size: 'sm',
   borderRadius: 'sm',
   id: '',

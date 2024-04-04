@@ -9,6 +9,7 @@ const API_CONST = {
   LOGOUT: `${BASE_URL}/auth/logout`,
   CHECK_AUTH: `${BASE_URL}/auth/check_auth`,
   GET_ADVERT_LIST: `${BASE_URL}/advert/get/list`,
+  GET_ADVERT: `${BASE_URL}/adverts/`,
 };
 
 /**
@@ -53,6 +54,15 @@ export const getAdvertList = () => {
   return getRequest(url);
 };
 
+/**
+ * GET-запрос для получения выбранного объявления
+ * @function getAdvertList
+ * @returns {Promise<Object>} - Объект, представляющий результат запроса.
+ */
+export const getAdvert = (advertId) => {
+  const url = API_CONST.GET_ADVERT + advertId;
+  return getRequest(url);
+};
 /**
  * GET-запрос для проверки авторизации пользователя
  * @function checkAuth
