@@ -7,7 +7,7 @@ import navbar from './navbar.hbs';
 const buttonPattern = {
   borderRadius: 'sm',
   size: 'sm',
-  order: 'secondary',
+  mode: 'secondary',
 };
 
 const DEFAULT_NAVBAR = {
@@ -35,7 +35,7 @@ export class Navbar extends BaseComponent {
     const template = navbar;
     const noticeButton = new Button('rightside', {
       ...buttonPattern,
-      order: 'primary',
+      mode: 'primary',
       text: state.notice,
     });
     let buttonLoginLogout = new Button('rightside', {

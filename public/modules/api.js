@@ -9,7 +9,6 @@ const API_CONST = {
   SIGNUP: `${BASE_URL}/auth/signup`,
   LOGOUT: `${BASE_URL}/auth/logout`,
   CHECK_AUTH: `${BASE_URL}/auth/check_auth`,
-
   GET_GRID_ADVERTS: `${BASE_URL}/adverts/squarelist/`,
   GET_ADVERTS_LIST: `${BASE_URL}/adverts/rectanglelist/`,
   UPLOAD_ADVERT_IMAGE: `${BASE_URL}/adverts/image/`,
@@ -19,10 +18,8 @@ const API_CONST = {
   DELETE_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}/`,
   CREATE_FLAT_ADVERT: `${BASE_URL}/adverts/flats/`,
   CREATE_HOUSE_ADVERT: `${BASE_URL}/adverts/houses/`,
-
   GET_COMPLEX_INFO: `${BASE_URL}/complexes/{id}`,
   GET_COMPLEX_ADVERTS: `${BASE_URL}/complexes/{id}/rectanglelist/`,
-
   GET_ME: `${BASE_URL}/user/me`,
   UPLOAD_AVATAR: `${BASE_URL}/user/avatar`,
   UPDATE_USER_INFO: `${BASE_URL}/user/info`,

@@ -2,11 +2,10 @@
  * класс Роутера
  */
 export class Router {
-  currentView;
+  routes;
 
   constructor() {
     this.routes = {};
-    this.currentRoute = window.location.pathname;
   }
 
   /**
@@ -15,7 +14,6 @@ export class Router {
      * @param {View} view - сама модель View, представляющая собой BaseCompontent
      */
   register(path, view) {
-    this.currentView = view;
     this.routes[path] = view;
   }
 
@@ -28,7 +26,7 @@ export class Router {
 
       this.go(window.location.pathname);
     });
-    this.currentView.render();
+    this.go(window.location.pathname);
   }
 
   /**
@@ -36,19 +34,24 @@ export class Router {
      * @param {string} path - путь URL
      */
   go(path) {
+    let currentView = this.routes[window.location.pathname];
     if (path !== window.location.pathname) {
       window.history.pushState(this.state, '', path);
     }
-    this.currentView.clean();
-    this.currentView = this.routes[path];
-    this.currentView.render();
+    if (this.currentView) {
+      this.currentView.clean();
+    }
+    currentView = this.routes[path];
+    if (currentView) {
+      currentView.render();
+    }
   }
 
   /**
      * Функция возврата в предыдущее состояние (назад)
      */
   back() {
-    this.go(window.history.back());
+    window.history.back();
   }
 
   /**

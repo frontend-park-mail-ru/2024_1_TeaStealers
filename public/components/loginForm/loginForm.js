@@ -5,7 +5,7 @@ import loginForm from './loginForm.hbs';
 
 const LOGIN_BUTTON = {
   id: 'login_button',
-  order: 'primary',
+  mode: 'primary',
   text: 'Войти',
 };
 const LOGIN_INPUT = {

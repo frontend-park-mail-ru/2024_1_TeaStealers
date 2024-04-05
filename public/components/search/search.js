@@ -102,7 +102,7 @@ export class Search extends BaseComponent {
 
     const findButton = new Button('searchButton', {
       text: 'Найти',
-      order: 'primary',
+      mode: 'primary',
       size: 'sm',
       borderRadius: 'sm',
       id: 'searchBtn',

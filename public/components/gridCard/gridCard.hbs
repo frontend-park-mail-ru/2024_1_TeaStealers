@@ -4,7 +4,7 @@
         <img src="{{imgSrc}}" alt="картинка квартиры">
         <div class="gridCard__description">
             {{#if fullprice}}
-            <span class="gridCard__fullprice">{{fullprice}}</span>
+            <a href="/advert" class=""><span class="gridCard__fullprice">{{fullprice}}</span></a>
             {{/if}}
             {{#if pricePerMetr}}
             <span class="gridCard__price-per-metr">{{pricePerMetr}}<span class="ruble"></span>/м<sup>2</sup></span>

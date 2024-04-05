@@ -1,0 +1,47 @@
+<div class="advert-page">
+    <div class="advert-page__info">
+        <div class="advert-page__img">
+            <img src="{{imgSrc}}" alt="картинка квартиры">
+        </div>
+        <div class="advert-page__description">
+            <div class="description-short">
+                {{shortDesc}}
+            </div>
+            <div class="advert-page__location">
+                <div class="location_inscription">
+                    Расположение
+                </div>
+                <div class="location_info">
+                    {{location}}
+                </div>
+            </div>
+            <div class="advert-page__characteristics">
+                {{#each characteristic}}
+                <div>
+                    <div class="characteristic-name">
+                        {{characteristicName}}
+                    </div>
+                    <div class="characteristic-description">
+                        {{characteristicDescription}}
+                    </div>
+                </div>
+                    
+                {{/each}}
+            </div>
+            <div class="advert-page__full-description">
+                {{fullDescription}}
+            </div>
+        </div>
+    </div>
+    <div class="advert-page__references">
+        <div class="advert-page__price" id="price">
+            <div>
+                {{price}}
+            </div>
+        </div>
+        <div class="reference-copmplex">
+            <img src="{{complexImgSrc}}" alt="Фото ЖК">
+            <a href="{{complexSrc}}">{{complex}}</a>
+        </div>
+    </div>
+</div>
