@@ -4,7 +4,7 @@ import { globalVariables } from '@models';
    * GET-запрос
    * @async
    * @param {String} url Путь запроса
-   * @return {Array} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const getRequest = async (url) => {
   try {
@@ -32,7 +32,7 @@ export const getRequest = async (url) => {
    * @async
    * @param {String} url Путь запроса
    * @param {Object} data Тело запроса
-   * @return {Array} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const postRequest = async (url, data) => {
   try {
@@ -58,11 +58,42 @@ export const postRequest = async (url, data) => {
 };
 
 /**
+   * POST-запрос c form-data
+   * @async
+   * @param {String} url Путь запроса
+   * @param {Object} data Тело запроса
+   * @return {Promise<any[]>} Ответ с сервера
+   */
+export const postRequestFormData = async (url, data) => {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      // body: JSON.stringify(data),
+      body: new FormData(data),
+    });
+    const body = await response.json();
+    if (!body) {
+      return [response.status, {}];
+    }
+
+    return [response.status, body];
+  } catch (error) {
+    return [globalVariables.HTTP_INTERNAL_SERVER_ERROR, error];
+  }
+};
+
+/**
    * PUT-запрос
    * @async
    * @param {String} url Путь запроса
    * @param {Object} data Тело запроса
-   * @return {Array} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const putRequest = async (url, data) => {
   try {
@@ -92,7 +123,7 @@ export const putRequest = async (url, data) => {
    * DELETE-запрос
    * @async
    * @param {String} url Путь запроса
-   * @return {Array} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const deleteRequest = async (url) => {
   try {
