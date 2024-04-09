@@ -11,7 +11,7 @@ export const getRequest = async (url) => {
   try {
     const response = await fetch(url, {
       method: 'GET',
-      // mode: 'cors',
+      mode: 'cors',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

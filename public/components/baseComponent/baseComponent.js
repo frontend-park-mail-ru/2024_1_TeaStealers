@@ -1,7 +1,5 @@
 import { router } from '@modules/router';
 
-import { router } from '@modules/router';
-
 /**
  * Класс базового компонента
  */
@@ -28,9 +26,6 @@ export class BaseComponent {
     return document.getElementById(this.state?.id);
   }
 
-  redirect(path) {
-    router.go(path);
-  }
 
   /**
      * Проверяет равенство объектов состояния
@@ -58,11 +53,14 @@ export class BaseComponent {
      * Производит рендер элемента
      */
   render() {
-    document.getElementById(this.parent).insertAdjacentHTML(
-      'beforeend',
-      this.template(this.state),
-    );
-    this.componentLink = document.getElementById(this.parent).lastChild;
+    if (document.getElementById(this.parent) !== null) {
+      document.getElementById(this.parent).insertAdjacentHTML(
+        'beforeend',
+        this.template(this.state),
+      );
+    }
+
+    this.componentLink = document.getElementById(this.parent)?.lastChild;
     this.innerComponents.forEach((component) => {
       component.render();
     });
@@ -91,14 +89,6 @@ export class BaseComponent {
       component.self.querySelector(selector)
         .addEventListener(event, handler);
     }
-  }
-
-  addClickListener(id, handler) {
-    document.getElementById(id)?.addEventListener('click', handler);
-  }
-
-  removeClickListener(id, handler) {
-    document.getElementById(id)?.removeEventListener('click', handler);
   }
 
   addClickListener(id, handler) {
@@ -138,7 +128,6 @@ export class BaseComponent {
      */
   componentDidUpdate(state) {
     this.innerComponents.forEach((component) => { component.componentDidUpdate(state); });
-    this.innerComponents.forEach((component) => { component.componentDidUpdate(state); });
   }
 
   /**
@@ -161,14 +150,6 @@ export class BaseComponent {
      */
   clean() {
     this.innerComponents.forEach((component) => { return component.clean(); });
-    const parent = document.getElementById(this.parent);
-    if (!this.self) {
-      if (parent !== null) {
-        parent.innerHTML = '';
-      }
-      return;
-    }
-    this.self?.remove();
     const parent = document.getElementById(this.parent);
     if (!this.self) {
       if (parent !== null) {

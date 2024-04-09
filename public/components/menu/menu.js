@@ -37,21 +37,20 @@ export class Menu extends BaseComponent {
   async logout() {
     const [codeStatus, ,] = await logout();
     if (codeStatus === globalVariables.HTTP_STATUS_OK) {
-      router.go('/');
+      this.redirect('/');
       authModel.setNotAutn();
     }
   }
 
   toProfile() {
-    router.go('/profile');
+    this.redirect('/profile/');
   }
 
   toMyAdvert() {
-    console.log('navigate to /myAdvert');
-    //   перенаправление на мои объявления
+    this.redirect('/my-advert/');
   }
 
   toNewAdvert() {
-    this.redirect('/new-advert');
+    this.redirect('/new-advert/');
   }
 }
