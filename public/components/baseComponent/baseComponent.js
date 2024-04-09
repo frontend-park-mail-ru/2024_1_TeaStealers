@@ -26,7 +26,6 @@ export class BaseComponent {
     return document.getElementById(this.state?.id);
   }
 
-
   /**
      * Проверяет равенство объектов состояния
      * @param {State} state - состояние, в которое необходимо привести элемент
@@ -112,13 +111,6 @@ export class BaseComponent {
     }
     component.self?.querySelector(selector)
       .removeEventListener(event, handler);
-  }
-    if (!selector) {
-      component.self?.removeEventListener(event, handler);
-    } else {
-      component.self?.querySelector(selector)
-        .removeEventListener(event, handler);
-    }
   }
 
   /**
