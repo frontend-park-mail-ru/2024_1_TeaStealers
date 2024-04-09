@@ -18,7 +18,6 @@ export class LoginAndSignupLayout extends BaseComponent {
     const loginForm = new LoginForm('modalForm', {
       id: 'login-form',
       closeModal: state.closeModal,
-      // renderButtonLog: this.state.renderButtonLog
     });
     const innerComponents = [loginForm];
     super({

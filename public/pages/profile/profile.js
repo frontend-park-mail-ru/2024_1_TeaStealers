@@ -9,7 +9,7 @@ export class ProfilePage extends BaseComponent {
   constructor(parent, state) {
     const template = profile;
     const menu = new Menu('left-menu', { profile: true });
-    const profileForm = new ProfileForm('body-page', { name: 'rita' });
+    const profileForm = new ProfileForm('body-page', {});
     const innerComponents = [menu, profileForm];
     super({
       parent, template, state, innerComponents,

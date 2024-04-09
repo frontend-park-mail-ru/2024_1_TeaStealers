@@ -5,6 +5,7 @@ import { globalVariables } from '@models';
    * @async
    * @param {String} url Путь запроса
    * @return {Promise<any[]>} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const getRequest = async (url) => {
   try {
@@ -32,6 +33,7 @@ export const getRequest = async (url) => {
    * @async
    * @param {String} url Путь запроса
    * @param {Object} data Тело запроса
+   * @return {Promise<any[]>} Ответ с сервера
    * @return {Promise<any[]>} Ответ с сервера
    */
 export const postRequest = async (url, data) => {
@@ -89,6 +91,7 @@ export const postRequestFormData = async (url, data) => {
    * @param {String} url Путь запроса
    * @param {Object} data Тело запроса
    * @return {Promise<any[]>} Ответ с сервера
+   * @return {Promise<any[]>} Ответ с сервера
    */
 export const putRequest = async (url, data) => {
   try {
@@ -118,6 +121,7 @@ export const putRequest = async (url, data) => {
    * DELETE-запрос
    * @async
    * @param {String} url Путь запроса
+   * @return {Promise<any[]>} Ответ с сервера
    * @return {Promise<any[]>} Ответ с сервера
    */
 export const deleteRequest = async (url) => {
