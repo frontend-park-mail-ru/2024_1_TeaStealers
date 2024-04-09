@@ -1,0 +1,15 @@
+{  
+  "compilerOptions": {  
+    "baseUrl": ".",  
+    "paths": {  
+      "@modules/*": ["./public/modules/*"],  
+      "@modules": ["./public/modules"],  
+      "@components/*": ["./public/components/*"] , 
+      "@components": ["./public/components"],
+      "@models" : ["./public/models"],
+      "@models/*": ["./public/models/*"] , 
+
+    }  
+  },  
+  "exclude": ["node_modules", "build"]  
+}

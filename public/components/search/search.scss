@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: $color_text_basic;
 
     &__block {
         display: flex;
@@ -44,6 +45,7 @@
         height: 40px;
         margin-block-start: 0;
         margin-block-end: 0;
+        cursor: pointer;
     }
 
     &__filter-link {

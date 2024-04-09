@@ -1,4 +1,5 @@
 $button-font-family-main: Verdana, Geneva, Tahoma, sans-serif;
+$font-family-main: Verdana, Geneva, Tahoma, sans-serif;
 $button-font-size: 16px;
 
 $subtitle-font-size: 22px;
@@ -42,6 +43,8 @@ $background-color-button-secondary: rgba(4,104,255,0.15);
 $color-button-secondary: #0468ff;
 $background-color-button-main-hover: #0661EC;
 $background-color-button-secondary-hover: rgba(4,104,255,0.2);
+$background-color-button-error: rgba(255, 31, 52, 0.15);
+$background-color-button-error-hover: rgba(255, 31, 52, 0.2);
 $page-background-color: white;
 $background_color_filter_passive: rgba(37,37,37,0.65);
 $color_filter_passive: white;

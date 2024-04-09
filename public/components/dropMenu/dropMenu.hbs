@@ -1,7 +1,17 @@
 {{#if homeType}}
     <div class="dropMenu hidden" id="{{id}}">
         <ul class="home-type_list">
-            {{#each types}}
+            {{#each flatTypes}}
+                <li class="home-type_checkbox">
+                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
+                    <label>
+                        {{this.label}}
+                    </label>
+                </li>
+            {{/each}}
+        </ul>
+        <ul class="home-type_list" id="house">
+            {{#each homeTypes}}
                 <li class="home-type_checkbox">
                     <input type="checkbox" class="checkbox_form" value="{{this.value}}">
                     <label>

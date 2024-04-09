@@ -1,0 +1,74 @@
+@use "@/variables.scss";
+
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 30px;
+    cursor: default;
+    
+    &__topper {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid grey;
+        align-items: center;
+        justify-content: start;
+        gap: 30px;
+        padding: 30px;
+        color: $color_text_basic;
+        font-size: 16px;
+        font-weight: bold ;
+        
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    &__main-info {
+        flex: 1 1 50%;
+        padding: 30px;
+    }
+
+    &__password {
+        flex: 1 1 50%;
+        padding: 30px;
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        align-items: center;
+    }
+    &__avatar {
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+
+    &__avatar-error {
+        font-size: 16px;
+        color: $color_errors;
+        font-weight: normal;
+    }
+}
+
+.okMessage {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: normal;
+    color: $color_text_highlight;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}

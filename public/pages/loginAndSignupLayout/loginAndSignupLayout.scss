@@ -9,11 +9,6 @@
     left: 0;
     z-index: 100;
 
-    &.open {
-        opacity: 1;
-        visibility: visible;
-    }
-
     &__body {
         display: flex;
         justify-content: center;
@@ -21,16 +16,13 @@
         min-height: 100%;
     }
 
-    &__content {
+        &__content {
         background-color: $page-background-color;
         border: 1px $color_basic_secondary solid;
-        width: 360px;
-        height: 485px;
+        width: 400px;
         border-radius: 8px;
-        overflow: hidden;
-        padding: 9px 39px 39px 39px;
-        display: grid;
-        grid-template-rows: 25px 60px 240px 40px 40px 30px;
+        display: flex;
+        flex-direction: column;
     }
 
     &__close-button {
@@ -39,9 +31,9 @@
         cursor: pointer;
         font-family: $button-font-family-main;
         color: $color_text_basic_secondary;
-        align-self: center;
+        align-self: flex-end;
         justify-self: end;
-        margin-right: -25px;
+        margin-right: 10px;
     }
 }
 

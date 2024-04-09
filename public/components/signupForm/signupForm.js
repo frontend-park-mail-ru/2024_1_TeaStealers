@@ -1,8 +1,8 @@
 import { BaseComponent, Input, Button } from '@components';
 import {
-  checkLogin, checkPassword, checkRepeatPassword, signup,
+  checkPhone, checkEmail, checkPassword, checkRepeatPassword, signup,
 } from '@modules';
-import { globalVariables } from '@models';
+import { authModel, globalVariables } from '@models';
 import signupForm from './signupForm.hbs';
 
 const SIGNUP_BUTTON = {
@@ -11,11 +11,17 @@ const SIGNUP_BUTTON = {
   mode: 'primary',
   size: 'sm',
   borderRadius: 'sm',
+  full: true,
 };
-const LOGIN_INPUT = {
-  id: 'signup_login',
+const PHONE_INPUT = {
+  id: 'signup_phone',
   type: 'text',
-  placeholder: 'Логин',
+  placeholder: 'Телефон',
+};
+const EMAIL_INPUT = {
+  id: 'signup_email',
+  type: 'text',
+  placeholder: 'Электронная почта',
 };
 const PASSWORD_INPUT = {
   id: 'signup_password',
@@ -27,7 +33,7 @@ const PASSWORD_REPEAT_INPUT = {
   type: 'password',
   placeholder: 'Повторите пароль',
 };
-const SIGNUP_ERROR = 'Такой логиин уже зарегистрирован';
+const SIGNUP_ERROR = 'Такой логиин уже существует';
 
 /**
  * Класс компонента формы авторизации.
@@ -40,7 +46,9 @@ export class SignupForm extends BaseComponent {
   constructor(parent, state) {
     const template = signupForm;
 
-    const login = new Input('signupFormLogin', LOGIN_INPUT);
+    const phone = new Input('signupFormLogin', PHONE_INPUT);
+
+    const email = new Input('signupFormLogin', EMAIL_INPUT);
 
     const password = new Input('signupFormPassword', PASSWORD_INPUT);
 
@@ -48,36 +56,44 @@ export class SignupForm extends BaseComponent {
 
     const signupButton = new Button('signupButton', SIGNUP_BUTTON);
 
-    const innerComponents = [login, password, repeatPassword, signupButton];
+    const innerComponents = [phone, email, password, repeatPassword, signupButton];
 
     super({
       parent, template, state, innerComponents,
     });
 
-    [this.login, this.password, this.repeatPassword, this.signupButton] = this.innerComponents;
+    this.state = state;
+    [this.phone,
+      this.email,
+      this.password,
+      this.repeatPassword,
+      this.signupButton] = innerComponents;
   }
 
   /**
  * Добавляет листенеры
  */
   componentDidMount() {
-    this.addListener(this.login, 'input', 'input', this.validateLoginInput.bind(this));
+    this.addListener(this.phone, 'input', 'input', this.formatPhoneNumber.bind(this));
+    this.addListener(this.email, 'input', 'input', this.validateEmailInput.bind(this));
     this.addListener(this.password, 'input', 'input', this.validatePasswordInput.bind(this));
     this.addListener(this.repeatPassword, 'input', 'input', this.validatePasswordRepeatInput.bind(this));
     this.signupButton.self.addEventListener('click', this.signupHandler.bind(this));
   }
 
   /**
- * Валидирует логин
+ * Валидирует номер телефона
  */
-  validateLoginInput() {
-    const login = this.login.self.querySelector('input').value.trim();
-    const [err, isValid] = checkLogin(login);
+  formatPhoneNumber() {
+    const { value } = this.phone.self.querySelector('input');
+
+    const [formatValue, isValid] = checkPhone(value);
+
+    this.innerComponents[0].self.querySelector('input').value = formatValue;
     if (isValid) {
-      this.login.removeError();
+      this.innerComponents[0].removeError();
       return true;
     }
-    this.login.renderError(err);
     return false;
   }
 
@@ -111,21 +127,40 @@ export class SignupForm extends BaseComponent {
   }
 
   /**
+   * Валидирует email
+   */
+  validateEmailInput() {
+    const email = this.innerComponents[1].self.querySelector('input').value.trim();
+    const isValid = checkEmail(email);
+    if (isValid) {
+      this.innerComponents[1].removeError();
+      return true;
+    }
+    this.innerComponents[1].renderError('Некорректный формат');
+    return false;
+  }
+
+  /**
    * Обработчик события для регистрации
    * @param {Event} event - событие, которое вызвало обработчик
    */
   async signupHandler(event) {
-    const valLog = this.validateLoginInput();
+    this.removeErr();
+    const valPhone = this.formatPhoneNumber();
+    const valEmail = this.validateEmailInput();
     const valPass = this.validatePasswordInput();
     const valPassRe = this.validatePasswordRepeatInput();
     event.preventDefault();
-    if (!valLog || !valPass || !valPassRe) {
+    if (!valPhone) {
+      this.phone.renderError('Некорректный формат');
+    }
+    if (!valPass || !valPassRe || !valEmail || !valPhone) {
       return;
     }
-    this.removeErr();
-    const log = this.login.self.querySelector('input').value.trim();
-    const pass = this.password.self.querySelector('input').value.trim();
-    const data = { login: log, password: pass };
+    const phoneValue = this.innerComponents[0].self.querySelector('input').value.trim();
+    const emailValue = this.innerComponents[1].self.querySelector('input').value.trim();
+    const pass = this.innerComponents[2].self.querySelector('input').value.trim();
+    const data = { phone: phoneValue, email: emailValue, password: pass };
     const [statusCode, ,] = await signup(data);
     if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
       || statusCode === globalVariables.HTTP_BAD_REQUEST) {
@@ -133,7 +168,7 @@ export class SignupForm extends BaseComponent {
       return;
     }
     this.state.closeModal();
-    this.state.renderButtonLog(true);
+    authModel.setAuth();
   }
 
   /**
@@ -155,8 +190,11 @@ export class SignupForm extends BaseComponent {
  *Удаляет листенеры
  */
   componentWillUnmount() {
-    if (this.validateLoginInput !== undefined) {
-      this.removeListener(this.login, 'input', 'input', this.validateLoginInput.bind(this));
+    if (this.formatPhoneNumber !== undefined) {
+      this.removeListener(this.phone, 'input', 'input', this.formatPhoneNumber.bind(this));
+    }
+    if (this.validateEmailInput !== undefined) {
+      this.removeListener(this.email, 'input', 'input', this.validateEmailInput.bind(this));
     }
     if (this.validatePasswordInput !== undefined) {
       this.removeListener(this.password, 'input', 'input', this.validatePasswordInput.bind(this));

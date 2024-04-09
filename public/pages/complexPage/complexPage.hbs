@@ -1,0 +1,87 @@
+<div class="complex-page">
+
+    <div class="complex-page__img">
+        <img src="{{photo}}" alt="Фото ЖК">
+    </div>
+
+    <div class="complex-page__info">
+
+        <h2>{{name}}</h2>
+
+        <div class="info_location">
+            <span>Расположение</span>
+            <h2>{{address}}</h2>
+        </div>
+
+        <div class="info_characteristics">
+            {{#if dateBeginBuild}}
+                <div>
+                    <div class="characteristic-name">
+                        Начало строительства
+                    </div>
+                    <div class="characteristic-description">
+                        {{dateBeginBuild}}
+                    </div>
+                </div>
+            {{/if}}
+            {{#if dateEndBuild}}
+                <div>
+                    <div class="characteristic-name">
+                        Конец строительства
+                    </div>
+                    <div class="characteristic-description">
+                        {{dateEndBuild}}
+                    </div>
+                </div>
+            {{/if}}
+                <div>
+                    <div class="characteristic-name">
+                        Варианты отделки
+                    </div>
+                    <div class="characteristic-description">
+                        {{#if withoutFinishingOption}}Без отделки {{/if}}{{#if finishingOption}}Чистовая {{/if}}{{#if preFinishingOption}}Предчистовая{{/if}}
+                    </div>
+                </div>
+            {{#if classHousing}}
+                <div>
+                    <div class="characteristic-name">
+                        Класс
+                    </div>
+                    <div class="characteristic-description">
+                        {{classHousing}}
+                    </div>
+                </div>
+            {{/if}}
+            <div>
+                <div class="characteristic-name">
+                    Паркинг
+                </div>
+                <div class="characteristic-description">
+                    {{#if parking}}Есть{{else}}Нет{{/if}}
+                </div>
+            </div>
+            <div>
+                <div class="characteristic-name">
+                    Охрана
+                </div>
+                <div class="characteristic-description">
+                    {{#if security}}Есть{{else}}Нет{{/if}}
+                </div>
+            </div>
+        </div>
+
+        <div class="info_description">
+            <div class="info_about-complex">
+                О жилом комплексе "{{name}}"
+            </div>
+            <div class="info_complex_description">
+                {{description}}
+            </div>
+        </div>
+    </div>
+
+    <div class="complex-page__adverts" id="cards">
+        <h2>Объявления в этом ЖК</h2>
+    </div>
+
+</div>

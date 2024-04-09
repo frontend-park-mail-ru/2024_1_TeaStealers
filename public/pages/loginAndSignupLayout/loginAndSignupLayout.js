@@ -17,12 +17,14 @@ export class LoginAndSignupLayout extends BaseComponent {
 
     const loginForm = new LoginForm('modalForm', {
       id: 'login-form',
+      closeModal: state.closeModal,
+      // renderButtonLog: this.state.renderButtonLog
     });
     const innerComponents = [loginForm];
     super({
       parent, template, state, innerComponents,
     });
-
+    this.state = state;
     this.page = loginForm;
   }
 
@@ -31,6 +33,9 @@ export class LoginAndSignupLayout extends BaseComponent {
    */
   componentDidMount() {
     this.addListenerSignup();
+    this.innerComponents.forEach((component) => {
+      component.componentDidMount();
+    });
   }
 
   /**
@@ -59,6 +64,7 @@ export class LoginAndSignupLayout extends BaseComponent {
     this.page.unmountAndClean();
     this.page = new SignupForm('modalForm', {
       id: 'signup-form',
+      closeModal: this.state.closeModal,
     });
     this.page.renderAndDidMount();
     this.addListenerLogin();
@@ -74,6 +80,7 @@ export class LoginAndSignupLayout extends BaseComponent {
     this.page.unmountAndClean();
     this.page = new LoginForm('modalForm', {
       id: 'login-form',
+      closeModal: this.state.closeModal,
     });
     this.page.renderAndDidMount();
     this.addListenerSignup();

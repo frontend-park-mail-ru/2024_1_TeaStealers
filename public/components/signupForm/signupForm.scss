@@ -1,17 +1,18 @@
 @use "@/variables.scss";
 
 .signup-form {
-    display: grid;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    grid-template-rows: 60px 240px 40px 40px 30px;
+    padding: 0 40px 20px 40px;
 
     &__inputs {
         display: flex;
         flex-direction: column;
-        align-self: start;
+        align-self: center;
+        width: 100%;
     }
 
     &__link {
@@ -21,14 +22,14 @@
         font-family: $button-font-family-main;
         cursor: pointer;
         justify-self: center;
-        align-self: self-end;
         text-decoration: none;
+        margin: 10px;
     }
 
     &__title {
         color: $color_basic;
         justify-self: center;
-        margin: 0;
+        margin-bottom: 40px;
     }
 
     &__button {
@@ -36,5 +37,11 @@
         width: 100%;
         justify-content: center;
         align-items: center;
+    }
+
+    .backend-error-message {
+        color: $color_errors;
+        font-size: 16px;
+        margin-bottom: 5px;
     }
 }
