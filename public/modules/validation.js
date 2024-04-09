@@ -125,3 +125,37 @@ export const checkDateDirthday = (date) => {
   }
   return false; // Невалидный возраст
 };
+
+export const checkYear = (year) => {
+  if (year.includes('.')) {
+    return ['Некорректный ввод', false];
+  }
+  const yearInt = parseInt(year, 10);
+  if (yearInt % 1 !== 0) {
+    return ['Некорректный ввод', false];
+  }
+  if (yearInt < 1772) {
+    return ['Укажите год позднее чем 1772', false];
+  }
+  if (yearInt > 2024) {
+    return ['Укажите год не позднее чем 2024', false];
+  }
+  return ['', true];
+};
+
+export const checkFloor = (floor) => {
+  if (floor.includes('.')) {
+    return ['Некорректный ввод', false];
+  }
+  const floorInt = parseInt(floor, 10);
+  if (floorInt % 1 !== 0) {
+    return ['Некорректный ввод', false];
+  }
+  if (floorInt < 1) {
+    return ['Не может быть меньше 1', false];
+  }
+  if (floorInt > 100) {
+    return ['Не более 100', false];
+  }
+  return ['', true];
+};

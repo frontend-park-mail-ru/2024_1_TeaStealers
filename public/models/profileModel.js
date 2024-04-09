@@ -6,7 +6,6 @@ class ProfileModel {
 
   constructor() {
     this.observers = []; // Массив наблюдателей
-    // await this.getMeInfo();
   }
 
   /**

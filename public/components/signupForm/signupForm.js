@@ -161,10 +161,15 @@ export class SignupForm extends BaseComponent {
     const emailValue = this.innerComponents[1].self.querySelector('input').value.trim();
     const pass = this.innerComponents[2].self.querySelector('input').value.trim();
     const data = { phone: phoneValue, email: emailValue, password: pass };
-    const [statusCode, ,] = await signup(data);
-    if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
-      || statusCode === globalVariables.HTTP_BAD_REQUEST) {
-      this.addErr(SIGNUP_ERROR);
+    try {
+      const [statusCode, ,] = await signup(data);
+      if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
+        || statusCode === globalVariables.HTTP_BAD_REQUEST) {
+        this.addErr(SIGNUP_ERROR);
+        return;
+      }
+    } catch (error) {
+      this.addErr('Ошибка при регистрации');
       return;
     }
     this.state.closeModal();

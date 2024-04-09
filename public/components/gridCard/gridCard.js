@@ -1,7 +1,7 @@
-import { BaseComponent } from '@components';
+import { BaseComponent, Button } from '@components';
 import { advertPageController } from '@controllers';
-import { router } from '@modules';
-import { events } from '@models';
+import { deleteAdvertById, router } from '@modules';
+import { events, globalVariables, myAdvertModel } from '@models';
 import gridCard from './gridCard.hbs';
 
 /**
@@ -16,12 +16,22 @@ export class GridCard extends BaseComponent {
   constructor(parent, state) {
     const template = gridCard;
     state = { ...state };
-    super({ parent, template, state });
+
+    const innerComponents = [];
+    super({
+      parent, template, state, innerComponents,
+    });
   }
 
   componentDidMount() {
-    document.querySelectorAll('.gridCard__mini-card').forEach((card) => {
+    document.querySelectorAll('.gridCards__card').forEach((card) => {
       card.querySelector('a').addEventListener('click', this.goToAdvert.bind(this));
+    });
+    document.querySelectorAll('.gridCards__edit').forEach((card) => {
+      card.addEventListener('click', this.editAdvert.bind(this));
+    });
+    document.querySelectorAll('.gridCards__delete').forEach((card) => {
+      card.addEventListener('click', this.deleteAdvert.bind(this));
     });
   }
 
@@ -29,12 +39,24 @@ export class GridCard extends BaseComponent {
     document.querySelectorAll('gridCard__mini-card').forEach((card) => {
       card.querySelector('a').removeEventListener('click', this.goToAdvert.bind(this));
     });
+    document.querySelectorAll('.gridCards__edit').forEach((card) => {
+      card.removeEventListener('click', this.editAdvert.bind(this));
+    });
+    document.querySelectorAll('.gridCards__delete').forEach((card) => {
+      card.removeEventListener('click', this.deleteAdvert.bind(this));
+    });
   }
 
   componentDidUpdate(event) {
     if (event.name === events.GET_ADVERTS_MAIN) {
       this.unmountAndClean();
       this.state.miniCards = event.data.adverts;
+      this.state = { ...this.state, ...event.data.pageInfo };
+      this.renderAndDidMount();
+    }
+    if (event.name === events.GET_MY_ADVERTS) {
+      this.unmountAndClean();
+      this.state.miniCards = event.data;
       this.renderAndDidMount();
     }
   }
@@ -45,6 +67,23 @@ export class GridCard extends BaseComponent {
     if (href === null) {
       href = event.target.parentElement.getAttribute('href');
     }
+    this.redirect(href);
+  }
+
+  async deleteAdvert(event) {
+    event.preventDefault();
+    const idAdvert = event.target.getAttribute('href');
+    try {
+      await deleteAdvertById(idAdvert);
+    } catch (error) {
+      console.log(error);
+    }
+    await myAdvertModel.getMyAdverts();
+  }
+
+  editAdvert(event) {
+    event.preventDefault();
+    const href = event.target.getAttribute('href');
     this.redirect(href);
   }
 }

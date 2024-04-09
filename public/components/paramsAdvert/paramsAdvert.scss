@@ -1,0 +1,18 @@
+.params {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+
+    .params-inputs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 30px;
+        margin-bottom: -30px;
+    
+        input {
+            width: fit-content;
+        }
+    }
+}

@@ -314,9 +314,9 @@ export class Search extends BaseComponent {
     const parentDivForButton = event.target.parentElement;
     const parentDivForMenu = event.target.parentElement.parentElement;
     if (parentDivForButton
-      .lastElementChild.classList
+      ?.lastElementChild.classList
       .contains('dropMenu')
-      || parentDivForMenu.lastElementChild.classList
+      || parentDivForMenu?.lastElementChild.classList
         .contains('dropMenu')) {
       return;
     }

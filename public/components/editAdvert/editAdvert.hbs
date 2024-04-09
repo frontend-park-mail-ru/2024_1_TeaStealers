@@ -1,0 +1,81 @@
+<body>
+    <div id="editAdvert" class="edit-advert">
+        <div id="editAdvertMain" class="edit-advert__block">
+            <h2>{{title}}</h2>
+            <div class="radio-inputs">
+
+            <div class="radio-inputs__container">
+                <div>Тип аккаунта</div>
+                <div class="radio-inputs__group">
+
+                <div>
+                <input id="agent" type="radio" name="isAgent" value="true" checked>
+                <label for="agent">Агент</label>
+                </div>
+
+                <div>
+                <input id="noagent" type="radio" name="isAgent" value="false">
+                <label for="noagent">Собственник</label>
+                </div>
+                </div>
+
+            </div>
+
+            <div class="radio-inputs__container">
+                <div>Сделка</div>
+                <div class="radio-inputs__group">
+<div>
+                <input id="rent" type="radio" name="deal" value="Rent" checked>
+                <label for="rent">Аренда</label>
+</div>
+<div>
+                <input id="sale" type="radio" name="deal" value="Sale">
+                <label for="sale">Продажа</label>
+                </div>
+                </div>
+            </div>
+ 
+            <div class="radio-inputs__container">
+                <div>Объект недвижимости</div>
+                <div class="radio-inputs__group">
+                <div>
+                <input id="flat" type="radio" name="object" value="Flat" checked>
+                <label for="flat">Квартира</label>
+                </div>
+              <div>
+                <input id="house" type="radio" name="object" value="House">
+                <label for="house">Дом / дача</label>
+                </div>
+                </div>
+            </div>
+            </div>
+
+
+            <div id="inputAdress-container" class="input-adress"></div>
+        </div>   
+        <div id="editAdvertAboutBuild" class="edit-advert__block">
+            <h2>О здании</h2>
+            <div id="aboutBuildIinputContainer" class="about-build__input-container">
+            </div>
+        </div>
+        <div id="editAdvertParams" class="edit-advert__block"></div>
+        <div id="editAdvertDescription" class="edit-advert__block">
+            <h2>Описание объявления</h2>
+            <div class="">
+                <span>Загрузите фотографии</span>
+                <div id="imageButtons" class="imageButtons"></div>
+                <span id="uploadImageError"></span>
+                <span id="uploadImageInfo"></span>
+                <div id="imagesPreview"></div>
+            </div>
+            <div id="descriptionInputsContainer">
+                <label for="description">Описание</label>
+                <textarea name="description" id="description" placeholder="Введите описание" ></textarea>
+                <div class="smallInputs" id="descriptionSmallInput"></div>
+            </div>
+        </div>
+        <div id="buttonSave"></div>
+        <span id="saveInfo"></span>
+    </div>
+
+</body>

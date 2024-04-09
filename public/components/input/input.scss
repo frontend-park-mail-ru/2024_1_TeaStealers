@@ -10,19 +10,24 @@ input {
     color: $color_text_basic;
 }
 
-input {
-    width: 100%;
-    height: 40px;
-    border: 1px solid grey;
-    border-radius: $button-border-radius_sm;
-    font-size: 16px;
-    padding: 0px 8px;
-    color: $color_text_basic;
-}
-
 .input-container {
     display: flex;
     flex-direction: column;
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid grey;
+        border-radius: $button-border-radius_sm;
+        font-size: 16px;
+        padding: 0px 8px;
+        color: $color_text_basic;
+    }
 }
 
 .input_border-radius_md {
@@ -56,22 +61,14 @@ input {
     color: $color_errors;
     width: 100%;
     height: 32px;
-    height: 32px;
     margin: 2px 0px;
     padding-left: 8px;
-    font-size: 14px;
     font-size: 14px;
     }
 
     &-border {
         border: 1px solid $color_errors;
     }
-}
-
-.label {
-    color: $color_text_basic;
-    font-weight: normal;
-    font-size: 16px;
 }
 
 .label {

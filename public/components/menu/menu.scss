@@ -4,10 +4,11 @@
     display: flex;
     flex-direction: column;
     width: 260px;
-    min-height: 700px;
+    min-height: 800px;
     gap: 30px;
     padding: 0px 30px;
     border-right: 1px solid grey;
+    position: fixed;
 
     &__profile-info {
         width: 100%;

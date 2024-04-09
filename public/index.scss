@@ -15,7 +15,14 @@
 @import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
 @import "@pages/main/main.scss";
 @import "@pages/advertPage/advertPage.scss"; 
+@import "@pages/newAdvert/newAdvert.scss"; 
+@import "@components/editAdvert/editAdvert.scss"; 
+@import "@components/paramsAdvert/paramsAdvert.scss"; 
+@import "@components/numberPages/numberPages.scss"; 
 @import "@pages/complexPage/complexPage.scss";
+@import "@pages/myAdvert/myAdvert.scss";
+@import "@pages/editAdvert/editAdvert.scss";
+@import "@pages/errorPage/errorPage.scss";
 
 * {
     box-sizing: border-box;

@@ -222,7 +222,7 @@ export class ProfileForm extends BaseComponent {
     if (event.data.photo === '') {
       document.getElementById('profileFormAvatar').src = '../../static/defaultAvatar.png';
     } else {
-      document.getElementById('profileFormAvatar').src = event.data.photo;
+      document.getElementById('profileFormAvatar').src = `/static/${event.data.photo}`;
     }
   }
 
@@ -301,7 +301,7 @@ export class ProfileForm extends BaseComponent {
       const [statusCode, data] = await uploadAvatar(formData);
       if (statusCode === globalVariables.HTTP_STATUS_OK) {
         const fileName = data.payload;
-        document.getElementById('profileFormAvatar').src = fileName;
+        document.getElementById('profileFormAvatar').src = `/static/${fileName}`;
         document.getElementById('profileFormAvatar').alt = fileName;
       }
       if (statusCode === globalVariables.HTTP_BAD_REQUEST) {

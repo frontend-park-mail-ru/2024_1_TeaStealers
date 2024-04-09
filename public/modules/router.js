@@ -1,4 +1,5 @@
 import { authModel } from '@models';
+import { ErrorView } from '@views';
 /**
  * класс Роутера
  */
@@ -13,6 +14,8 @@ class Router {
     this.routes = {};
     this.curView = null;
     this.curPath = '';
+    this.protectedRoutes = {};
+    this.error = false;
   }
 
   /**
@@ -20,7 +23,10 @@ class Router {
      * @param {string} path - путь до модели View
      * @param {View} view - сама модель View, представляющая собой BaseCompontent
      */
-  register(path, view) {
+  register(path, view, protect = false) {
+    if (protect) {
+      this.protectedRoutes[path] = view;
+    }
     this.routes[path] = view;
   }
 
@@ -29,8 +35,14 @@ class Router {
      * @param {string} path - путь URL
      */
   go(path, isReplace) {
+    this.error = false;
+    console.log(path, this.curPath);
+    console.log(path === this.curPath);
     if (path === this.curPath) {
       return;
+    }
+    if (this.protectedRoutes[path] !== undefined && authModel.isAuth !== true) {
+      this.error = true;
     }
     const id = path.substring(path.lastIndexOf('/') + 1);
     const pathWithoutId = path.replace(id, '');
@@ -49,9 +61,14 @@ class Router {
     } else {
       this.curView = new CurrentView();
     }
+    if (this.error) {
+      this.curPath = 'error';
+      this.curView = new ErrorView();
+    } else {
+      this.curPath = path;
+    }
     this.curView.render();
 
-    this.curPath = path;
     if (isReplace) {
       window.history.replaceState({ path }, '', path);
       return;

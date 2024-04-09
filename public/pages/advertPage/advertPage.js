@@ -15,9 +15,9 @@ export class AdvertPage extends BaseComponent {
   slideIndex;
 
   /**
-    * Создает новый экземпляр выпадающего меню
+    * Создает новый экземпляр страницы объявления
     * @param {Id} parent - Родительский элемент (Id)
-    * @param {Object} [state] - Начальное состояние выпадающего меню
+    * @param {Object} [state] - Начальное состояние страницы объявления
     */
   constructor(parent, state) {
     const template = advertPage;

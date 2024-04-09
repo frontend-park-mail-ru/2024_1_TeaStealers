@@ -11,3 +11,6 @@ export * from './gridCard/gridCard.js';
 export * from './menu/menu.js';
 export * from './profileForm/profileForm.js';
 export * from './avatar/avatar.js';
+export * from './editAdvert/editAdvert.js';
+export * from './paramsAdvert/paramsAdvert.js';
+export * from './numberPages/numberPages.js';

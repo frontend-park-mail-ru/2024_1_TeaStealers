@@ -2,3 +2,8 @@ export * from './mainView.js';
 export * from './profileView.js';
 export * from './advertView.js';
 export * from './complexView.js';
+export * from './newAdvertView.js';
+export * from './myAdvert.js';
+export * from './editAdvertView.js';
+export * from './errorView.js';
+export * from './navbarView.js';

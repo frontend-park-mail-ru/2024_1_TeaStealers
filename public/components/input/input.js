@@ -11,6 +11,7 @@ const DEFAULT_INPUT = {
   label: '',
   value: '',
   file: '',
+  multiple: false,
 };
 
 /**
@@ -26,6 +27,24 @@ export class Input extends BaseComponent {
     const template = input;
     state = { ...DEFAULT_INPUT, ...state };
     super({ parent, template, state });
+  }
+
+  render() {
+    if (document.getElementById(this.parent) !== null) {
+      document.getElementById(this.parent).insertAdjacentHTML(
+        this.state.position,
+        this.template(this.state),
+      );
+      this.componentLink = document.getElementById(this.parent).lastChild;
+    }
+  }
+
+  getValue() {
+    return this.self.querySelector('input').value;
+  }
+
+  setValue(value) {
+    this.self.querySelector('input').value = value;
   }
 
   /**
