@@ -1,7 +1,4 @@
 export const checkLogin = (login) => {
-  // if (login.length < 2) {
-  //   return ['Минимальная длина 2 символа', false];
-  // }
   if (login.length > 30) {
     return ['Максимальная длина 30 символа', false];
   }

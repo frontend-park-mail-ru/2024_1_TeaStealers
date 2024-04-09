@@ -23,7 +23,7 @@ export class Avatar extends BaseComponent {
   }
 
   /**
-   * Получение элемента кнопки
+   * Получение элемента аватара
    */
   get self() {
     return document.getElementById(this.state.id);

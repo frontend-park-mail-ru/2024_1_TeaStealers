@@ -2,8 +2,6 @@ import { Navbar } from '@components';
 import { authModel } from '@models';
 
 export class NavbarView {
-  // BaseComponent
-  // ...
   constructor() {
     this.parent = 'main-navbar';
     authModel.addObserver(this);

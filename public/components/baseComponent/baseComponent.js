@@ -1,5 +1,7 @@
 import { router } from '@modules/router';
 
+import { router } from '@modules/router';
+
 /**
  * Класс базового компонента
  */
@@ -18,6 +20,11 @@ export class BaseComponent {
      * Получение элемента
      */
   get self() {
+    return document.getElementById(this.state?.id);
+  }
+
+  redirect(path) {
+    router.go(path);
     return document.getElementById(this.state?.id);
   }
 
@@ -94,6 +101,14 @@ export class BaseComponent {
     document.getElementById(id)?.removeEventListener('click', handler);
   }
 
+  addClickListener(id, handler) {
+    document.getElementById(id)?.addEventListener('click', handler);
+  }
+
+  removeClickListener(id, handler) {
+    document.getElementById(id)?.removeEventListener('click', handler);
+  }
+
   /**
    * Функция удаления обработчика события
    * @param {BaseComponent} component - компонент, к которому применяется обработчик
@@ -102,6 +117,12 @@ export class BaseComponent {
    * @param {func} handler - обработчик события
    */
   removeListener(component, selector, event, handler) {
+    if (!selector) {
+      component.self?.removeEventListener(event, handler);
+    }
+    component.self?.querySelector(selector)
+      .removeEventListener(event, handler);
+  }
     if (!selector) {
       component.self?.removeEventListener(event, handler);
     } else {
@@ -116,6 +137,7 @@ export class BaseComponent {
      * @returns
      */
   componentDidUpdate(state) {
+    this.innerComponents.forEach((component) => { component.componentDidUpdate(state); });
     this.innerComponents.forEach((component) => { component.componentDidUpdate(state); });
   }
 
@@ -139,6 +161,14 @@ export class BaseComponent {
      */
   clean() {
     this.innerComponents.forEach((component) => { return component.clean(); });
+    const parent = document.getElementById(this.parent);
+    if (!this.self) {
+      if (parent !== null) {
+        parent.innerHTML = '';
+      }
+      return;
+    }
+    this.self?.remove();
     const parent = document.getElementById(this.parent);
     if (!this.self) {
       if (parent !== null) {

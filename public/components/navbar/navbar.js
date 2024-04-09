@@ -1,4 +1,5 @@
 import { Button, BaseComponent, Avatar } from '@components';
+import { Button, BaseComponent, Avatar } from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { Router } from '@modules';
 import { globalVariables, events } from '@models';
@@ -12,6 +13,7 @@ const buttonPattern = {
 };
 
 const DEFAULT_NAVBAR = {
+  id: 'nav',
   id: 'nav',
   parentID: '',
   notice: '',
@@ -32,18 +34,28 @@ export class Navbar extends BaseComponent {
    */
   constructor(parent, state) {
     state = { ...DEFAULT_NAVBAR, ...state };
+  constructor(parent, state) {
+    state = { ...DEFAULT_NAVBAR, ...state };
     const template = navbar;
     const noticeButton = new Button('rightside', {
       ...buttonPattern,
       mode: 'primary',
       text: state.notice,
       id: 'buttonNewAdvert',
+      id: 'buttonNewAdvert',
     });
     let buttonLoginLogout = new Button('rightside', {
       ...buttonPattern,
       id: 'buttonLogin',
+      id: 'buttonLogin',
       text: 'Войти',
     });
+    if (state.isAuthenticated) {
+      buttonLoginLogout = new Button('rightside', {
+        ...buttonPattern,
+        id: 'buttonProfile',
+        text: 'Мой профиль',
+      });
     if (state.isAuthenticated) {
       buttonLoginLogout = new Button('rightside', {
         ...buttonPattern,
@@ -73,8 +85,27 @@ export class Navbar extends BaseComponent {
       text: 'Войти',
     });
   }
+    this.btnLogin = buttonLoginLogout;
+  }
+
+  chooseLoginButton(isAuth) {
+    if (isAuth) {
+      return new Button('rightside', {
+        ...buttonPattern,
+        id: 'buttonProfile',
+        text: 'Мой профиль',
+
+      });
+    }
+    return new Button('rightside', {
+      ...buttonPattern,
+      id: 'buttonLogin',
+      text: 'Войти',
+    });
+  }
 
   /**
+   * Добавляет обработчик события
    * Добавляет обработчик события
    */
   componentDidMount() {
@@ -133,6 +164,7 @@ export class Navbar extends BaseComponent {
       id: 'modal',
       page: 'login',
       closeModal: this.closeModal.bind(this),
+      closeModal: this.closeModal.bind(this),
     });
 
     this.modal.renderAndDidMount();
@@ -170,12 +202,15 @@ export class Navbar extends BaseComponent {
    */
   removeListenersOpen() {
     this.removeClickListener('buttonLogin', this.openModal.bind(this));
+    this.removeClickListener('buttonLogin', this.openModal.bind(this));
   }
 
   /**
    * Удаляет обработчик события закрытия окна
    */
   removeListenersClose() {
+    if (this.closeModal !== null) {
+      document.querySelector('.modal__close-button')?.removeEventListener('click', this.closeModal.bind(this));
     if (this.closeModal !== null) {
       document.querySelector('.modal__close-button')?.removeEventListener('click', this.closeModal.bind(this));
     }

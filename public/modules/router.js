@@ -1,3 +1,4 @@
+import { authModel } from '@models';
 /**
  * класс Роутера
  */
@@ -73,7 +74,6 @@ class Router {
      * Функция возврата в предыдущее состояние (назад)
      */
   back() {
-    window.history.back();
     window.history.back();
   }
 
