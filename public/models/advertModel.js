@@ -1,57 +1,25 @@
-import { getAdvert } from '@modules';
-import { globalVariables } from '@models';
+import { getAdvertById } from '@modules';
+import { events, globalVariables } from '@models';
 
-async function getCardData() {
-  const [statusCode, data] = await getAdvert();
-  if (statusCode !== globalVariables.HTTP_STATUS_OK) {
-    return undefined;
-  }
-  const cardData = data.map((ad) => {
-    const characteristics = Object.keys(ad.HouseProperties).map((key) => {
-      return {
-        characteristicName: key.toString(),
-        characteristicDescription: ad.HouseProperties[key].toString(),
-      };
-    });
-    return {
-      imgSrc: `/static/room${ad.ID + 1}.jpg`,
-      shortDesc: ad.Title,
-      fullDescription: ad.Desciption,
-      adress: ad.Adress,
-      fullprice: ad.Price,
-      characteristic: characteristics,
-    };
-  });
-  return cardData;
-}
 /**
  * Класс модели страницы объявления
  */
 class AdvertModel {
-  cardData; // данные модели
+  infoAdvert; // данные модели
 
-  constructor(advertId) {
+  constructor() {
     this.observers = []; // Массив наблюдателей
-    this.advertId = advertId;
-    this.init();
   }
 
-  /**
-   * Инициализация модели
-   */
-  init() {
-    this.updateState();
-  }
-
-  /**
-   * Обновление данных
-   */
-  async updateState() {
+  async getInfoAdvert(id) {
     try {
-      const data = await getCardData();
-      this.updateAdvert(data);
+      const [statusCode, data] = await getAdvertById(id);
+      if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        this.infoAdvert = data.payload;
+        this.notifyObservers({ name: events.GET_ADVERT_BY_ID, data: this.infoAdvert });
+      }
     } catch (error) {
-      this.updateState();
+      console.log(error);
     }
   }
 
@@ -64,20 +32,11 @@ class AdvertModel {
   }
 
   /**
-   * Обновления данных модели и оповещения наблюдателей
-   * @param {state} newState
-   */
-  updateAdvert(newState) {
-    this.cardData = newState;
-    this.notifyObservers();
-  }
-
-  /**
    * Оповещение всех наблюдателей о изменениях
    */
-  notifyObservers() {
+  notifyObservers(event) {
     this.observers.forEach((observer) => {
-      observer.update(this.cardData);
+      observer.update(event);
     });
   }
 }

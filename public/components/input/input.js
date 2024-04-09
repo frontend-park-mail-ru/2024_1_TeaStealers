@@ -8,6 +8,9 @@ const DEFAULT_INPUT = {
   placeholder: '',
   isPassword: '',
   isError: '',
+  label: '',
+  value: '',
+  file: '',
 };
 
 /**

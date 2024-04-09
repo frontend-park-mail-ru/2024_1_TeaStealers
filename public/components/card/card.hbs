@@ -1,12 +1,12 @@
-<div class="card {{#if skeleton}}skeleton{{/if}}">
+<div class="card {{#if skeleton}}skeleton{{/if}}" id="{{advertId}}">
     {{#unless skeleton}}
-    <img src="{{#if imgSrc}}{{imgSrc}}{{/if}}" alt="Квартира мечты" class="card__picture">
+    <img src="{{#if photo}}{{photo}}{{/if}}" alt="Квартира мечты" class="card__picture">
     <div class="card__info">
         <div class="card__header-and-save">
             <div class="card__header">
-                {{#if shortDesc}}
-                <a href="#" class="card__header-link">
-                    {{shortDesc}}
+                {{#if title}}
+                <a href="/adverts/{{advertId}}" class="card__header-link" id="href{{advertId}}">
+                    {{title}}
                 </a>
                 {{/if}}
                 {{#if releaseDate}}
@@ -15,9 +15,11 @@
                 </span>
                 {{/if}}
             </div>
-            {{#if likeSrc}}
-            <img src="{{likeSrc}}" alt="likeButton">
-            {{/if}}
+            <div class="card__contact-and-save" id="phone{{advertId}}">
+                {{#if likeSrc}}
+                <img src="{{likeSrc}}" alt="likeButton">
+                {{/if}}
+            </div>
         </div>
         {{#if adress}}
         <div class="card__adress">
@@ -25,9 +27,9 @@
         </div>
         {{/if}}
         <div class="card__price">
-            {{#if fullprice}}
+            {{#if price}}
             <span class="card__fullprice">
-                {{fullprice}}
+                {{price}}
             </span>
             {{/if}}
             {{#if pricePerMetr}}

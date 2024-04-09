@@ -1,11 +1,17 @@
 /**
  * класс Роутера
  */
-export class Router {
+class Router {
   routes;
+
+  curView;
+
+  curPath;
 
   constructor() {
     this.routes = {};
+    this.curView = null;
+    this.curPath = '';
   }
 
   /**
@@ -18,39 +24,56 @@ export class Router {
   }
 
   /**
-     * Функция запуска роутинга. Изменение происходит при изменении в URL
-     */
-  start() {
-    window.addEventListener('popstate', (e) => {
-      e.preventDefault();
-
-      this.go(window.location.pathname);
-    });
-    this.go(window.location.pathname);
-  }
-
-  /**
      * Функция перехода по URL
      * @param {string} path - путь URL
      */
-  go(path) {
-    let currentView = this.routes[window.location.pathname];
-    if (path !== window.location.pathname) {
-      window.history.pushState(this.state, '', path);
+  go(path, isReplace) {
+    if (path === this.curPath) {
+      return;
     }
-    if (this.currentView) {
-      this.currentView.clean();
+    const id = path.substring(path.lastIndexOf('/') + 1);
+    const pathWithoutId = path.replace(id, '');
+
+    const prevView = this.curView;
+    const CurrentView = this.routes[pathWithoutId];
+    if (!CurrentView) {
+      return;
     }
-    currentView = this.routes[path];
-    if (currentView) {
-      currentView.render();
+
+    if (prevView) {
+      prevView.clean();
     }
+    if (id) {
+      this.curView = new CurrentView(id);
+    } else {
+      this.curView = new CurrentView();
+    }
+    this.curView.render();
+
+    this.curPath = path;
+    if (isReplace) {
+      window.history.replaceState({ path }, '', path);
+      return;
+    }
+    window.history.pushState({ path }, '', path);
+  }
+
+  /**
+     * Функция запуска роутинга. Изменение происходит при изменении в URL
+     */
+  start() {
+    window.addEventListener('popstate', (event) => {
+      event.preventDefault();
+      this.go(event.state.path, true);
+    });
+    this.go(window.location.pathname);
   }
 
   /**
      * Функция возврата в предыдущее состояние (назад)
      */
   back() {
+    window.history.back();
     window.history.back();
   }
 
@@ -61,3 +84,5 @@ export class Router {
     window.history.forward();
   }
 }
+
+export const router = new Router();

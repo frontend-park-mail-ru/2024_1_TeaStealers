@@ -70,12 +70,7 @@ export const postRequestFormData = async (url, data) => {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      // body: JSON.stringify(data),
-      body: new FormData(data),
+      body: data,
     });
     const body = await response.json();
     if (!body) {

@@ -1,3 +1,5 @@
+import { router } from '@modules/router';
+
 /**
  * Класс базового компонента
  */
@@ -16,7 +18,11 @@ export class BaseComponent {
      * Получение элемента
      */
   get self() {
-    return document.getElementById(this.state.id);
+    return document.getElementById(this.state?.id);
+  }
+
+  redirect(path) {
+    router.go(path);
   }
 
   /**
@@ -80,6 +86,14 @@ export class BaseComponent {
     }
   }
 
+  addClickListener(id, handler) {
+    document.getElementById(id)?.addEventListener('click', handler);
+  }
+
+  removeClickListener(id, handler) {
+    document.getElementById(id)?.removeEventListener('click', handler);
+  }
+
   /**
    * Функция удаления обработчика события
    * @param {BaseComponent} component - компонент, к которому применяется обработчик
@@ -88,8 +102,12 @@ export class BaseComponent {
    * @param {func} handler - обработчик события
    */
   removeListener(component, selector, event, handler) {
-    component.self.querySelector(selector)
-      .removeEventListener(event, handler);
+    if (!selector) {
+      component.self?.removeEventListener(event, handler);
+    } else {
+      component.self?.querySelector(selector)
+        .removeEventListener(event, handler);
+    }
   }
 
   /**
@@ -98,15 +116,7 @@ export class BaseComponent {
      * @returns
      */
   componentDidUpdate(state) {
-    if (!state) {
-      return;
-    }
-    if (this.checkState(state)) { // проверка внутренних элементов
-      return;
-    }
-    this.state = state;
-    this.unmountAndClean();
-    this.renderAndDidMount();
+    this.innerComponents.forEach((component) => { component.componentDidUpdate(state); });
   }
 
   /**
@@ -129,6 +139,13 @@ export class BaseComponent {
      */
   clean() {
     this.innerComponents.forEach((component) => { return component.clean(); });
-    document.getElementById(this.parent).innerHTML = '';
+    const parent = document.getElementById(this.parent);
+    if (!this.self) {
+      if (parent !== null) {
+        parent.innerHTML = '';
+      }
+      return;
+    }
+    this.self?.remove();
   }
 }

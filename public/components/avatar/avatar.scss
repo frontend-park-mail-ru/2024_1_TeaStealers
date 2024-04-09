@@ -1,0 +1,13 @@
+.avatar-container {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}

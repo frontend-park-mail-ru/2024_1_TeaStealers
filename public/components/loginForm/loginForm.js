@@ -1,6 +1,8 @@
 import { BaseComponent, Input, Button } from '@components';
-import { checkLogin, checkPassword, login } from '@modules';
-import { globalVariables } from '@models';
+import {
+  checkLogin, checkPassword, login, checkPhone,
+} from '@modules';
+import { authModel, globalVariables } from '@models';
 import loginForm from './loginForm.hbs';
 
 const LOGIN_BUTTON = {
@@ -11,15 +13,15 @@ const LOGIN_BUTTON = {
 const LOGIN_INPUT = {
   id: 'login_input',
   type: 'text',
-  placeholder: 'Логин',
+  placeholder: 'Телефон',
 };
 const PASSWORD_INPUT = {
   id: 'password_input',
   type: 'password',
   placeholder: 'Пароль',
 };
-const ERROR_LOGIN = 'Неверный логин или пароль';
-const ERROE_LOG = 'Некорректный логин';
+const ERROR_LOGIN = 'Неверный телефон или пароль';
+const ERROE_PHONE = 'Некорректный формат';
 const ERROE_PASS = 'Некорректный пароль';
 
 /**
@@ -45,7 +47,7 @@ export class LoginForm extends BaseComponent {
       parent, template, state, innerComponents,
     });
 
-    [this.loginInput, this.password, this.button] = this.innerComponents;
+    [this.loginInput, this.password, this.button] = innerComponents;
 
     this.loginHandler = this.loginHandler.bind(this);
   }
@@ -54,22 +56,24 @@ export class LoginForm extends BaseComponent {
    * Добавляет листенеры
    */
   componentDidMount() {
-    this.addListener(this.loginInput, 'input', 'blur', this.validateLoginInput.bind(this));
+    this.addListener(this.loginInput, 'input', 'input', this.formatPhoneNumber.bind(this));
     this.addListener(this.password, 'input', 'blur', this.validatePasswordInput.bind(this));
     this.button.self.addEventListener('click', this.loginHandler.bind(this));
   }
 
   /**
- * Валидирует логин
+ * Валидирует номер телефона
  */
-  validateLoginInput() {
-    const loginVal = this.loginInput.self.querySelector('input').value.trim();
-    const [, isValid] = checkLogin(loginVal);
+  formatPhoneNumber() {
+    const { value } = this.innerComponents[0].self.querySelector('input');
+
+    const [formatValue, isValid] = checkPhone(value);
+
+    this.innerComponents[0].self.querySelector('input').value = formatValue;
     if (isValid) {
-      this.loginInput.removeError();
+      this.innerComponents[0].removeError();
       return true;
     }
-    this.loginInput.renderError(ERROE_LOG);
     return false;
   }
 
@@ -91,29 +95,27 @@ export class LoginForm extends BaseComponent {
    * Обрабатывает действие кнопки "войти"
    */
   async loginHandler() {
-    const logValue = this.loginInput.self.querySelector('input').value.trim();
+    const phoneValue = this.loginInput.self.querySelector('input').value.trim();
     const password = this.password.self.querySelector('input').value.trim();
-    const [, isValidLogin] = checkLogin(logValue);
-    const [, isValidPass] = checkPassword(password);
+    const isValidLogin = this.formatPhoneNumber();
+    const isValidPass = this.validatePasswordInput();
     if (!isValidLogin) {
-      this.loginInput.renderError(ERROE_LOG);
-    }
-    if (!isValidLogin) {
-      this.password.renderError(ERROE_PASS);
+      this.loginInput.renderError(ERROE_PHONE);
+      return;
     }
     if (!isValidLogin || !isValidPass) {
       return;
     }
     this.removeErr();
-    const data = { login: logValue, password };
+    const data = { login: phoneValue, password };
     const [statusCode, ,] = await login(data);
-    if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
+    if (statusCode === globalVariables.HTTP_INTERNAL_SERVER_ERROR
       || statusCode === globalVariables.HTTP_BAD_REQUEST) {
       this.addErr(ERROR_LOGIN);
       return;
     }
     this.state.closeModal();
-    this.state.renderButtonLog(true);
+    authModel.setAuth();
   }
 
   /**
@@ -136,7 +138,7 @@ export class LoginForm extends BaseComponent {
      */
   componentWillUnmount() {
     if (!this.validateLoginInput) {
-      this.removeListener(this.loginInput, 'input', 'blur', this.validateLoginInput.bind(this));
+      this.removeListener(this.loginInput, 'input', 'blur', this.formatPhoneNumber.bind(this));
     }
     if (!this.validatePasswordInput) {
       this.removeListener(this.password, 'input', 'blur', this.validatePasswordInput.bind(this));

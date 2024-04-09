@@ -8,3 +8,6 @@ export * from './navbar/navbar.js';
 export * from './search/search.js';
 export * from './signupForm/signupForm.js';
 export * from './gridCard/gridCard.js';
+export * from './menu/menu.js';
+export * from './profileForm/profileForm.js';
+export * from './avatar/avatar.js';

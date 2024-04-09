@@ -1,14 +1,17 @@
 import { router } from '@modules';
 import './index.scss';
-import { mainView, advertView, profileView } from '@views';
-import { mainControler } from '@controllers';
+import {
+  AdvertView, ComplexView,
+  MainView, ProfileView,
+} from '@views';
 import { authModel } from '@models';
+import { NavbarView } from './views/navbarView';
 
-await authModel.checkAuthentication();
-
-router.register('/', mainView);
-router.register('/advert', advertView);
-router.register('/profile', profileView);
+const navbar = new NavbarView();
+navbar.render();
+router.register('/', MainView);
+router.register('/profile/', ProfileView);
+router.register('/adverts/', AdvertView);
+router.register('/complex/', ComplexView);
 router.start();
-
-mainControler.updateMainModel();
+document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));

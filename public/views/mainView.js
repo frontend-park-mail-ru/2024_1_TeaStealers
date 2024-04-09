@@ -1,19 +1,21 @@
 import { MainPage } from '@pages';
-import { mainModel } from '@models';
+import { mainModel, authModel } from '@models';
 
 export class MainView {
   constructor() {
     this.parent = 'app';
     mainModel.addObserver(this);
-    this.mainPage = new MainPage(this.parent, {});
+    authModel.addObserver(this);
+    this.mainPage = new MainPage(this.parent, { isAuthenticated: authModel.isAuth });
+    mainModel.updateWithParameters('');
   }
 
   /**
    * Обновление страницы объявлений
    * @param {state} adverts
    */
-  update(adverts) {
-    this.mainPage.componentDidUpdate(adverts);
+  update(event) {
+    this.mainPage.componentDidUpdate(event);
   }
 
   /**
@@ -30,5 +32,3 @@ export class MainView {
     this.mainPage.unmountAndClean();
   }
 }
-
-export const mainView = new MainView();

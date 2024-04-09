@@ -8,6 +8,7 @@ const DEFAULT_BUTTON = {
   borderRadius: 'sm',
   id: '',
   text: '',
+  full: false,
 };
 
 /**

@@ -1,5 +1,5 @@
 import { getRequest, postRequest } from '@modules';
-import { deleteRequest, postRequestFormData } from './ajax';
+import { deleteRequest, postRequestFormData } from './ajax.js';
 
 // const BASE_URL = 'https://tean.homes/api';
 const BASE_URL = 'http://localhost:8080/api';
@@ -9,22 +9,22 @@ const API_CONST = {
   SIGNUP: `${BASE_URL}/auth/signup`,
   LOGOUT: `${BASE_URL}/auth/logout`,
   CHECK_AUTH: `${BASE_URL}/auth/check_auth`,
-  GET_GRID_ADVERTS: `${BASE_URL}/adverts/squarelist/`,
+  GET_GRID_ADVERTS: `${BASE_URL}/adverts/rectanglelist/`,
   GET_ADVERTS_LIST: `${BASE_URL}/adverts/rectanglelist/`,
   UPLOAD_ADVERT_IMAGE: `${BASE_URL}/adverts/image/`,
   DELETE_ADVERT_IMAGE: `${BASE_URL}/adverts/{id}/image/`,
-  GET_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}/`,
-  UPDATE_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}/`,
-  DELETE_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}/`,
+  GET_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}`,
+  UPDATE_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}`,
+  DELETE_ADVERT_BY_ID: `${BASE_URL}/adverts/{id}`,
   CREATE_FLAT_ADVERT: `${BASE_URL}/adverts/flats/`,
   CREATE_HOUSE_ADVERT: `${BASE_URL}/adverts/houses/`,
   GET_COMPLEX_INFO: `${BASE_URL}/complexes/{id}`,
   GET_COMPLEX_ADVERTS: `${BASE_URL}/complexes/{id}/rectanglelist/`,
-  GET_ME: `${BASE_URL}/user/me`,
-  UPLOAD_AVATAR: `${BASE_URL}/user/avatar`,
-  UPDATE_USER_INFO: `${BASE_URL}/user/info`,
-  UPDATE_USER_PASSWORD: `${BASE_URL}/user/password`,
-  GET_MY_ADVERTS: `${BASE_URL}/user/myadverts`,
+  GET_ME: `${BASE_URL}/users/me`,
+  UPLOAD_AVATAR: `${BASE_URL}/users/avatar`,
+  UPDATE_USER_INFO: `${BASE_URL}/users/info`,
+  UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
+  GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
 };
 
 /**
@@ -66,16 +66,6 @@ export const logout = () => {
  */
 export const checkAuth = () => {
   const url = API_CONST.CHECK_AUTH;
-  return getRequest(url);
-};
-
-/**
- * GET-запрос для получения квадратных (маленьких) объявлений
- * @function getGridAdverts
- * @returns {Promise<Object>} - Объект, представляющий результат запроса.
- */
-export const getGridAdverts = () => {
-  const url = API_CONST.GET_GRID_ADVERTS;
   return getRequest(url);
 };
 
@@ -202,7 +192,7 @@ export const getMe = () => {
  * @returns {Promise<Object>} - Объект, представляющий результат запроса.
  */
 export const uploadAvatar = (userInput) => {
-  const url = API_CONST.LOGIN;
+  const url = API_CONST.UPLOAD_AVATAR;
   return postRequestFormData(url, userInput);
 };
 
@@ -235,5 +225,12 @@ export const updateUserPassword = (userInfo) => {
  */
 export const getMyAdverts = () => {
   const url = API_CONST.GET_MY_ADVERTS;
+  return getRequest(url);
+};
+/**
+ * GET-запрос для получения объявлений с фильтром
+ */
+export const getGridAdverts = (queryParamenrts) => {
+  const url = API_CONST.GET_GRID_ADVERTS + queryParamenrts;
   return getRequest(url);
 };

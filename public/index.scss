@@ -8,9 +8,14 @@
 @import "@components/loginForm/loginForm.scss";
 @import "@components/navbar/navbar.scss";
 @import "@components/signupForm/signupForm.scss";
+@import "@components/menu/menu.scss";
+@import "components/profileForm/profileForm.scss";
+@import "@pages/profile/profile.scss";
+@import "@components/avatar/avatar.scss";
 @import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
 @import "@pages/main/main.scss";
 @import "@pages/advertPage/advertPage.scss"; 
+@import "@pages/complexPage/complexPage.scss";
 
 * {
     box-sizing: border-box;
@@ -32,15 +37,6 @@ h1 {
 h2 {
     font-size: 22px;
     font-weight: bold;
-}
-
-input {
-    width: 280px;
-    height: 40px;
-    border: 1px solid grey;
-    border-radius: $button-border-radius_sm;
-    font-size: 16px;
-    padding: 0px 8px;
 }
 
 .skeleton {

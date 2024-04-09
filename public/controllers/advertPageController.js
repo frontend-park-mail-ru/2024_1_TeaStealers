@@ -1,8 +1,8 @@
 import { advertModel } from '@models';
 
 class AdvertPageController {
-  updateAdvertPageModel() {
-    advertModel.updateState();
+  updateAdvertPageModel(id) {
+    advertModel.getInfoAdvert(id);
   }
 }
 

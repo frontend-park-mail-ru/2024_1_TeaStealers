@@ -1,0 +1,15 @@
+class Events {
+  AUTH = 'AUTH';
+
+  ME = 'ME';
+
+  GET_ADVERT_BY_ID = 'GET_ADVERT_BY_ID';
+
+  GET_ADVERTS_MAIN = 'GET_ADVERTS_MAIN';
+
+  GET_COMPLEX_BY_ID = 'GET_COMPLEX_BY_ID';
+
+  GET_COMPLEX_ADVERTS_BY_ID = 'GET_COMPLEX_ADVERTS_BY_ID';
+}
+
+export const events = new Events();

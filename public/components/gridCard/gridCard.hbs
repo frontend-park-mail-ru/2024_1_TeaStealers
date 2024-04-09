@@ -1,18 +1,25 @@
 <div class="gridCard">
     {{#each miniCards}}
-    <div class="gridCard__mini-card">
-        <img src="{{imgSrc}}" alt="картинка квартиры">
+    <div class="gridCard__mini-card" id="{{advertId}}">
+        <a href="/adverts/{{advertId}}" class="gridCard__link">
+        <img src="{{photo}}" alt="картинка квартиры">
+
         <div class="gridCard__description">
-            {{#if fullprice}}
-            <a href="/advert" class=""><span class="gridCard__fullprice">{{fullprice}}</span></a>
+            <span class="gridCard__price">{{price}}</span>
+            {{#if houseProperties}}
+            <span class="gridCard__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
             {{/if}}
-            {{#if pricePerMetr}}
-            <span class="gridCard__price-per-metr">{{pricePerMetr}}<span class="ruble"></span>/м<sup>2</sup></span>
+
+            {{#if flatProperties}}
+            {{!-- <span class="gridCard__properties"> Квартира · {{flatProperties.к}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span> --}}
             {{/if}}
-            {{#if releaseDate}}
-            <span>{{releaseDate}}</span>
-            {{/if}}
+            <span class="gridCard__adress">{{adress}}</span>     
         </div>
+        </a>
+
     </div>
+
     {{/each}}
 </div>
+
+

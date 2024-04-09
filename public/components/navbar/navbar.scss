@@ -1,15 +1,16 @@
 @use "@/variables.scss";
 
 .nav {
-    border-bottom: $nav-border-bottom-line-width
-    $nav-border-bottom-line-style 
-    $nav-border-bottom-line-color;
-    height: 60px;
+    // border-bottom: $nav-border-bottom-line-width
+    // $nav-border-bottom-line-style 
+    // $nav-border-bottom-line-color;
+    height: 74px;
     display: flex;
     padding: 0 150px;
     width: 100%;
     align-self: center;
     justify-self: center;
+    box-shadow: 0px 5px 6px 0px rgba(34, 60, 80, 0.2);
     position: fixed;
     top: 0;
     left: 0;
@@ -47,8 +48,8 @@
 
     &__rightside {
         display: grid;
-        gap: 10px;
-        grid-template-columns: auto auto;
+        gap: 15px;
+        grid-template-columns: auto auto auto;
         align-items: center;
         justify-content: flex-start;
     }
@@ -58,5 +59,6 @@
         color: $color_text_highlight;
         align-self: center;
         justify-self: center;
+        cursor: pointer;
     }
 }

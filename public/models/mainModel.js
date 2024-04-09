@@ -1,44 +1,26 @@
-import { getAdvertList } from '@modules';
-import { globalVariables } from '@models';
-
-async function getAdverts() {
-  const [statusCode, data] = await getAdvertList();
-  if (statusCode !== globalVariables.HTTP_STATUS_OK) {
-    return undefined;
-  }
-  const cardsData = data.map((ad, index) => {
-    return {
-      imgSrc: `/static/room${index + 1}.jpg`,
-      shortDesc: ad.description,
-      likeSrc: '/static/save.svg',
-      adress: ad.location,
-      fullprice: ad.price,
-    };
-  });
-  return cardsData;
-}
+import { getGridAdverts, updateAdvertById } from '@modules';
+import { events, globalVariables } from '@models';
 
 class MainModel {
   cardsData; // данные модели
 
   constructor() {
     this.observers = []; // Массив наблюдателей
-    this.init();
-  }
-
-  init() {
-    this.updateState();
   }
 
   /**
-   * Обновление данных
+   * Обновление данных с query параметрами
+   * @param {string} queryParametersURL - query параметры
    */
-  async updateState() {
+  async updateWithParameters(queryParametersURL) {
     try {
-      this.cardsData = await getAdverts();
-      this.updateAdverts(this.cardsData);
+      const [statusCode, response] = await getGridAdverts(queryParametersURL);
+      if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        this.cardsData = response.payload;
+        this.updateAdverts();
+      }
     } catch (error) {
-      this.updateState();
+      console.log(error);
     }
   }
 
@@ -54,17 +36,16 @@ class MainModel {
    * Обновления данных модели и оповещения наблюдателей
    * @param {state} newState
    */
-  updateAdverts(newState) {
-    this.adverts = newState;
-    this.notifyObservers();
+  updateAdverts() {
+    this.notifyObservers({ name: events.GET_ADVERTS_MAIN, data: this.cardsData });
   }
 
   /**
    * Оповещение всех наблюдателей о изменениях
    */
-  notifyObservers() {
+  notifyObservers(event) {
     this.observers.forEach((observer) => {
-      observer.update(this.adverts);
+      observer.update(event);
     });
   }
 }
