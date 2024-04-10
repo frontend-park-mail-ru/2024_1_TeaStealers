@@ -83,9 +83,9 @@ export class BaseComponent {
    */
   addListener(component, selector, event, handler) {
     if (!selector) {
-      component.self.addEventListener(event, handler);
+      component.self?.addEventListener(event, handler);
     } else {
-      component.self.querySelector(selector)
+      component.self?.querySelector(selector)
         .addEventListener(event, handler);
     }
   }
@@ -106,10 +106,7 @@ export class BaseComponent {
    * @param {func} handler - обработчик события
    */
   removeListener(component, selector, event, handler) {
-    console.log(component);
-    console.log(selector);
     if (!selector) {
-      console.log('!selector');
       component.self?.removeEventListener(event, handler);
     } else {
       component.self?.querySelector(selector)

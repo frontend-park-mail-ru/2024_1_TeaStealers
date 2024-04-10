@@ -82,7 +82,7 @@
         </div>
         {{#if complexProperties}}
         <div class="advert-page__box boxComplex">
-            <img src="{{complexProperties.photoCompany}}" alt="Фото ЖК">
+            <img src="/static/{{complexProperties.photoCompany}}" alt="Фото ЖК" class="boxComplex__image">
             <a href="/complex/{{complexProperties.complexId}}" id="linkToComplex">{{complexProperties.nameComplex}}</a>
         </div>
         {{/if}}

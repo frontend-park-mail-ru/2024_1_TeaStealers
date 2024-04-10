@@ -46,7 +46,7 @@ export class Card extends BaseComponent {
   componentDidMount() {
     this.addListener(this.viewContact, '', 'click', this.viewContactListener.bind(this));
     document.querySelector(`#href${this.state.advertId}`)
-      .addEventListener('click', this.goToAdvert.bind(this));
+      ?.addEventListener('click', this.goToAdvert.bind(this));
   }
 
   goToAdvert(event) {
@@ -61,6 +61,6 @@ export class Card extends BaseComponent {
   componentWillUnmount() {
     this.removeListener(this.viewContact, '', 'click', this.viewContactListener.bind(this));
     document.querySelector(`#href${this.state.advertId}`)
-      .removeEventListener('click', this.goToAdvert.bind(this));
+      ?.removeEventListener('click', this.goToAdvert.bind(this));
   }
 }
