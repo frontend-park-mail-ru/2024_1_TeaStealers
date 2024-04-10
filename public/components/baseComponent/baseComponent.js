@@ -106,7 +106,10 @@ export class BaseComponent {
    * @param {func} handler - обработчик события
    */
   removeListener(component, selector, event, handler) {
+    console.log(component);
+    console.log(selector);
     if (!selector) {
+      console.log('!selector');
       component.self?.removeEventListener(event, handler);
     } else {
       component.self?.querySelector(selector)
