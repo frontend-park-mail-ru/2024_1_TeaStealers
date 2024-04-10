@@ -138,6 +138,6 @@ export class LoginForm extends BaseComponent {
   componentWillUnmount() {
     this.removeListener(this.loginInput, 'input', 'blur', this.formatPhoneNumber.bind(this));
     this.removeListener(this.password, 'input', 'blur', this.validatePasswordInput.bind(this));
-    this.removeListener(this.button, '', 'blur', this.loginHandler.bind(this));
+    this.removeListener(this.button, '', 'сlick', this.loginHandler.bind(this));
   }
 }
