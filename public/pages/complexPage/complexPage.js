@@ -28,9 +28,9 @@ export class ComplexPage extends BaseComponent {
   }
 
   componentDidUpdate(event) {
-    console.log(event);
     if (event.name === events.GET_COMPLEX_BY_ID) {
       this.unmountAndClean();
+      console.log(event.data);
       this.state = { ...event.data };
       const dateBegin = new Date(this.state.dateBeginBuild);
       const dateEnd = new Date(this.state.dateEndBuild);
