@@ -108,9 +108,10 @@ export class BaseComponent {
   removeListener(component, selector, event, handler) {
     if (!selector) {
       component.self?.removeEventListener(event, handler);
+    } else {
+      component.self?.querySelector(selector)
+        .removeEventListener(event, handler);
     }
-    component.self?.querySelector(selector)
-      .removeEventListener(event, handler);
   }
 
   /**
