@@ -1,0 +1,70 @@
+{{#if myAdverts}}
+
+<div class="gridCards">
+    <div class="gridCards__information">
+        <h2>{{title}}</h2>
+        <span>Всего объявлений: {{totalElements}}</span> 
+    </div>
+    <div class="gridCards__container">
+    {{#each miniCards}}
+        <div class="gridCards__card">
+            <a href="/adverts/{{advertId}}" class="gridCard__link">
+            <img src="/static/{{photo}}" alt="Фотография">
+            <div class="gridCards__description">
+
+                <h2>{{price}} &#8381;</h2>
+
+                {{#if houseProperties}}
+                <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
+                {{/if}}
+
+                {{#if flatProperties}}
+                <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
+                {{/if}}
+
+                <span class="gridCards__adress">{{adress}}</span>    
+
+            </div>
+            </a>
+
+            <div class="gridCards__buttons">
+                <a href="/edit-advert/{{advertId}}" class="gridCards__edit">Изменить</a>
+                <a href="{{advertId}}" class="gridCards__delete">Удалить</a>
+            </div>
+
+        </div>
+    {{/each}}
+    </div>
+</div>
+{{else}}
+<div class="gridCards">
+    <div class="gridCards__information">
+        <h2>{{title}}</h2>
+        <span>Всего объявлений: {{totalElements}}</span> 
+    </div>
+    <div class="gridCards__container">
+    {{#each miniCards}}
+        <div class="gridCards__card">
+            <a href="/adverts/{{advertId}}" class="gridCard__link">
+            <img src="/static/{{photo}}" alt="Фотография">
+            <div class="gridCards__description">
+
+                <h2>{{price}} &#8381;</h2>
+
+                {{#if houseProperties}}
+                <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
+                {{/if}}
+
+                {{#if flatProperties}}
+                <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
+                {{/if}}
+
+                <span class="gridCards__adress">{{adress}}</span>    
+
+            </div>
+            </a>
+        </div>
+    {{/each}}
+    </div>
+</div>
+{{/if}}

@@ -1,0 +1,64 @@
+@use "@/variables.scss";
+
+.nav {
+    // border-bottom: $nav-border-bottom-line-width
+    // $nav-border-bottom-line-style 
+    // $nav-border-bottom-line-color;
+    height: 74px;
+    display: flex;
+    padding: 0 150px;
+    width: 100%;
+    align-self: center;
+    justify-self: center;
+    box-shadow: 0px 5px 6px 0px rgba(34, 60, 80, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $background-color-main;
+    z-index: 50;
+
+    &__linkbar {
+        display: flex;
+        list-style: none;
+        margin: 0;
+    }
+
+    &__leftside {
+        padding: 0 20px;
+        margin: 0 auto 0 0;
+        height: 100%;
+        display: flex;
+    }
+
+    &__link {
+        float: left;
+        display: flex;
+        align-items: center;
+    }
+
+    &__link a {
+        padding: 0 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__rightside {
+        display: grid;
+        gap: 15px;
+        grid-template-columns: auto auto auto;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    &__brand {
+        font-size: 36px;
+        color: $color_text_highlight;
+        align-self: center;
+        justify-self: center;
+        cursor: pointer;
+    }
+}

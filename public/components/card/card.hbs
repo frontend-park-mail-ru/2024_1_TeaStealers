@@ -1,44 +1,46 @@
-    <div class="card">
-        <img src="{{#if imgSrc}}{{imgSrc}}{{/if}}" alt="Квартира мечты" class="card__picture">
-        <div class="card__info">
-            <div class="card__header-and-save">
-                <div class="card__header">
-                    {{#if shortDesc}}
-                    <a href="#" class="card__header-link">
-                        {{shortDesc}}
-                    </a>
-                    {{/if}}
-                    {{#if releaseDate}}
-                    <span class="card__header-description">
-                        {{releaseDate}}
-                    </span>
-                    {{/if}}
-                </div>
+<div class="card {{#if skeleton}}skeleton{{/if}}" id="{{advertId}}">
+    {{#unless skeleton}}
+    <img src="{{#if photo}}/static/{{photo}}{{/if}}" alt="Квартира мечты" class="card__picture">
+    <div class="card__info">
+        <div class="card__header-and-save">
+            <div class="card__header">
+                {{#if title}}
+                <a href="/adverts/{{advertId}}" class="card__header-link" id="href{{advertId}}">
+                    {{title}}
+                </a>
+                {{/if}}
+                {{#if releaseDate}}
+                <span class="card__header-description">
+                    {{releaseDate}}
+                </span>
+                {{/if}}
+            </div>
+            <div class="card__contact-and-save" id="phone{{id}}">
                 {{#if likeSrc}}
                 <img src="{{likeSrc}}" alt="likeButton">
                 {{/if}}
             </div>
-            {{#if adress}}
-            <div class="card__adress">
-                {{adress}}
-            </div>
+        </div>
+        {{#if adress}}
+        <div class="card__adress">
+            {{adress}}
+        </div>
+        {{/if}}
+        <div class="card__price">
+            {{#if price}}
+            <span class="card__fullprice">
+                {{price}}
+            </span>
             {{/if}}
-            <div class="card__price">
-                {{#if fullprice}}
-                <span class="card__fullprice">
-                    {{fullprice}}
-                </span>
-                {{/if}}
-                {{#if pricePerMetr}}
-                <span class="card__price-per-metr">
-                    {{pricePerMetr}}<span class="ruble"></span>/м<sup>2</sup>
-                </span>
-                {{/if}}
-            </div>
-            <div class="card__description">
-                {{description}}
-            </div>
+            {{#if pricePerMetr}}
+            <span class="card__price-per-metr">
+                {{pricePerMetr}}<span class="ruble"></span>/м<sup>2</sup>
+            </span>
+            {{/if}}
+        </div>
+        <div class="card__description">
+            {{description}}
         </div>
     </div>
-</body>
-</html>
+    {{/unless}}
+</div>

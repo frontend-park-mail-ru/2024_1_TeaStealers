@@ -1,7 +1,13 @@
-<div class="input-container" id="{{id}}">
-    <input class="{{#if blockClass}}{{blockClass}}{{/if}}" type="{{type}}" placeholder="{{placeholder}}">
+<div class="input-container {{#if file}}input-file{{/if}}" id="{{id}}">
+    {{#if label}}<span class="label">{{label}}</span>{{/if}}
+    <input class="{{#if blockClass}}{{blockClass}}{{/if}} {{#if file}}input-file__input{{/if}}" type="{{type}}" placeholder="{{placeholder}}" value="{{value}}"  {{#if file}} accept=".png, .jpeg, .jpg"{{/if}} {{#if multiple}}multiple{{/if}}>
     {{#if isPassword}}
         <img class="show-password-btn" src="/src/assets/eye-close.svg">
     {{/if}}
-    <span class="error-message"></span>
+    <span class="error-message {{#if file}}input-file__span{{/if}}"></span>
+    {{#if file}}
+    <label for="input-file__input" class="input-file__label">
+        <span class="input-file__label-span">{{textInputFile}}</span>
+    </label>
+    {{/if}}
 </div>

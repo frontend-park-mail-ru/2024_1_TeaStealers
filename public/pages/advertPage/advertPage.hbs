@@ -1,0 +1,90 @@
+<div class="advert-page">
+    <div class="advert-page__info">
+
+        <div class="advert-page__img">
+            <div class="advert-page__slides">
+                 {{#each images}}
+                <img src="/static/{{photo}}" alt="{{id}}" class="imageAdvert">
+                {{/each}}
+            </div>
+            <button class="imageAdvert__prev" id="imageAdvert__prev">&#10094;</button>
+            <button class="imageAdvert__next" id="imageAdvert__next">&#10095;</button>
+        </div>
+
+        <div class="advert-page__description">
+            <h2>{{title}}</h2>
+
+            <div class="advert-page__location">
+                <div class="location_inscription">
+                    Расположение
+                </div>
+                <h2>{{adress}}</h2>
+            </div>
+
+            <div class="advert-page__characteristics">
+                {{#if houseProperties}}
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Площадь участка
+                    </div>
+                    <div class="characteristic-description">
+                        {{houseProperties.squareArea}} сот.
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Площадь дома
+                    </div>
+                    <div class="characteristic-description">
+                        {{houseProperties.squareHouse}} м<sup>2</sup>
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Этажей
+                    </div>
+                    <div class="characteristic-description">
+                        {{houseProperties.floor}}
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Спален
+                    </div>
+                    <div class="characteristic-description">
+                        {{houseProperties.bedroomCount}}
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Год постройки
+                    </div>
+                    <div class="characteristic-description">
+                        {{yearCreation}}
+                    </div>
+                </div>                
+                {{/if}}
+                {{#if flatProperties}}
+                {{/if}}
+
+            </div>
+
+            <div class="advert-page__description">
+                {{description}}
+            </div>
+        </div>
+    </div>
+    <div class="advert-page__references">
+        <div class="advert-page__box boxPrice" id="price">
+            <h2>
+                {{price}}   &#x20bd;
+            </h2>
+        </div>
+        {{#if complexProperties}}
+        <div class="advert-page__box boxComplex">
+            <img src="/static/{{complexProperties.photoCompany}}" alt="Фото ЖК" class="boxComplex__image">
+            <a href="/complex/{{complexProperties.complexId}}" id="linkToComplex">{{complexProperties.nameComplex}}</a>
+        </div>
+        {{/if}}
+    </div>
+</div>

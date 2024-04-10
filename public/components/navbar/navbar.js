@@ -1,30 +1,28 @@
-import Button from '../button/button.js';
-import LoginAndSignupLayout from '../../pages/loginAndSignupLayout/loginAndSignupLayout.js';
-import { logout } from '../../modules/api.js';
+import { Button, BaseComponent, Avatar } from '@components';
+import { LoginAndSignupLayout } from '@pages';
+import { Router } from '@modules';
+import { globalVariables, events } from '@models';
+import { mainControler } from '@controllers';
+import navbar from './navbar.hbs';
 
 const buttonPattern = {
   borderRadius: 'sm',
   size: 'sm',
-  order: 'secondary',
+  mode: 'secondary',
 };
 
 const DEFAULT_NAVBAR = {
-  id: '',
+  id: 'nav',
   parentID: '',
   notice: '',
   login: '',
+  skeleton: false,
 };
 
 /**
  * Класс компонента навигационной панели
  */
-export default class Navbar {
-  state;
-
-  #parent;
-
-  login;
-
+export class Navbar extends BaseComponent {
   modal;
 
   /**
@@ -32,21 +30,97 @@ export default class Navbar {
    * @param {HTMLElement} parent - родительский элемент
    * @param {Object} state - состояния компонента
    */
-  constructor(parent, state = {}) {
-    this.state = { ...DEFAULT_NAVBAR, ...state };
-    this.#parent = parent;
+  constructor(parent, state) {
+    state = { ...DEFAULT_NAVBAR, ...state };
+    const template = navbar;
+    const noticeButton = new Button('rightside', {
+      ...buttonPattern,
+      mode: 'primary',
+      text: state.notice,
+      id: 'buttonNewAdvert',
+    });
+    let buttonLoginLogout = new Button('rightside', {
+      ...buttonPattern,
+      id: 'buttonLogin',
+      text: 'Войти',
+    });
+    if (state.isAuthenticated) {
+      buttonLoginLogout = new Button('rightside', {
+        ...buttonPattern,
+        id: 'buttonProfile',
+        text: 'Мой профиль',
+      });
+    }
+    const innerComponents = [noticeButton, buttonLoginLogout];
+    super({
+      parent, template, state, innerComponents,
+    });
+    this.btnLogin = buttonLoginLogout;
+  }
+
+  chooseLoginButton(isAuth) {
+    if (isAuth) {
+      return new Button('rightside', {
+        ...buttonPattern,
+        id: 'buttonProfile',
+        text: 'Мой профиль',
+
+      });
+    }
+    return new Button('rightside', {
+      ...buttonPattern,
+      id: 'buttonLogin',
+      text: 'Войти',
+    });
   }
 
   /**
-   * Добавляет обработчик события открытия модального окна
+   * Добавляет обработчик события
    */
-  addListeners() {
-    if (document.querySelector('#login-button') !== null) {
-      document.querySelector('#login-button').addEventListener('click', this.openModal.bind(this));
+  componentDidMount() {
+    this.addClickListener('buttonLogin', this.openModal.bind(this));
+    this.addClickListener('buttonProfile', this.goToProfile.bind(this));
+    this.addClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));
+    this.addClickListener('nabarBrand', this.goToMain.bind(this));
+    this.addClickListener('sale', this.goToBuy.bind(this));
+    this.addClickListener('rent', this.goToRent.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.removeListenersClose();
+    this.removeListenersOpen();
+    document.querySelector('sale')
+      ?.removeEventListener('click', this.goToBuy.bind(this));
+    document.querySelector('rent')
+      ?.removeEventListener('click', this.goToRent.bind(this));
+  }
+
+  componentDidUpdate(event) {
+    if (event.name === events.AUTH) {
+      if (this.state.isAuthenticated === event.data) {
+        return;
+      }
+      this.state.isAuthenticated = event.data;
+      this.btnLogin.unmountAndClean();
+      this.btnLogin = this.chooseLoginButton(this.state.isAuthenticated);
+      this.btnLogin.renderAndDidMount();
+      this.componentWillUnmount();
+      this.componentDidMount();
     }
-    if (document.querySelector('#logout-button') !== null) {
-      document.querySelector('#logout-button').addEventListener('click', this.logout.bind(this));
-    }
+  }
+
+  goToBuy() {
+    const queryParameters = {};
+    queryParameters.dealtype = 'Sale';
+    mainControler.updateMainModelWithParameters(queryParameters);
+    this.redirect('/');
+  }
+
+  goToRent() {
+    const queryParameters = {};
+    queryParameters.dealtype = 'Rent';
+    mainControler.updateMainModelWithParameters(queryParameters);
+    this.redirect('/');
   }
 
   /**
@@ -54,97 +128,56 @@ export default class Navbar {
    * @param {Event} event - событие, которое вызвало обработчик
    */
   openModal(event) {
-    this.removeListenersOpen();
     event.preventDefault();
-    this.modal = new LoginAndSignupLayout(document.querySelector('#modal'), {
+    this.modal = new LoginAndSignupLayout('modal', {
+      id: 'modal',
       page: 'login',
       closeModal: this.closeModal.bind(this),
-      renderButtonLog: this.renderButtonLog.bind(this),
     });
-    this.modal.render();
+
+    this.modal.renderAndDidMount();
     document.querySelector('.modal__close-button').addEventListener('click', this.closeModal.bind(this));
   }
 
-  async logout(event) {
+  goToProfile(event) {
     event.preventDefault();
-    this.removeLostenerLogout();
-    const [codeStatus, data] = await logout();
-    console.log(codeStatus);
-    if (codeStatus === 200) {
-      this.renderButtonLog(false);
+    this.redirect('/profile/');
+  }
+
+  goToNewAdvert(event) {
+    event.preventDefault();
+    if (this.state.isAuthenticated) {
+      this.redirect('/new-advert/');
+    } else {
+      this.openModal(event);
     }
+  }
+
+  goToMain(event) {
+    event.preventDefault();
+    this.redirect('/');
   }
 
   /**
    * Закрывает модальное окно
    */
   closeModal() {
-    this.removeListenersClose();
-    this.modal.self.remove();
-    this.modal = undefined;
-  }
-
-  removeLostenerLogout() {
-    if (document.querySelector('#logout-button') !== undefined) {
-      document.querySelector('#logout-button').removeEventListener('click', this.logout.bind(this));
-    }
+    this.modal.unmountAndClean();
   }
 
   /**
    * Удаляет обработчик события открытия окна
    */
   removeListenersOpen() {
-    if (this.openModal !== undefined) {
-      document.querySelector('#login-button').removeEventListener('click', this.openModal.bind(this));
-    }
+    this.removeClickListener('buttonLogin', this.openModal.bind(this));
   }
 
   /**
    * Удаляет обработчик события закрытия окна
    */
   removeListenersClose() {
-    if (this.closeModal !== undefined) {
-      document.querySelector('.modal__close-button').removeEventListener('click', this.closeModal.bind(this));
+    if (this.closeModal !== null) {
+      document.querySelector('.modal__close-button')?.removeEventListener('click', this.closeModal.bind(this));
     }
-  }
-
-  /**
-   * Отрисовывает кнопку Войти\Выйти
-   */
-  renderButtonLog(isAuth) {
-    console.log('renderButtonlog', isAuth);
-    let buttonLoginLogout = {
-      ...buttonPattern,
-      id: 'login-button',
-      text: 'Войти',
-    };
-    if (isAuth) {
-      buttonLoginLogout = { ...buttonPattern, id: 'logout-button', text: 'Выйти' };
-    }
-    if (this.login !== undefined) {
-      this.login.self.remove();
-    }
-    this.login = new Button(document.querySelector('#rightside'), buttonLoginLogout);
-    this.login.render();
-    this.addListeners();
-  }
-
-  /**
-   * Отрисовка компонента навбар
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['navbar.hbs'](this.state),
-    );
-
-    const noticeButton = new Button(document.querySelector('#rightside'), {
-      ...buttonPattern,
-      order: 'primary',
-      text: this.state.notice,
-    });
-    noticeButton.render();
-
-    this.renderButtonLog(this.state.isAuthenticated);
   }
 }

@@ -1,42 +1,28 @@
-import Card from '../../components/card/card.js';
-import Navbar from '../../components/navbar/navbar.js';
-import Search from '../../components/search/search.js';
+import {
+  BaseComponent, Card, Navbar, Search, GridCard,
+} from '@components';
+import { events } from '@models';
+import main from './main.hbs';
 
 const DEFAULT_MAIN = {
-  isAuthenticated: false,
   title: 'Найди мечту',
+  skeleton: false,
 };
+
 /**
  * Класс главной страницы страницы
  */
-export default class MainPage {
-  #parent;
-
-  state;
-
+export class MainPage extends BaseComponent {
   /**
      * Конструктор класса
      * @param {HTMLElement} parent - Родительский элемент
      * @param {Object} [state = DEFAULT_MAIN] - Начальное состояние главной страницы
      */
   constructor(parent, state = DEFAULT_MAIN) {
-    this.#parent = parent;
-    this.state = { ...DEFAULT_MAIN, ...state };
-  }
+    const template = main;
+    state = { ...DEFAULT_MAIN, ...state };
 
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['main.hbs'](this.state),
-    );
-    const navbar = new Navbar(document.querySelector('#app'), {
-      isAuthenticated: this.state.isAuthenticated,
-      id: 'navbar',
-      notice: '+ Разместить объявление',
-    });
-    navbar.render();
-
-    const search = new Search(document.querySelector('#app'), {
+    const search = new Search('searhMenu', {
       id: 'search',
       title: 'Найди мечту',
       firstFilterLinkStatus: 'active',
@@ -46,14 +32,20 @@ export default class MainPage {
       homeType: 'Квартиру в новостройке или вторичке',
       roomNumber: 'Комнат',
       price: 'Цена',
+      skeleton: state.skeleton,
     });
-    search.render();
 
-    if (this.state.cards && this.state.cards.length > 0) {
-      this.state.cards.forEach((cardData) => {
-        const card = new Card(document.querySelector('#app'), cardData);
-        card.render();
-      });
-    }
+    const gridCard = new GridCard('gridCards', { title: 'Рекомендуем' });
+
+    const innerComponents = [search, gridCard];
+    super({
+      parent, template, state, innerComponents,
+    });
+    this.search = search;
+    this.gridCard = gridCard;
+  }
+
+  delete() {
+    this.parent.innerHTML = '';
   }
 }

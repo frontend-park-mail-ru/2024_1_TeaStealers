@@ -4,21 +4,37 @@
   "description": "CIAN reimagined",
   "main": "index.js",
   "scripts": {
-    "start": "npm run compile_hbs && node server/index.js",
-    "compile_hbs": "globstar -- npx handlebars public/**/*.hbs -f public/templates/handlebars.precompiled.js",
-    "test": "eslint ."
+    "start": "npm run dev",
+    "build": "webpack --mode development",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "dev": "webpack serve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "globstar": "^1.0.0",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "handlebars-loader": "^1.7.3",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.8.1",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1"
   },
   "devDependencies": {
+    "babel-loader": "^9.1.3",
+    "css-loader": "^6.10.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1"
+    "eslint-import-resolver-webpack": "^0.13.8",
+    "eslint-plugin-import": "^2.29.1",
+    "style-loader": "^3.3.4",
+    "svg-inline-loader": "^0.8.2",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.3"
   }
 }

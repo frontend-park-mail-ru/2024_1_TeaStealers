@@ -1,0 +1,47 @@
+@use "@/variables.scss";
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 40px 20px 40px;
+
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 100%;
+    }
+
+    &__link {
+        color: $color_text_highlight;
+        height: 20px;
+        font-size: $button-font-size;
+        font-family: $button-font-family-main;
+        cursor: pointer;
+        justify-self: center;
+        text-decoration: none;
+        margin: 10px;
+    }
+
+    &__title {
+        color: $color_basic;
+        justify-self: center;
+        margin-bottom: 40px;
+    }
+
+    &__button {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .backend-error-message {
+        color: $color_errors;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,116 @@
+@use "@/variables.scss";
+
+button {
+    outline: none;
+    border: none;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: $button-font-family-main;
+    font-size: $button-font-size;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.button {
+
+    &_primary {
+        background-color: $background-color-button-main;
+        color: $color-button-main;
+    }
+
+    &_primary:hover {
+        background-color: $background-color-button-main-hover;
+    }
+
+    &_secondary {
+        background-color: $background-color-button-secondary;
+        color: $color-button-secodary;
+    }
+
+    &_secondary:hover {
+        background-color: $background-color-button-secondary-hover;
+    }
+
+    &_error {
+        background-color: $background-color-button-error;
+        color: $color_errors;
+    }
+
+    &_error:hover {
+        background-color: $background-color-button-error-hover;
+    }
+
+    &_size {
+        &_sm {
+            padding: $button-padding_sm;
+            font-size: $button-font-size;
+        }
+        
+        &_md {
+            padding: $button-padding_md;
+            font-size: $button-font-size_md;
+        }
+
+        &_lg {
+            padding: $button-padding_lg;
+            font-size: $button-font-size_lg;
+        }
+    }
+
+    &_border-radius {
+        &_sm {
+            border-radius: $button-border-radius_sm;
+        }
+        
+        &_md {
+            border-radius: $button-border-radius_md;
+        }
+    }
+
+    &_text {
+        background-color: transparent;
+        color: black;
+    }
+
+    &_contrast {
+        border-color: #152242;
+        background-color: white;
+    }
+
+    &_full {
+        width: 100%;
+    }
+}
+
+.search__button {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+
+
+}
+
+.string_menu-button {
+    position: relative;
+    height: 60px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    border-right: $nav-border-bottom-line-width 
+        $nav-border-bottom-line-style
+        $nav-border-bottom-line-color;
+    border-top-left-radius: 0;
+
+    
+    button {
+        color: $color_text_basic;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        font-weight: normal;
+    }
+}
+
+.button-container {
+}

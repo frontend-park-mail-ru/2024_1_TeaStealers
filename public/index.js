@@ -1,43 +1,23 @@
-import MainPage from './pages/main/main.js';
-import { checkAuth, getAdvertList } from './modules/api.js';
+import { router } from '@modules';
+import './index.scss';
+import {
+  AdvertView, ComplexView,
+  MainView, ProfileView,
+  NewAdvertView, MyAdvertView,
+  EditAdvertView, NavbarView,
+  ErrorView,
+} from '@views';
+import { authModel } from '@models';
 
-let isAuthenticated = false;
-let cardsData = [{
-  imgSrc: '',
-  shortDesc: '',
-  likeSrc: '',
-  adress: '',
-  fullprise: '',
-  description: '',
-}];
-
-async function checkAuthentication() {
-  const [statusCode, data] = await checkAuth();
-
-  if (statusCode === 200) {
-    console.log(data);
-    isAuthenticated = true;
-    return;
-  }
-  isAuthenticated = false;
-}
-
-async function getAdverts() {
-  const [statusCode, data] = await getAdvertList();
-  if (statusCode !== 200) {
-    return;
-  }
-  cardsData = data.map((ad, index) => ({
-    imgSrc: `/static/room${index + 1}.jpg`,
-    shortDesc: ad.description,
-    likeSrc: '/static/save.svg',
-    adress: ad.location,
-    fullprice: ad.price,
-  }));
-}
-
-Promise.all([checkAuthentication(), getAdverts()])
-  .then(() => {
-    const main = new MainPage(document.getElementById('app'), { isAuthenticated, cards: cardsData });
-    main.render();
-  });
+const navbar = new NavbarView();
+navbar.render();
+router.register('/', MainView);
+router.register('/error', ErrorView);
+router.register('/profile/', ProfileView, true);
+router.register('/adverts/', AdvertView);
+router.register('/complex/', ComplexView);
+router.register('/new-advert/', NewAdvertView, true);
+router.register('/my-advert/', MyAdvertView, true);
+router.register('/edit-advert/', EditAdvertView, true);
+router.start();
+document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));

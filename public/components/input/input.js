@@ -1,3 +1,6 @@
+import { BaseComponent } from '@components';
+import input from './input.hbs';
+
 const DEFAULT_INPUT = {
   position: 'beforeend',
   id: '',
@@ -5,31 +8,43 @@ const DEFAULT_INPUT = {
   placeholder: '',
   isPassword: '',
   isError: '',
+  label: '',
+  value: '',
+  file: '',
+  multiple: false,
 };
 
 /**
  * Класс компонента инпута
  */
-export default class Input {
-  state;
-
-  #parent;
-
+export class Input extends BaseComponent {
   /**
    * Создает новый экземпляр инпута.
    * @param {HTMLElement} parent - Родительский элемент, к которому будет добавлен инпут.
    * @param {Object} [state=DEFAULT_INPUT] - Начальное состояние инпута.
    */
   constructor(parent, state = DEFAULT_INPUT) {
-    this.state = { ...DEFAULT_INPUT, ...state };
-    this.#parent = parent;
+    const template = input;
+    state = { ...DEFAULT_INPUT, ...state };
+    super({ parent, template, state });
   }
 
-  /**
-  * Получение элемента инпута
-  */
-  get self() {
-    return document.getElementById(this.state.id);
+  render() {
+    if (document.getElementById(this.parent) !== null) {
+      document.getElementById(this.parent).insertAdjacentHTML(
+        this.state.position,
+        this.template(this.state),
+      );
+      this.componentLink = document.getElementById(this.parent).lastChild;
+    }
+  }
+
+  getValue() {
+    return this.self.querySelector('input').value;
+  }
+
+  setValue(value) {
+    this.self.querySelector('input').value = value;
   }
 
   /**
@@ -47,15 +62,5 @@ export default class Input {
   removeError() {
     this.self.querySelector('input').classList.remove('error-border');
     this.self.querySelector('.error-message').textContent = '';
-  }
-
-  /**
-   * Отрисовывает элемент ввода и добавляет его к родительскому элементу.
-   */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      this.state.position,
-      window.Handlebars.templates['input.hbs'](this.state),
-    );
   }
 }

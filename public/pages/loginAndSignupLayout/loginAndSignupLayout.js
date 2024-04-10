@@ -1,15 +1,10 @@
-import LoginForm from '../../components/loginForm/loginForm.js';
-import SignupForm from '../../components/signupForm/signupForm.js';
-import '../../templates/handlebars.precompiled.js';
+import { BaseComponent, LoginForm, SignupForm } from '@components';
+import LoginAndSignupLayoutTemplate from './loginAndSignupLayout.hbs';
 
 /**
  * Класс страницы логина или регистрации
  */
-export default class LoginAndSignupLayout {
-  state;
-
-  #parent;
-
+export class LoginAndSignupLayout extends BaseComponent {
   page;
 
   /**
@@ -18,22 +13,35 @@ export default class LoginAndSignupLayout {
    * @param {Object} [state] - Флаг оттрисовки логина или регистрации
    */
   constructor(parent, state) {
-    this.#parent = parent;
+    const template = LoginAndSignupLayoutTemplate;
+
+    const loginForm = new LoginForm('modalForm', {
+      id: 'login-form',
+      closeModal: state.closeModal,
+    });
+    const innerComponents = [loginForm];
+    super({
+      parent, template, state, innerComponents,
+    });
     this.state = state;
+    this.page = loginForm;
   }
 
   /**
-   * Возвращает элесент страницы логина или регистрации
+   * Добавление обработчиков
    */
-  get self() {
-    return this.#parent.querySelector('.modal');
+  componentDidMount() {
+    this.addListenerSignup();
+    this.innerComponents.forEach((component) => {
+      component.componentDidMount();
+    });
   }
 
   /**
    * Добавляет обработчик события при переходе к странице логина
    */
   addListenerLogin() {
-    const signupFormLink = this.page.self.querySelector('.signup-form__link');
+    const signupFormLink = document.querySelector('.signup-form__link');
     signupFormLink.addEventListener('click', this.goToLogin.bind(this));
   }
 
@@ -41,7 +49,7 @@ export default class LoginAndSignupLayout {
    * Добавляет обработчик события при переходе на страницу регистрации
    */
   addListenerSignup() {
-    const loginFormLink = this.page.self.querySelector('.login-form__link');
+    const loginFormLink = document.querySelector('.login-form__link');
     loginFormLink.addEventListener('click', this.goToSignup.bind(this));
   }
 
@@ -52,12 +60,12 @@ export default class LoginAndSignupLayout {
   goToSignup(event) {
     event.preventDefault();
     this.state.page = 'signup';
-    this.page.removeListeners();
-    this.page = new SignupForm(document.querySelector('.modal__form'), {
+    this.page.unmountAndClean();
+    this.page = new SignupForm('modalForm', {
+      id: 'signup-form',
       closeModal: this.state.closeModal,
-      renderButtonLog: this.state.renderButtonLog,
     });
-    this.page.render();
+    this.page.renderAndDidMount();
     this.addListenerLogin();
   }
 
@@ -68,38 +76,29 @@ export default class LoginAndSignupLayout {
   goToLogin(event) {
     event.preventDefault();
     this.state.page = 'login';
-    this.page.removeListeners();
-    this.page = new LoginForm(document.querySelector('.modal__form'), {
+    this.page.unmountAndClean();
+    this.page = new LoginForm('modalForm', {
+      id: 'login-form',
       closeModal: this.state.closeModal,
-      renderButtonLog: this.state.renderButtonLog,
     });
-    this.page.render();
+    this.page.renderAndDidMount();
     this.addListenerSignup();
   }
 
   /**
  * Удаляет обработчики событий
  */
-  removeListeners() {
-    if (this.goToLogin !== undefined) {
+  componentWillUnmount() {
+    if (this.page.self.querySelector('.login-form__link') !== null) {
       this.page.self.querySelector('.login-form__link').removeEventListener('click', this.goToLogin.bind(this));
     }
-    if (this.goToSignup !== undefined) {
+    if (this.page.self.querySelector('.signup-form__link') !== null) {
       this.page.self.querySelector('.signup-form__link').removeEventListener('click', this.goToSignup.bind(this));
     }
   }
 
-  /**
-    * Отрисовка страницы модального окна авторизации/регистрации
-    */
-  render() {
-    this.#parent.insertAdjacentHTML(
-      'beforeend',
-      window.Handlebars.templates['loginAndSignupLayout.hbs'](),
-    );
-    this.page = new LoginForm(document.querySelector('.modal__form'), { closeModal: this.state.closeModal, renderButtonLog: this.state.renderButtonLog });
-    this.page.render();
-
-    this.addListenerSignup();
+  clean() {
+    this.page.clean();
+    document.getElementById(this.parent).innerHTML = '';
   }
 }

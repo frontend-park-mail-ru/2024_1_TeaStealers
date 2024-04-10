@@ -1,0 +1,48 @@
+@use "@/variables.scss";
+
+.dropMenu {
+  position: absolute;
+  background-color: $background-color-main;
+  min-width: 60%;
+  border-radius: $menu-border-radius_md;
+  margin-top: 10px;
+}
+
+.checkbox_form {
+  width: 14px;
+  height: 14px;
+}
+
+.home-type_list {
+  list-style: none;
+  padding-left: 10px;
+}
+
+.home-type_checkbox {
+  text-align: left;
+}
+
+.room-number_list {
+  list-style: none;
+  padding-left: 10px;
+  width: 150px;
+}
+
+.room-number_checkbox {
+  text-align: left;
+}
+
+.dropMenu__price-range {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  input {
+    width: 100px;
+    height: 30px;
+    margin: 0 10px;
+  }
+}
+
+.hidden {
+  display: none;
+}

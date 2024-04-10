@@ -1,0 +1,133 @@
+@use "@/variables.scss";
+
+input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid grey;
+    border-radius: $button-border-radius_sm;
+    font-size: 16px;
+    padding: 0px 8px;
+    color: $color_text_basic;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid grey;
+        border-radius: $button-border-radius_sm;
+        font-size: 16px;
+        padding: 0px 8px;
+        color: $color_text_basic;
+    }
+}
+
+.input_border-radius_md {
+    border-radius: $input-border-radius_md;
+}
+
+.search {
+
+    &__input {
+    border: none; 
+    outline: none; 
+    padding: 0;
+    padding-left: 10px; 
+    font-size: $button-font-size; 
+    font-family: $button-font-family-main;
+    height: 100%;
+    width: 100%;
+    }
+
+    &__input::placeholder {
+        color: $placeholder_color; 
+        font-size: $button-font-size;   
+        font-family: $button-font-family-main;    
+    }
+
+} 
+
+.error {
+
+    &-message {
+    color: $color_errors;
+    width: 100%;
+    height: 32px;
+    margin: 2px 0px;
+    padding-left: 8px;
+    font-size: 14px;
+    }
+
+    &-border {
+        border: 1px solid $color_errors;
+    }
+}
+
+.label {
+    color: $color_text_basic;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.modal__input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-file {
+
+    &__input {
+        border: none;
+        opacity: 0;
+        position: absolute;
+        width: 150px;
+        height: 34px;
+        cursor: pointer;
+    }
+
+    &__span {
+        width: 0px;
+        height: 0px;
+    }
+
+    &__label-span {
+        width: 100%;
+        height: 34px;
+        background: $background-color-button-secondary;
+        color: $color-button-secodary;
+        font-size: 16px;
+        font-weight: bold;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        border-radius: 3px;
+        cursor: pointer;
+        margin: 0 auto;
+        padding: 0px 15px;
+        z-index: 10;
+    }
+
+    &__label {
+        line-height: 1;
+        margin-top: 1px;
+    }
+
+    &__label-span:hover {
+        background: $background-color-button-secondary-hover;
+    }
+}

@@ -1,0 +1,89 @@
+<div id="paramsBlock" class="params">
+    <h2>{{title}}</h2>
+    {{#if flat}}
+    <div class="radio-inputs">
+        <div class="radio-inputs__container">
+            <div>Тип недвижимости</div>
+            <div class="radio-inputs__group">
+                <div>
+                    <input id="radioApartament" type="radio" name="apartament" value="false" checked>
+                    <label for="radioApartament">Квартира</label>
+                </div>
+                <div>
+                    <input id="radioNoApartament" type="radio" name="apartament" value="true">
+                    <label for="radioNoApartament">Апартаменты</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="paramsFlatInputs" class="params-inputs"></div>
+    {{/if}}
+    {{#if house}}
+    <div class="radio-inputs">
+        <div class="radio-inputs__container">
+            <div>Тип дома</div>
+            <div class="radio-inputs__group">
+                <div>
+                    <input id="radioCottage" type="radio" name="cottage" value="false" checked>
+                    <label for="radioCottage">Для постоянного проживания</label>
+                </div>
+                <div>
+                    <input id="radioNoCottage" type="radio" name="cottage" value="true">
+                    <label for="radioNoCottage">Дача</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="paramsHouseInputs" class="params-inputs"></div>
+    <div class="radio-inputs">
+        <div class="radio-inputs__container">
+            <div>Состояние дома</div>
+            <div class="radio-inputs__group">
+                <div>
+                    <input id="radioLive" type="radio" name="statusHome" value="Live" checked>
+                    <label for="radioLive">Можно жить</label>
+                </div>
+                <div>
+                    <input id="radioRepair" type="radio" name="statusHome" value="RepairNeed">
+                    <label for="radioRepair">Нужен ремонт</label>
+                </div>
+                <div>
+                    <input id="radioComplete" type="radio" name="statusHome" value="CompleteNeed">
+                    <label for="radioComplete">Нужно достроить</label>
+                </div>
+                <div>
+                    <input id="radioRenovation" type="radio" name="statusHome" value="Renovation">
+                    <label for="radioRenovation">Нужен капремонт или под снос</label>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="radio-inputs">
+        <div class="radio-inputs__container">
+            <div>Статус участка</div>
+            <div class="radio-inputs__group">
+                <div>
+                    <input id="radioIHC" type="radio" name="statusArea" value="IHC">
+                    <label for="radioIHC">ИЖС</label>
+                </div>
+                <div>
+                    <input id="radioDNP" type="radio" name="statusArea" value="DNP">
+                    <label for="radioDNP">ДНП</label>
+                </div>
+                <div>
+                    <input id="radioG" type="radio" name="statusArea" value="G">
+                    <label for="radioG">Садоводство</label>
+                </div>
+                <div>
+                    <input id="radioF" type="radio" name="statusArea" value="F">
+                    <label for="radioF">Фермерское хозяйство</label>
+                </div>
+                <div>
+                    <input id="radioPSP" type="radio" name="statusArea" value="PSP" checked>
+                    <label for="radioPSP">ЛПХ</label>
+                </div>                
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>

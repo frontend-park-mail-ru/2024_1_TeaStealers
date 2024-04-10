@@ -1,0 +1,26 @@
+@import "@/variables.scss";
+
+.error-page {
+    width: 100%;
+    padding-top: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    font-family: $font-family-main;
+    color: $color_text_basic;
+
+    h1 {
+        margin: 0;
+    }
+    a {
+        cursor: pointer;
+        font-size: 16px;
+        background-color: $background-color-button-secondary;
+        padding: 8px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        color: $color_text_highlight;
+    }
+}

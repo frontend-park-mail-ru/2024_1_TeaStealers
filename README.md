@@ -7,4 +7,4 @@ CIAN reimagined
 
 ## Deploy
 
-[Tean](http://5.35.16.157). - ссылка на деплой.
+[Tean](https://tean.homes) - ссылка на деплой.
