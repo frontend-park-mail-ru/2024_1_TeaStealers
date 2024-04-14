@@ -21,6 +21,11 @@ export class BaseComponent {
     return document.getElementById(this.state?.id);
   }
 
+  /**
+   *
+   * @param {string} path - Путь, на который осуществляется переход
+   * @returns {HTMLObject}
+   */
   redirect(path) {
     router.go(path);
     return document.getElementById(this.state?.id);
@@ -28,8 +33,8 @@ export class BaseComponent {
 
   /**
      * Проверяет равенство объектов состояния
-     * @param {State} state - состояние, в которое необходимо привести элемент
-     * @returns
+     * @param {State} state - Состояние, в которое необходимо привести элемент
+     * @returns {bool} - Результат проверки
      */
   checkState(state) {
     if (!state || !this.state) {
@@ -41,7 +46,7 @@ export class BaseComponent {
   }
 
   /**
-     * Производить отрисовку элемента и добавление листенеров
+     * Производит отрисовку элемента и добавление обработчиков
      */
   renderAndDidMount() {
     this.render();
@@ -66,7 +71,7 @@ export class BaseComponent {
   }
 
   /**
-     * Добавление листенеров
+     * Добавление обработчиков
      */
   componentDidMount() {
     this.innerComponents.forEach((component) => {
@@ -90,10 +95,20 @@ export class BaseComponent {
     }
   }
 
+  /**
+   * Функция добавления обработчика на событие 'click'
+   * @param {string} id - id эемента
+   * @param {*} handler - обработчик
+   */
   addClickListener(id, handler) {
     document.getElementById(id)?.addEventListener('click', handler);
   }
 
+  /**
+   * Функция удаления обработчика на событие 'click'
+   * @param {string} id - id эемента
+   * @param {*} handler - обработчик
+   */
   removeClickListener(id, handler) {
     document.getElementById(id)?.removeEventListener('click', handler);
   }
@@ -132,7 +147,7 @@ export class BaseComponent {
   }
 
   /**
-     * Удаление листенеров
+     * Удаление обработчиков
      */
   componentWillUnmount() {
     this.innerComponents.forEach((component) => { return component.componentWillUnmount(); });
