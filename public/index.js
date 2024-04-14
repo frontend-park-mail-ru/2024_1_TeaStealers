@@ -9,6 +9,16 @@ import {
 } from '@views';
 import { authModel } from '@models';
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js', { scope: '/' })
+    .then((reg) => {
+      console.log('SW register', reg);
+    })
+    .catch((e) => {
+      console.log('SW error', e);
+    });
+}
+
 const navbar = new NavbarView();
 navbar.render();
 router.register('/', MainView);
