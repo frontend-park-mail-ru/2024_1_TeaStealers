@@ -4,7 +4,6 @@ const CACHE_NAME = 'SW cache';
  * Добавление обработчика на событие установки SW
  */
 self.addEventListener('install', (event) => {
-  console.log('install');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {

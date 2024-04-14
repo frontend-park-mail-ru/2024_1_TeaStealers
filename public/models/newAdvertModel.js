@@ -10,7 +10,6 @@ class NewAdvertModel {
    * Обновление данных
    */
   async updateState() {
-    console.log('update new advert');
   }
 
   /**

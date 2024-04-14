@@ -30,7 +30,6 @@ export class ComplexPage extends BaseComponent {
   componentDidUpdate(event) {
     if (event.name === events.GET_COMPLEX_BY_ID) {
       this.unmountAndClean();
-      console.log(event.data);
       this.state = { ...event.data };
       const dateBegin = new Date(this.state.dateBeginBuild);
       const dateEnd = new Date(this.state.dateEndBuild);
@@ -39,7 +38,6 @@ export class ComplexPage extends BaseComponent {
       this.state.dateBeginBuild = dateBeginString;
       this.state.dateEndBuild = dateEndString;
       this.renderAndDidMount();
-      console.log(this.state);
     }
     if (event.name === events.GET_COMPLEX_ADVERTS_BY_ID) {
       this.innerComponents.forEach((component) => {
