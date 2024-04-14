@@ -58,6 +58,11 @@ export class Navbar extends BaseComponent {
     this.btnLogin = buttonLoginLogout;
   }
 
+  /**
+   * Отображение кнопки 'Войти' или 'Мой аккаунт' в зависимости от состояния аутентификации
+   * @param {bool} isAuth - Состояние аутентификации
+   * @returns
+   */
   chooseLoginButton(isAuth) {
     if (isAuth) {
       return new Button('rightside', {
@@ -86,6 +91,9 @@ export class Navbar extends BaseComponent {
     this.addClickListener('rent', this.goToRent.bind(this));
   }
 
+  /**
+   * Удаление обработчиков
+   */
   componentWillUnmount() {
     this.removeListenersClose();
     this.removeListenersOpen();
@@ -95,6 +103,11 @@ export class Navbar extends BaseComponent {
       ?.removeEventListener('click', this.goToRent.bind(this));
   }
 
+  /**
+   * Изменение состояния элемента
+   * @param {Object} event - Событие изменения состояния
+   * @returns
+   */
   componentDidUpdate(event) {
     if (event.name === events.AUTH) {
       if (this.state.isAuthenticated === event.data) {
@@ -109,6 +122,9 @@ export class Navbar extends BaseComponent {
     }
   }
 
+  /**
+   * Перейти на главную страницу с фильтром покупки
+   */
   goToBuy() {
     const queryParameters = {};
     queryParameters.dealtype = 'Sale';
@@ -116,6 +132,9 @@ export class Navbar extends BaseComponent {
     this.redirect('/');
   }
 
+  /**
+   * Перейти на главную страницу с фильтром аренды
+   */
   goToRent() {
     const queryParameters = {};
     queryParameters.dealtype = 'Rent';
@@ -124,7 +143,7 @@ export class Navbar extends BaseComponent {
   }
 
   /**
-   * Открывает модально окно
+   * Открывает модальное окно
    * @param {Event} event - событие, которое вызвало обработчик
    */
   openModal(event) {
@@ -139,11 +158,19 @@ export class Navbar extends BaseComponent {
     document.querySelector('.modal__close-button').addEventListener('click', this.closeModal.bind(this));
   }
 
+  /**
+   * Переход на страницу профиля
+   * @param {Object} event - Отслеживаемое событие
+   */
   goToProfile(event) {
     event.preventDefault();
     this.redirect('/profile/');
   }
 
+  /**
+   * Переход на страницу создания объявления
+   * @param {Object} event - Отслеживаемое событие
+   */
   goToNewAdvert(event) {
     event.preventDefault();
     if (this.state.isAuthenticated) {
@@ -153,6 +180,10 @@ export class Navbar extends BaseComponent {
     }
   }
 
+  /**
+   * Переход на главную страницу
+   * @param {Object} event - Отслеживаемое событие
+   */
   goToMain(event) {
     event.preventDefault();
     this.redirect('/');

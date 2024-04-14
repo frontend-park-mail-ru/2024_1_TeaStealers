@@ -53,7 +53,7 @@ export class LoginForm extends BaseComponent {
   }
 
   /**
-   * Добавляет листенеры
+   * Добавление обработчиков
    */
   componentDidMount() {
     this.addListener(this.loginInput, 'input', 'input', this.formatPhoneNumber.bind(this));

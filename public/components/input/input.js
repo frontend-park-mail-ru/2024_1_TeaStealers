@@ -29,6 +29,9 @@ export class Input extends BaseComponent {
     super({ parent, template, state });
   }
 
+  /**
+   * Отображение элемента
+   */
   render() {
     if (document.getElementById(this.parent) !== null) {
       document.getElementById(this.parent).insertAdjacentHTML(
@@ -39,10 +42,18 @@ export class Input extends BaseComponent {
     }
   }
 
+  /**
+   * Получение значения
+   * @returns {string} - Значение поля
+   */
   getValue() {
     return this.self.querySelector('input').value;
   }
 
+  /**
+   * Задание значения поля
+   * @param {string} value - Задаваемое полю значение
+   */
   setValue(value) {
     this.self.querySelector('input').value = value;
   }
