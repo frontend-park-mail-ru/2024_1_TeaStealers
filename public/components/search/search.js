@@ -139,6 +139,9 @@ export class Search extends BaseComponent {
     this.dealType = 'Sale';
   }
 
+  /**
+   * Добавление обработчиков
+   */
   componentDidMount() {
     document.querySelector('#searchBtn').addEventListener('click', this.search.bind(this));
     this.addListener(this.homeType, 'button', 'click', this.openMenu.bind(this.homeType));
@@ -173,6 +176,10 @@ export class Search extends BaseComponent {
     }
   }
 
+  /**
+   * Обработчик открытия всплывающего меню
+   * @param {Object} menuButton - Отслеживаемое событие
+   */
   openMenu(menuButton) {
     const parentDivForButton = menuButton.target.parentElement;
     const documentmenus = document.getElementsByClassName('dropMenu');
@@ -185,6 +192,10 @@ export class Search extends BaseComponent {
     menu.classList.toggle('hidden');
   }
 
+  /**
+   * Выбор параметра дом/квартира
+   * @param {Object} event - Отслеживаемое событие
+   */
   chooseHomeType(event) {
     this.flatFilter = event.target.value;
     let menuButton = event.target;
@@ -218,6 +229,10 @@ export class Search extends BaseComponent {
     menuButton.firstElementChild.innerText = message;
   }
 
+  /**
+   * Выбор параметра количество комнат
+   * @param {Object} event - Отслеживаемое событие
+   */
   chooseRoomNember(event) {
     this.roomCounter = event.target.value;
     let menuButton = event.target;
@@ -248,6 +263,10 @@ export class Search extends BaseComponent {
     menuButton.firstElementChild.innerText = message;
   }
 
+  /**
+   * Смена активного фильтра купить/снять
+   * @param {Object} event - Отслеживаемое событие
+   */
   changeFilter(event) {
     let filterElement = event.target;
     if (!filterElement.classList.contains('search__filter-link')) {
@@ -268,6 +287,10 @@ export class Search extends BaseComponent {
     filterElement.classList.add('filter-link_active');
   }
 
+  /**
+   * Выбор интервала цены
+   * @param {Object} event - Отслеживаемое событие
+   */
   choosePrice(event) {
     let menuButton = event.target;
     let dropMenu;
@@ -303,6 +326,11 @@ export class Search extends BaseComponent {
     }
   }
 
+  /**
+   * Скрытие выпадающего меню
+   * @param {Object} event - Отслеживаемое событие
+   * @returns
+   */
   closeMenu(event) {
     let currentObj = event.target;
     while (currentObj !== null) {
@@ -328,19 +356,19 @@ export class Search extends BaseComponent {
     });
   }
 
+  /**
+   * Сохранение записанных в поисковую строку данных
+   * @param {Object} event - Отслеживаемое событие
+   */
   saveInput(event) {
     this.adress = event.target.value;
   }
 
+  /**
+   * Обработчик поиска
+   */
   search() {
     const queryParameters = {};
-    // if (this.flatFilter === 1) {
-    //   queryParameters.adverttype = 'Flat';
-    // } else if (this.flatFilter === 2) {
-    //   queryParameters.adverttype = 'House';
-    // } else {
-    //   queryParameters.adverttype = '';
-    // }
     queryParameters.adverttype = this.flatFilter;
     queryParameters.adress = `${this.adress}`;
     queryParameters.dealtype = `${this.dealType}`;
@@ -350,6 +378,9 @@ export class Search extends BaseComponent {
     mainControler.updateMainModelWithParameters(queryParameters);
   }
 
+  /**
+   * Удаление обработчиков
+   */
   componentWillUnmount() {
     document.querySelector('#searchBtn').removeEventListener('click', this.search.bind(this));
     this.removeListener(this.homeType, 'button', 'click', this.openMenu.bind(this.homeType));

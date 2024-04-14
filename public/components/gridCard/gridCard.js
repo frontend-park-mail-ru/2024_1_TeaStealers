@@ -23,6 +23,9 @@ export class GridCard extends BaseComponent {
     });
   }
 
+  /**
+   * Добавление обработчиков
+   */
   componentDidMount() {
     document.querySelectorAll('.gridCards__card').forEach((card) => {
       card.querySelector('a').addEventListener('click', this.goToAdvert.bind(this));
@@ -35,6 +38,9 @@ export class GridCard extends BaseComponent {
     });
   }
 
+  /**
+   * Удаление обработчиков
+   */
   componentWillUnmount() {
     document.querySelectorAll('gridCard__mini-card').forEach((card) => {
       card.querySelector('a').removeEventListener('click', this.goToAdvert.bind(this));
@@ -47,6 +53,10 @@ export class GridCard extends BaseComponent {
     });
   }
 
+  /**
+   * Обновление состояния
+   * @param {Object} event - Событие обновления данных
+   */
   componentDidUpdate(event) {
     if (event.name === events.GET_ADVERTS_MAIN) {
       this.unmountAndClean();
@@ -61,6 +71,10 @@ export class GridCard extends BaseComponent {
     }
   }
 
+  /**
+   * Переход на страницу объявления
+   * @param {Object} event - Отслеживаемое событие
+   */
   goToAdvert(event) {
     event.preventDefault();
     let href = event.target.parentElement.parentElement.getAttribute('href');
@@ -70,6 +84,10 @@ export class GridCard extends BaseComponent {
     this.redirect(href);
   }
 
+  /**
+   * Удаление объявления
+   * @param {Object} event - Отслеживаемое событие
+   */
   async deleteAdvert(event) {
     event.preventDefault();
     const idAdvert = event.target.getAttribute('href');
@@ -81,6 +99,10 @@ export class GridCard extends BaseComponent {
     await myAdvertModel.getMyAdverts();
   }
 
+  /**
+   * Переход на страницу редактирования объявления
+   * @param {Object} event - Отслеживаемое событие
+   */
   editAdvert(event) {
     event.preventDefault();
     const href = event.target.getAttribute('href');

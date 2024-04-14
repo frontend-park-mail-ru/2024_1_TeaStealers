@@ -8,6 +8,9 @@ import {
 import { events, globalVariables } from '@models';
 import editAdvert from './editAdvert.hbs';
 
+/**
+ * Класс страницы редактирования объявления
+ */
 export class EditAdvert extends BaseComponent {
   object;
 
@@ -19,6 +22,11 @@ export class EditAdvert extends BaseComponent {
 
   editAdvert;
 
+  /**
+    * Создает новый экземпляр страницы редактирования объявления
+    * @param {HTMLElement} parent - Родительский элемент
+    * @param {Object} [state] - Начальное состояние страницы редактирования объявления
+    */
   constructor(parent, state) {
     const template = editAdvert;
     state = { ...state };
@@ -119,7 +127,7 @@ export class EditAdvert extends BaseComponent {
   }
 
   /**
-     * Добавление листенеров
+     * Добавление обработчиков
      */
   componentDidMount() {
     document.getElementById('flat').addEventListener('change', this.changeObject.bind(this));
@@ -134,6 +142,10 @@ export class EditAdvert extends BaseComponent {
     super.componentDidMount();
   }
 
+  /**
+   * Обновление данных
+   * @param {Object} event - Пришедшее событие обновления данных
+   */
   componentDidUpdate(event) {
     if (event.name === events.GET_ADVERT_BY_ID_FOR_EDIT) {
       this.setValues(event.data);
@@ -141,12 +153,15 @@ export class EditAdvert extends BaseComponent {
   }
 
   /**
-     * Удаление листенеров
+     * Удаление обработчиков
      */
   componentWillUnmount() {
     super.componentWillUnmount();
   }
 
+  /**
+   * Изменение объектов меню
+   */
   changeObject() {
     const flatRadio = document.getElementById('flat');
     const houseRadio = document.getElementById('house');
@@ -169,6 +184,10 @@ export class EditAdvert extends BaseComponent {
     this.params.componentDidUpdate({ name: events.CHANGE_OBJECT, data: state });
   }
 
+  /**
+   * Валидация года постройки
+   * @returns bool - Результат проверки валидности
+   */
   validateYear() {
     const year = this.inputYear.self.querySelector('input').value;
     const [textError, isVal] = checkYear(year);
@@ -180,6 +199,10 @@ export class EditAdvert extends BaseComponent {
     return true;
   }
 
+  /**
+   * Валидация этажа
+   * @returns bool - Результат проверки валидности
+   */
   validateFloor() {
     const floor = this.self.querySelector('input').value;
     const [textError, isVal] = checkFloor(floor);
@@ -191,6 +214,10 @@ export class EditAdvert extends BaseComponent {
     return true;
   }
 
+  /**
+   * Валидация высоты потолка
+   * @returns bool - Результат проверки валидности
+   */
   validateHeight() {
     const { value } = this.inputHeight.self.querySelector('input');
     let formatedValue = '';
@@ -202,8 +229,9 @@ export class EditAdvert extends BaseComponent {
   }
 
   /**
- * Валидирует номер телефона
- */
+   * Валидация номера телефона
+   * @returns bool - Результат проверки валидности
+   */
   formatPhoneNumber() {
     const { value } = this.inputPhone.self.querySelector('input');
 
@@ -217,6 +245,11 @@ export class EditAdvert extends BaseComponent {
     return false;
   }
 
+  /**
+   * Получение значения в поле
+   * @param {string} name - Название поля
+   * @returns {string} - Значение поля
+   */
   getValueRadio(name) {
     const radioButtons = document.querySelectorAll(`input[name="${name}"]`);
     let selectedValue = null;
@@ -229,6 +262,11 @@ export class EditAdvert extends BaseComponent {
     return selectedValue;
   }
 
+  /**
+   * Задание поля значением
+   * @param {string} name - Имя поля
+   * @param {string} value - Устанавлеваемое значение поля
+   */
   setValueRadio(name, value) {
     const radioButtons = document.querySelectorAll(`input[name="${name}"]`);
     radioButtons.forEach((radioButton) => {
@@ -238,6 +276,9 @@ export class EditAdvert extends BaseComponent {
     });
   }
 
+  /**
+   * Обработка события добавления фото
+   */
   uploadImageHandler() {
     this.changeImages = true;
     document.getElementById('uploadImageError').textContent = '';
@@ -259,6 +300,9 @@ export class EditAdvert extends BaseComponent {
     }
   }
 
+  /**
+   * Валидация возможности и сохранение данных
+   */
   async saveHandler() {
     document.getElementById('saveInfo').textContent = '';
     if (!this.isValidImages) {
@@ -297,6 +341,9 @@ export class EditAdvert extends BaseComponent {
     }
   }
 
+  /**
+   * Валидация возможности и изменение данных
+   */
   async editHandler() {
     document.getElementById('saveInfo').textContent = '';
     if (!this.isValidImages && this.changeImages) {
@@ -380,6 +427,10 @@ export class EditAdvert extends BaseComponent {
     }
   }
 
+  /**
+   * Получение значений всех полей
+   * @returns {Object} - Объект значений полей
+   */
   getValues() {
     const isAgent = this.getValueRadio('isAgent');
     const typeDeal = this.getValueRadio('deal');
@@ -451,6 +502,10 @@ export class EditAdvert extends BaseComponent {
     return data;
   }
 
+  /**
+   * Установка всех полей заданными значениями
+   * @param {Object} state - Объект задаваемых значений
+   */
   setValues(state) {
     const countImages = state.images.length;
     document.getElementById('uploadImageInfo').textContent = `Загружено фотографий: ${countImages}`;
