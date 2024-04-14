@@ -18,6 +18,9 @@ export class Menu extends BaseComponent {
     super({ parent, template, state });
   }
 
+  /**
+   * Добавление обработчиков
+   */
   componentDidMount() {
     this.addClickListener('menu_logout', this.logout.bind(this));
     this.addClickListener('menu_profile', this.toProfile.bind(this));
@@ -26,6 +29,9 @@ export class Menu extends BaseComponent {
     super.componentDidMount();
   }
 
+  /**
+   * Удаление обработчиков
+   */
   componentWillUnmount() {
     this.removeClickListener('menu_logout', this.logout.bind(this));
     this.removeClickListener('menu_profile', this.toProfile.bind(this));
@@ -34,6 +40,9 @@ export class Menu extends BaseComponent {
     super.componentWillUnmount();
   }
 
+  /**
+   * Выход из аккаунта
+   */
   async logout() {
     const [codeStatus, ,] = await logout();
     if (codeStatus === globalVariables.HTTP_STATUS_OK) {
@@ -42,14 +51,23 @@ export class Menu extends BaseComponent {
     }
   }
 
+  /**
+   * Перейти на страницу профиля
+   */
   toProfile() {
     this.redirect('/profile/');
   }
 
+  /**
+   * Перейти к моим объявлениям
+   */
   toMyAdvert() {
     this.redirect('/my-advert/');
   }
 
+  /**
+   * Перейти к созданию нового объявления
+   */
   toNewAdvert() {
     this.redirect('/new-advert/');
   }

@@ -7,7 +7,7 @@ export class ComplexView {
     this.parent = 'app';
     complexModel.addObserver(this);
     this.advertPage = new ComplexPage(this.parent, {});
-    complexModel.updateState(this.advertId);
+    complexModel.updateState(id);
   }
 
   /**

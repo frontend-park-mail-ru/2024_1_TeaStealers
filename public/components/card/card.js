@@ -1,21 +1,6 @@
 import { BaseComponent, Button } from '@components';
 import card from './card.hbs';
 
-const DEFAULT_CARD = {
-  id: '',
-  parentID: '',
-  imgSrc: '../../static/room1.jpg',
-  cardLink: '',
-  shortDesc: '',
-  releaseDate: '',
-  likeSrc: '',
-  adress: '',
-  fullprice: '',
-  pricePerMetr: '',
-  description: '',
-  phone: 'phone',
-};
-
 /**
  * Класс компонента карточки объявления
  */
@@ -43,24 +28,38 @@ export class Card extends BaseComponent {
     [this.viewContact] = this.innerComponents;
   }
 
+  /**
+   * Метод добавления обработчиков
+   */
   componentDidMount() {
     this.addListener(this.viewContact, '', 'click', this.viewContactListener.bind(this));
     document.querySelector(`#href${this.state.advertId}`)
-      .addEventListener('click', this.goToAdvert.bind(this));
+      ?.addEventListener('click', this.goToAdvert.bind(this));
   }
 
+  /**
+   * Функция осуществляет переход к странице объявления по ссылке
+   * @param {Object} event - Обрабатываемое событие
+   */
   goToAdvert(event) {
     event.preventDefault();
     this.redirect(event.target.getAttribute('href'));
   }
 
+  /**
+   * Функция удаляет кнопку "Показать контакты" и отображает контакт
+   * @param {Object} event - Обрабатываемое событие
+   */
   viewContactListener(event) {
     event.target.parentElement.innerHTML = this.state.phone;
   }
 
+  /**
+   * Метод удаления обработчиков
+   */
   componentWillUnmount() {
     this.removeListener(this.viewContact, '', 'click', this.viewContactListener.bind(this));
     document.querySelector(`#href${this.state.advertId}`)
-      .removeEventListener('click', this.goToAdvert.bind(this));
+      ?.removeEventListener('click', this.goToAdvert.bind(this));
   }
 }

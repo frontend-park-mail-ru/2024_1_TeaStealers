@@ -11,15 +11,15 @@ const DEFAULT_FORM = {
 };
 
 /**
- * Класс компонента инпута
+ * Класс компонента формы профиля
  */
 export class ProfileForm extends BaseComponent {
   infoChange = false;
 
   /**
-   * Создает новый экземпляр инпута.
+   * Создает новый экземпляр формы профиля.
    * @param {HTMLElement} parent - Родительский элемент, к которому будет добавлен инпут.
-   * @param {Object} [state] - Начальное состояние инпута.
+   * @param {Object} [state] - Начальное состояние формы профиля.
    */
   constructor(parent, state) {
     const template = profileForm;
@@ -153,6 +153,10 @@ export class ProfileForm extends BaseComponent {
     super.componentWillUnmount();
   }
 
+  /**
+   * Валидация имени
+   * @returns {bool} - Результат валидации
+   */
   validateName() {
     const { value } = this.self.querySelector('input');
     const [errorText, isValid] = checkLogin(value);
@@ -164,6 +168,10 @@ export class ProfileForm extends BaseComponent {
     return false;
   }
 
+  /**
+   * Валидация даты
+   * @returns - Результат валидации
+   */
   validateDate() {
     const date = this.self.querySelector('input').value;
     const isValid = checkDateDirthday(date);
@@ -176,6 +184,10 @@ export class ProfileForm extends BaseComponent {
     return false;
   }
 
+  /**
+   * Валидация телефона
+   * @returns {bool} - Результат валидации
+   */
   validatePhone() {
     const { value } = this.self.querySelector('input');
     const [formatValue, isValid] = checkPhone(value);
@@ -189,6 +201,10 @@ export class ProfileForm extends BaseComponent {
     return false;
   }
 
+  /**
+   * Валидация почты
+   * @returns {bool} - Результат валидации
+   */
   validateEmail() {
     const { value } = this.self.querySelector('input');
     const isValid = checkEmail(value);
@@ -200,6 +216,10 @@ export class ProfileForm extends BaseComponent {
     return false;
   }
 
+  /**
+   * Валидация пароля
+   * @returns {bool} - Результат валидации
+   */
   validatePassword() {
     const pass = this.self.querySelector('input').value.trim();
     const [errorText, isValid] = checkPassword(pass);
@@ -211,6 +231,10 @@ export class ProfileForm extends BaseComponent {
     return false;
   }
 
+  /**
+   * Обновление компонента
+   * @param {Object} event - Событие обновления
+   */
   componentDidUpdate(event) {
     if (event.name !== events.ME) {
       return;
@@ -226,6 +250,9 @@ export class ProfileForm extends BaseComponent {
     }
   }
 
+  /**
+   * Обработчик сохранения значений полей
+   */
   async saveHandler() {
     const isValName = this.validateName.bind(this.inputName);
     const isValSecondName = this.validateName.bind(this.inputSecondName);
@@ -257,6 +284,9 @@ export class ProfileForm extends BaseComponent {
     }
   }
 
+  /**
+   * Обработчик смены пароля
+   */
   async changePasswordHandler() {
     const isValOld = this.validatePassword.bind(this.inputOldPassword);
     const isValNew = this.validatePassword.bind(this.inputNewPassword);
@@ -285,6 +315,9 @@ export class ProfileForm extends BaseComponent {
     }
   }
 
+  /**
+   * Обработчик загрузки аватара
+   */
   async uploadAvatar() {
     document.getElementById('profileForm__avatarError').textContent = '';
     const file = this.self.querySelector('input').files[0];
@@ -312,6 +345,11 @@ export class ProfileForm extends BaseComponent {
     }
   }
 
+  /**
+   * Отображение сообщения
+   * @param {string} text - текст сообщения
+   * @param {streing} elementId - id элемента
+   */
   renderOkMessage(text, elementId) {
     const okMessage = document.createElement('div');
     okMessage.id = 'okMessage';
