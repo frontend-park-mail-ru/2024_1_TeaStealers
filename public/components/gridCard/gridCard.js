@@ -15,6 +15,7 @@ export class GridCard extends BaseComponent {
       */
   constructor(parent, state) {
     const template = gridCard;
+
     state = { ...state };
 
     const innerComponents = [];
@@ -62,6 +63,9 @@ export class GridCard extends BaseComponent {
       this.unmountAndClean();
       this.state.miniCards = event.data.adverts;
       this.state = { ...this.state, ...event.data.pageInfo };
+      this.state.miniCards.forEach((card) => {
+        card.price = parseInt(card.price, 10).toLocaleString('ru-RU');
+      });
       this.renderAndDidMount();
     }
     if (event.name === events.GET_MY_ADVERTS) {

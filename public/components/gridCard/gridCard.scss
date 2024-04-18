@@ -65,10 +65,14 @@
         flex-direction: column;
         gap: 10px;
         padding: 0 10px;
+        max-width: 320px;
     }
 
     &__adress {
         color: $color_text_basic_secondary !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &__buttons {

@@ -46,22 +46,22 @@
     {{#each miniCards}}
         <div class="gridCards__card">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
-            <img src="/static/{{photo}}" alt="Фотография">
-            <div class="gridCards__description">
+                <img src="/static/{{photo}}" alt="Фотография">
+                <div class="gridCards__description">
 
-                <h2>{{price}} &#8381;</h2>
+                    <h2>{{price}} &#8381;</h2>
 
-                {{#if houseProperties}}
-                <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
-                {{/if}}
+                    {{#if houseProperties}}
+                    <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
+                    {{/if}}
 
-                {{#if flatProperties}}
-                <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
-                {{/if}}
+                    {{#if flatProperties}}
+                    <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
+                    {{/if}}
 
-                <span class="gridCards__adress">{{adress}}</span>    
+                    <span class="gridCards__adress">{{adress}}</span>    
 
-            </div>
+                </div>
             </a>
         </div>
     {{/each}}

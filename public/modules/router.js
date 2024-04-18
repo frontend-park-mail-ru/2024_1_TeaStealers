@@ -36,8 +36,6 @@ class Router {
      */
   go(path, isReplace) {
     this.error = false;
-    console.log(path, this.curPath);
-    console.log(path === this.curPath);
     if (path === this.curPath) {
       return;
     }

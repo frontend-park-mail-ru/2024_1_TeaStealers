@@ -12,10 +12,8 @@ import { authModel } from '@models';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js', { scope: '/' })
     .then((reg) => {
-      console.log('SW register', reg);
     })
     .catch((e) => {
-      console.log('SW error', e);
     });
 }
 
