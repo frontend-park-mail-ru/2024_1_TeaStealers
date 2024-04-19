@@ -3,7 +3,10 @@
 <div class="gridCards">
     <div class="gridCards__information">
         <h2>{{title}}</h2>
-        <span>Всего объявлений: {{totalElements}}</span> 
+        {{#if totalElements}}<span>Всего объявлений: {{totalElements}}</span>
+        {{else}}
+        <span>Вы еще не создали ни одного объявления</span>
+        {{/if}}
     </div>
     <div class="gridCards__container">
     {{#each miniCards}}
