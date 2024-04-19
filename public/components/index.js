@@ -14,3 +14,4 @@ export * from './avatar/avatar.js';
 export * from './editAdvert/editAdvert.js';
 export * from './paramsAdvert/paramsAdvert.js';
 export * from './numberPages/numberPages.js';
+export * from './footer/footer.js';

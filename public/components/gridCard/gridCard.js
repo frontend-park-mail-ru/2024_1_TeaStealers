@@ -76,7 +76,6 @@ export class GridCard extends BaseComponent {
         }
       });
       this.renderAndDidMount();
-      console.log(this.state.title);
       if (this.state.title !== 'Все объявления') {
         if (document.querySelector('#clearFilters').classList
           .contains('gridCards_hidden')) {

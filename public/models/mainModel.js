@@ -26,7 +26,6 @@ class MainModel {
             this.cardsData.pageInfo.title = 'Продажа';
           }
         }
-        console.log(this.cardsData);
         this.updateAdverts();
       }
     } catch (error) {
