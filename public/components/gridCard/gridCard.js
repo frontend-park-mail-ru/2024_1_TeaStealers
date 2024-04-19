@@ -64,7 +64,10 @@ export class GridCard extends BaseComponent {
       this.state.miniCards = event.data.adverts;
       this.state = { ...this.state, ...event.data.pageInfo };
       this.state.miniCards.forEach((card) => {
-        card.price = parseInt(card.price, 10).toLocaleString('ru-RU');
+        const spacedPrice = parseInt(card.price, 10).toLocaleString('ru-RU');
+        if (spacedPrice.length >= card.price.toString().length) {
+          card.price = spacedPrice;
+        }
       });
       this.renderAndDidMount();
     }
