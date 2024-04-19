@@ -19,6 +19,7 @@ export class ComplexPage extends BaseComponent {
       const cardObject = new Card('cards', card);
       cardsComponents.push(cardObject);
     });
+
     const innerComponents = [];
     innerComponents.push(...cardsComponents);
     super({

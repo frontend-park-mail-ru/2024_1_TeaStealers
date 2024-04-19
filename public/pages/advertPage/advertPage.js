@@ -1,4 +1,4 @@
-import { BaseComponent, Button } from '@components';
+import { BaseComponent, Button, Footer } from '@components';
 import { events } from '@models';
 import { router } from '@modules/router';
 import advertPage from './advertPage.hbs';
@@ -26,11 +26,14 @@ export class AdvertPage extends BaseComponent {
     const buttonViewContact = new Button('price', {
       ...VIEW_CONTACT_TEMPLATE,
     });
-    const innerComponents = [buttonViewContact];
+
+    const footer = new Footer('app');
+
+    const innerComponents = [buttonViewContact, footer];
     super({
       parent, template, state, innerComponents,
     });
-    [this.buttonViewContact] = innerComponents;
+    [this.buttonViewContact, this.footer] = innerComponents;
     this.slideIndex = 0;
   }
 
@@ -44,6 +47,7 @@ export class AdvertPage extends BaseComponent {
     this.addClickListener('imageAdvert__next', this.nextSlide.bind(this));
     this.addClickListener('linkToComplex', this.goToComplex.bind(this));
     this.addClickListener('advert-page__back', this.goToList.bind(this));
+    this.footer.componentDidMount();
   }
 
   viewContactListener(event) {
@@ -90,6 +94,7 @@ export class AdvertPage extends BaseComponent {
     this.removeClickListener('imageAdvert__prev', this.prevSlide.bind(this));
     this.removeClickListener('imageAdvert__next', this.nextSlide.bind(this));
     this.removeClickListener('linkToComplex', this.goToComplex.bind(this));
+    this.footer.componentWillUnmount();
   }
 
   componentDidUpdate(event) {
