@@ -6,10 +6,11 @@ class MainController {
   }
 
   updateMainModelWithParameters(queryParameters) {
+    const filter = queryParameters.dealtype;
+    console.log(filter);
     let requestURL = '?';
     const keys = Object.keys(queryParameters);
 
-    // Iterate over the keys and append each query parameter to the request URL
     keys.forEach((key) => {
       if (requestURL === '?') {
         requestURL += `${key}=${queryParameters[key]}`;
@@ -20,7 +21,7 @@ class MainController {
         requestURL += `&${key}=${queryParameters[key]}`;
       }
     });
-    mainModel.updateWithParameters(requestURL);
+    mainModel.updateWithParameters(requestURL, filter);
   }
 }
 

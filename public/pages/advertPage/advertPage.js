@@ -89,6 +89,10 @@ export class AdvertPage extends BaseComponent {
     if (event.name === events.GET_ADVERT_BY_ID) {
       this.state = event.data;
       this.unmountAndClean();
+      const spacedPrice = parseInt(this.state.price, 10).toLocaleString('ru-RU');
+      if (spacedPrice.length >= this.state.price.toString().length) {
+        this.state.price = spacedPrice;
+      }
       this.renderAndDidMount();
     }
   }

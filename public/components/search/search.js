@@ -176,6 +176,38 @@ export class Search extends BaseComponent {
     }
   }
 
+  componentDidUpdate(state) {
+    if (state.name !== 'GET_ADVERTS_MAIN') {
+      return;
+    }
+    if (state.data.pageInfo.title === 'Аренда') {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Снять') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+
+      this.state.firstFilterLinkStatus = 'passive';
+      this.state.secondFilterLinkStatus = 'active';
+    } else {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Купить') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+      this.state.firstFilterLinkStatus = 'active';
+      this.state.secondFilterLinkStatus = 'passive';
+    }
+  }
+
   /**
    * Обработчик открытия всплывающего меню
    * @param {Object} menuButton - Отслеживаемое событие
@@ -285,6 +317,9 @@ export class Search extends BaseComponent {
     }
     filterElement.classList.remove('filter-link_passive');
     filterElement.classList.add('filter-link_active');
+    const queryParameters = {};
+    queryParameters.dealtype = `${this.dealType}`;
+    mainControler.updateMainModelWithParameters(queryParameters);
   }
 
   /**

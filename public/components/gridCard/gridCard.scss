@@ -107,4 +107,12 @@
             background-color: $background-color-button-error-hover;
         }
     }
+
+    &_hidden {
+        display: none !important;
+    }
+
+    &_clear-filters {
+        cursor: pointer;
+    }
 }

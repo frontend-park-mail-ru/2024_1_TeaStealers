@@ -35,7 +35,7 @@ export class MainPage extends BaseComponent {
       skeleton: state.skeleton,
     });
 
-    const gridCard = new GridCard('gridCards', { title: 'Рекомендуем' });
+    const gridCard = new GridCard('gridCards', { title: 'Все объявления' });
 
     const innerComponents = [search, gridCard];
     super({

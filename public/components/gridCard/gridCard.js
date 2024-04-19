@@ -1,5 +1,5 @@
 import { BaseComponent, Button } from '@components';
-import { advertPageController } from '@controllers';
+import { advertPageController, mainControler } from '@controllers';
 import { deleteAdvertById, router } from '@modules';
 import { events, globalVariables, myAdvertModel } from '@models';
 import gridCard from './gridCard.hbs';
@@ -37,6 +37,9 @@ export class GridCard extends BaseComponent {
     document.querySelectorAll('.gridCards__delete').forEach((card) => {
       card.addEventListener('click', this.deleteAdvert.bind(this));
     });
+    if (!this.state.myAdverts) {
+      document.querySelector('#clearFilters').addEventListener('click', this.clearFilters.bind(this));
+    }
   }
 
   /**
@@ -52,6 +55,9 @@ export class GridCard extends BaseComponent {
     document.querySelectorAll('.gridCards__delete').forEach((card) => {
       card.removeEventListener('click', this.deleteAdvert.bind(this));
     });
+    if (!this.state.myAdverts) {
+      document.querySelector('#clearFilters').removeEventListener('click', this.clearFilters.bind(this));
+    }
   }
 
   /**
@@ -70,6 +76,13 @@ export class GridCard extends BaseComponent {
         }
       });
       this.renderAndDidMount();
+      console.log(this.state.title);
+      if (this.state.title !== 'Все объявления') {
+        if (document.querySelector('#clearFilters').classList
+          .contains('gridCards_hidden')) {
+          document.querySelector('#clearFilters').classList.remove('gridCards_hidden');
+        }
+      }
     }
     if (event.name === events.GET_MY_ADVERTS) {
       this.unmountAndClean();
@@ -114,5 +127,9 @@ export class GridCard extends BaseComponent {
     event.preventDefault();
     const href = event.target.getAttribute('href');
     this.redirect(href);
+  }
+
+  clearFilters() {
+    mainControler.updateMainModelWithParameters({});
   }
 }

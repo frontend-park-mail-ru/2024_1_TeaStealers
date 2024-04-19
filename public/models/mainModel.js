@@ -11,12 +11,22 @@ class MainModel {
   /**
    * Обновление данных с query параметрами
    * @param {string} queryParametersURL - query параметры
+   * @param {string} filter - параметр фильра ('Rent' | 'Sale' | undefined)
    */
-  async updateWithParameters(queryParametersURL) {
+  async updateWithParameters(queryParametersURL, filter) {
     try {
       const [statusCode, response] = await getGridAdverts(queryParametersURL);
       if (statusCode === globalVariables.HTTP_STATUS_OK) {
         this.cardsData = response.payload;
+        this.cardsData.pageInfo.title = 'Все объявления';
+        if (filter) {
+          if (filter === 'Rent') {
+            this.cardsData.pageInfo.title = 'Аренда';
+          } else {
+            this.cardsData.pageInfo.title = 'Продажа';
+          }
+        }
+        console.log(this.cardsData);
         this.updateAdverts();
       }
     } catch (error) {
