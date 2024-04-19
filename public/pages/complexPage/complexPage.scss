@@ -35,6 +35,11 @@
         font-weight: $subtitle-font-weight;
         font-size: $subtitle-font-size;
     }
+
+    &__characteristic-block {
+        display: grid;
+        grid-template-rows: 1fr auto 1fr;
+    }
 }
 
 .info_location {
