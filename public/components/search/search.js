@@ -229,7 +229,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseHomeType(event) {
-    this.flatFilter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -242,11 +241,17 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Квартиру в новостройке или вторичке';
     let checked = false;
+    this.flatFilter = '';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        if (this.flatFilter === '') {
+          this.flatFilter = input.value;
+        } else {
+          this.flatFilter = '';
+        }
         if (!checked) {
           checked = true;
           message = '';
@@ -258,6 +263,7 @@ export class Search extends BaseComponent {
         }
       }
     });
+    console.log(this.flatFilter);
     menuButton.firstElementChild.innerText = message;
   }
 
@@ -266,7 +272,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseRoomNember(event) {
-    this.roomCounter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -279,11 +284,13 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Комнат';
     let checked = false;
+    this.roomCounter = 'undefined';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        this.roomCounter = input.value;
         if (!checked) {
           checked = true;
           message += `: ${labels[idx].innerText}`;
@@ -404,12 +411,24 @@ export class Search extends BaseComponent {
    */
   search() {
     const queryParameters = {};
-    queryParameters.adverttype = this.flatFilter;
-    queryParameters.adress = `${this.adress}`;
+    if (this.flatFilter) {
+      queryParameters.adverttype = this.flatFilter;
+    }
+    if (this.adress) {
+      queryParameters.adress = `${this.adress}`;
+    }
+    if (this.roomCounter) {
+      queryParameters.roomcount = `${this.roomCounter}`;
+    }
     queryParameters.dealtype = `${this.dealType}`;
-    queryParameters.roomcount = `${this.roomCounter}`;
-    queryParameters.minprice = `${this.prices[0]}`;
-    queryParameters.maxprice = `${this.prices[1]}`;
+    if (this.prices[0]) {
+      queryParameters.minprice = `${this.prices[0]}`;
+    }
+    if (this.prices[1]) {
+      queryParameters.minprice = `${this.prices[1]}`;
+    }
+
+    console.log(queryParameters);
     mainControler.updateMainModelWithParameters(queryParameters);
   }
 

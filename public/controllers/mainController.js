@@ -7,7 +7,6 @@ class MainController {
 
   updateMainModelWithParameters(queryParameters) {
     const filter = queryParameters.dealtype;
-    console.log(filter);
     let requestURL = '?';
     const keys = Object.keys(queryParameters);
 
@@ -15,7 +14,7 @@ class MainController {
       if (requestURL === '?') {
         requestURL += `${key}=${queryParameters[key]}`;
       } else {
-        if (queryParameters[key] === 'undefined') {
+        if (queryParameters[key] === undefined) {
           return;
         }
         requestURL += `&${key}=${queryParameters[key]}`;
