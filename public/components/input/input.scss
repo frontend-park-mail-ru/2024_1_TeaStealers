@@ -67,7 +67,7 @@ input {
     }
 
     &-border {
-        border: 1px solid $color_errors;
+        border: 1px solid $color_errors !important;
     }
 }
 
@@ -89,7 +89,7 @@ input {
         border: none;
         opacity: 0;
         position: absolute;
-        width: 150px;
+        width: 150px !important;
         height: 34px;
         cursor: pointer;
     }

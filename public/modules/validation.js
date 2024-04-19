@@ -159,3 +159,49 @@ export const checkFloor = (floor) => {
   }
   return ['', true];
 };
+
+export const formatInteger = (value, maxLength) => {
+  let formatValue = '';
+
+  let leadingZeros = true;
+  for (let index = 0; index < value.length && formatValue.length < maxLength; index += 1) {
+    if (leadingZeros && value[index] === '0') {
+      continue;
+    }
+    leadingZeros = false;
+
+    if (value[index] >= '0' && value[index] <= '9') {
+      formatValue += value[index];
+    }
+  }
+
+  return formatValue;
+};
+
+export const formatFloat = (value, maxNumber) => {
+  let formatValue = '';
+  let haveDot = false;
+  let dotIndex = 0;
+  let leadingZeros = true;
+  for (let i = 0; i < value.length; i += 1) {
+    if (leadingZeros && value[i] === '0') {
+      continue;
+    }
+    leadingZeros = false;
+
+    if (haveDot && formatValue.length > dotIndex + maxNumber) {
+      continue;
+    }
+
+    if (value[i] >= '0' && value[i] <= '9') {
+      formatValue += value[i];
+    }
+    if (value[i] === ',' && !haveDot && formatValue !== '') {
+      haveDot = true;
+      dotIndex = i;
+      formatValue += value[i];
+    }
+  }
+
+  return formatValue;
+};

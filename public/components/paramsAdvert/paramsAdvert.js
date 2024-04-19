@@ -1,5 +1,6 @@
 import { BaseComponent, Input } from '@components';
 import { events } from '@models';
+import { formatFloat, formatInteger } from '@modules';
 import paramsAdvert from './paramsAdvert.hbs';
 
 const DEFAULT_STATE = {
@@ -47,7 +48,7 @@ export class Params extends BaseComponent {
     });
     const inputSquareArea = new Input('paramsHouseInputs', {
       placeholder: 'Площадь в сот.',
-      label: 'Площаль участка',
+      label: 'Площадь участка',
       id: 'inputSquareArea',
     });
     const inputBedrooms = new Input('paramsHouseInputs', {
@@ -86,6 +87,148 @@ export class Params extends BaseComponent {
       this.unmountAndClean();
       this.renderAndDidMount();
     }
+  }
+
+  formatInteger() {
+    const value = this.getValue();
+    const formatedValue = formatInteger(value, 3);
+    this.setValue(formatedValue);
+  }
+
+  formatSquare() {
+    const value = this.getValue();
+    const formatedValue = formatFloat(value, 2);
+    this.setValue(formatedValue);
+  }
+
+  validateFloor() {
+    const value = this.getValue();
+    const valueInt = parseInt(value, 10);
+    if (valueInt < 1) {
+      this.renderError('Укажите этаж больше 0');
+      return false;
+    }
+    if (valueInt > 100) {
+      this.renderError('Укажите этаж меньше 100');
+      return false;
+    }
+    this.removeError();
+    return true;
+  }
+
+  validateSquare() {
+    const value = this.getValue();
+    const valueInt = parseFloat(value);
+    if (valueInt < 1.01) {
+      this.renderError('Укажите площадь больше 1');
+      return false;
+    }
+    if (valueInt > 5000) {
+      this.renderError('Укажите площадь меньше 5000');
+      return false;
+    }
+    this.removeError();
+    return true;
+  }
+
+  validateRoomsCount() {
+    const value = this.getValue();
+    const valueInt = parseInt(value, 10);
+    if (valueInt < 1) {
+      this.renderError('Укажите количество больше 0');
+      return false;
+    }
+    if (valueInt > 200) {
+      this.renderError('Укажите количество меньше 200');
+      return false;
+    }
+    this.removeError();
+    return true;
+  }
+
+  checkValidFlat() {
+    const valFloor = this.validateFloor.bind(this.inputFloor);
+    const valGeneralSquare = this.validateSquare.bind(this.inputGeneralSquare);
+    const valLiveSquare = this.validateSquare.bind(this.inputGeneralSquare);
+    const valRooms = this.validateRoomsCount.bind(this.inputRooms);
+
+    if (valFloor && valGeneralSquare && valLiveSquare && valRooms) {
+      return true;
+    }
+    return false;
+
+    // this.inputFloor;
+    // this.inputGeneralSquare;
+    // this.inputLiveSquare;
+    // this.inputRooms;
+  }
+
+  checkValidHouse() {
+    const valHouseSquare = this.validateSquare.bind(this.inputSquareHouse);
+    const valAreaSquare = this.validateSquare.bind(this.inputSquareArea);
+    const valRooms = this.validateRoomsCount.bind(this.inputBedrooms);
+
+    if (valHouseSquare && valAreaSquare && valRooms) {
+      return true;
+    }
+    return false;
+    // this.inputSquareHouse;
+    // this.inputSquareArea;
+    // this.inputBedrooms;
+  }
+
+  checkMandatoryInputFlat() {
+    let ok = true;
+    this.inputFloor.removeError();
+    this.inputGeneralSquare.removeError();
+    this.inputLiveSquare.removeError();
+    this.inputRooms.removeError();
+
+    const adress = this.inputFloor.getValue();
+    if (adress.length === 0) {
+      this.inputFloor.renderError('Обязательное поле');
+      ok = false;
+    }
+    const year = this.inputGeneralSquare.getValue();
+    if (year.length === 0) {
+      this.inputGeneralSquare.renderError('Обязательное поле');
+      ok = false;
+    }
+    const height = this.inputLiveSquare.getValue();
+    if (height.length === 0) {
+      this.inputLiveSquare.renderError('Обязательное поле');
+      ok = false;
+    }
+    const floor = this.inputRooms.getValue();
+    if (floor.length === 0) {
+      this.inputRooms.renderError('Обязательное поле');
+      ok = false;
+    }
+    return ok;
+  }
+
+  checkMandatoryInputHouse() {
+    let ok = true;
+    this.inputSquareHouse.removeError();
+    this.inputSquareArea.removeError();
+    this.inputBedrooms.removeError();
+
+    const adress = this.inputSquareHouse.getValue();
+    if (adress.length === 0) {
+      this.inputSquareHouse.renderError('Обязательное поле');
+      ok = false;
+    }
+    const year = this.inputSquareArea.getValue();
+    if (year.length === 0) {
+      this.inputSquareArea.renderError('Обязательное поле');
+      ok = false;
+    }
+    const height = this.inputBedrooms.getValue();
+    if (height.length === 0) {
+      this.inputBedrooms.renderError('Обязательное поле');
+      ok = false;
+    }
+    return ok;
   }
 
   /**
