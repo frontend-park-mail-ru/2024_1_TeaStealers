@@ -1,5 +1,6 @@
 import { BaseComponent, Button } from '@components';
 import { events } from '@models';
+import { router } from '@modules/router';
 import advertPage from './advertPage.hbs';
 
 const VIEW_CONTACT_TEMPLATE = {
@@ -42,12 +43,18 @@ export class AdvertPage extends BaseComponent {
     this.addClickListener('imageAdvert__prev', this.prevSlide.bind(this));
     this.addClickListener('imageAdvert__next', this.nextSlide.bind(this));
     this.addClickListener('linkToComplex', this.goToComplex.bind(this));
+    this.addClickListener('advert-page__back', this.goToList.bind(this));
   }
 
   viewContactListener(event) {
     if (event.target.parentElement.id === 'buttonViewContact') {
       event.target.parentElement.innerHTML = this.state.phone;
     }
+  }
+
+  goToList(event) {
+    event.preventDefault();
+    router.back();
   }
 
   nextSlide() {
