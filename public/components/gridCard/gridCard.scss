@@ -48,11 +48,30 @@
         grid-gap: 1rem;
     }
 
+    &__Mycontainer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+    }
+
     &__card {
         width: 320px;
         min-height: 400px;
         display: grid;
         grid-template-rows: 380px auto;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        transition-duration: 0.3s;
+        &:hover {
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    &__Mycard {
+        width: 320px;
+        min-height: 400px;
+        display: grid;
+        grid-template-rows: 380px 120px auto;
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
         border-radius: 8px;
         transition-duration: 0.3s;
