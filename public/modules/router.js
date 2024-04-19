@@ -1,5 +1,5 @@
 import { authModel } from '@models';
-import { ErrorView } from '@views';
+import { ErrorView, MobileView } from '@views';
 /**
  * класс Роутера
  */
@@ -35,6 +35,7 @@ class Router {
      * @param {string} path - путь URL
      */
   go(path, isReplace) {
+    console.log(this.curView);
     this.error = false;
     if (path === this.curPath) {
       return;
@@ -65,6 +66,15 @@ class Router {
     } else {
       this.curPath = path;
     }
+
+    if (window.innerWidth <= 600) {
+      this.curPath = 'mobile';
+      this.curView = new MobileView();
+      console.log(this.curView);
+      this.curView.render();
+      return;
+    }
+
     this.curView.render();
 
     if (isReplace) {

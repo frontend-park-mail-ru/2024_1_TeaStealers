@@ -5,7 +5,7 @@ import {
   MainView, ProfileView,
   NewAdvertView, MyAdvertView,
   EditAdvertView, NavbarView,
-  ErrorView,
+  ErrorView, MobileView,
 } from '@views';
 import { authModel } from '@models';
 
@@ -20,7 +20,6 @@ if ('serviceWorker' in navigator) {
 const navbar = new NavbarView();
 navbar.render();
 router.register('/', MainView);
-router.register('/error', ErrorView);
 router.register('/profile/', ProfileView, true);
 router.register('/adverts/', AdvertView);
 router.register('/complex/', ComplexView);
