@@ -3,9 +3,9 @@
 <div class="gridCards">
     <div class="gridCards__information">
         <h2>{{title}}</h2>
-        {{#if totalElements}}<span>Всего объявлений: {{totalElements}}</span>
+        {{#if miniCards}}
         {{else}}
-        <span>Вы еще не создали ни одного объявления</span>
+        <span>Вы не создали еще ни одного объявления</span> 
         {{/if}}
     </div>
     <div class="gridCards__container">
