@@ -3,8 +3,9 @@
 .advert-page {
     display: grid;
     grid-template-columns: 8fr 3fr;
-    padding: 30px 200px;
+    padding: 50px;
     margin-top: 74px;
+    min-width: 1400px;
     gap: 50px;
     font-family: $font-family-main;
 
