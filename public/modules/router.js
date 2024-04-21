@@ -67,12 +67,9 @@ class Router {
       this.curPath = path;
     }
 
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 600 && false) {
       this.curPath = 'mobile';
       this.curView = new MobileView();
-      console.log(this.curView);
-      this.curView.render();
-      return;
     }
 
     this.curView.render();

@@ -88,3 +88,41 @@
     }
     
 }
+
+@media screen and (max-width: 600px) {
+    .search {
+        height: 10%;
+        min-width: 0px;
+        width: 100%;
+        background-image: url('../public/static/fone.jpg');
+        background-size: cover;
+        display: flex;
+        // display: none;
+        align-items: center;
+        justify-content: center;
+        color: $color_text_basic;
+        padding-top: 90px;
+
+        &__main-message {
+            display: none;
+        }
+
+        &__filter-and-search {
+
+        }
+
+        &__filters {
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        &__filter-link {
+            width: 40%;
+            height: 100%;
+        }
+
+        &__string {
+            display: none;
+        }
+    }
+}
