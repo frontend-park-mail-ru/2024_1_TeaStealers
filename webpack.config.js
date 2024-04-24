@@ -11,7 +11,7 @@ module.exports = {
     rules: [
       { test: /\.svg$/, use: 'svg-inline-loader' },
       { test: /\.scss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] },
-      { test: /\.(js)$/, use: 'babel-loader' },
+      { test: /\.(js|jsx|ts|tsx)$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['@babel/preset-env', '@babel/preset-react'] } } },
       { test: /\.hbs$/, use: 'handlebars-loader' },
     ],
   },

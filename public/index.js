@@ -9,13 +9,19 @@ import {
 } from '@views';
 import { authModel } from '@models';
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', { scope: '/' })
-    .then((reg) => {
-    })
-    .catch((e) => {
-    });
-}
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker.register('sw.js', { scope: '/' })
+//     .then((reg) => {
+//     })
+//     .catch((e) => {
+//     });
+// }
+
+import { ex } from './components/example/ex.tsx';
+import { h } from './pragma.ts';
+
+const app = document.querySelector('#app');
+app.append(ex);
 
 const navbar = new NavbarView();
 navbar.render();

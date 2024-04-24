@@ -91,7 +91,7 @@
 
 @media screen and (max-width: 600px) {
     .search {
-        height: 10%;
+        // height: 10%;
         min-width: 0px;
         width: 100%;
         background-image: url('../public/static/fone.jpg');
@@ -103,26 +103,53 @@
         color: $color_text_basic;
         padding-top: 90px;
 
+        &__block {
+            height: 100%;
+        }
+
         &__main-message {
             display: none;
         }
 
         &__filter-and-search {
-
+            height: 75%;
         }
 
         &__filters {
             justify-content: space-between;
-            height: 4rem;
+            height: 3rem;
         }
 
         &__filter-link {
-            width: 40%;
+            width: 45%;
             height: 100%;
+            border-radius: $button-border-radius_md;
         }
 
         &__string {
-            display: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            padding-top: 20px;
+            background: none;
+            gap: 10px;
         }
+
+        &__home-type {
+            grid-column: 1 / -1;
+        }
+
+        &__input-container {
+            grid-column: 1 / -1;
+            display: block !important;
+        }
+
+        &__input {
+            height: 3rem !important;
+        }
+    }
+
+    .string_menu-button {
+        height: 3rem;
     }
 }

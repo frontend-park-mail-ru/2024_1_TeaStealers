@@ -86,6 +86,7 @@ export class Search extends BaseComponent {
       ...buttonPattern,
       text: state.homeType,
       id: 'homeType',
+      blockClass: 'string_menu-button search__home-type',
     });
 
     const roomNumber = new Button('searchString', {
@@ -105,6 +106,7 @@ export class Search extends BaseComponent {
       type: 'text',
       blockClass: 'search__input',
       id: 'inputMenu',
+      containerClass: 'search__input-container',
     });
 
     const findButton = new Button('searchButton', {
