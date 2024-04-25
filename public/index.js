@@ -17,11 +17,11 @@ import { authModel } from '@models';
 //     });
 // }
 
-import { ex } from './components/example/ex.tsx';
-import { h } from './pragma.ts';
+// import { ex } from './components/example/ex.tsx';
+// import { h } from './pragma.ts';
 
-const app = document.querySelector('#app');
-app.append(ex);
+// const app = document.querySelector('#app');
+// app.append(ex);
 
 const navbar = new NavbarView();
 navbar.render();
