@@ -5,7 +5,7 @@ import {
   MainView, ProfileView,
   NewAdvertView, MyAdvertView,
   EditAdvertView, NavbarView,
-  ErrorView, MobileView,
+  ErrorView, MobileView, StatisticView,
 } from '@views';
 import { authModel } from '@models';
 
@@ -26,5 +26,7 @@ router.register('/complex/', ComplexView);
 router.register('/new-advert/', NewAdvertView, true);
 router.register('/my-advert/', MyAdvertView, true);
 router.register('/edit-advert/', EditAdvertView, true);
+console.log(StatisticView);
+router.register('/statistics/', StatisticView, true);
 router.start();
 document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));

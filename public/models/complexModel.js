@@ -2,8 +2,8 @@ import { getComplexInfo, getComplexAdverts } from '@modules';
 import { events, globalVariables } from '@models';
 
 /**
- * Класс модели страницы объявления
- */
+   * Класс модели страницы объявления
+   */
 class ComplexModel {
   infoComplex; // данные модели
 
@@ -12,8 +12,8 @@ class ComplexModel {
   }
 
   /**
-   * Обновление данных
-   */
+     * Обновление данных
+     */
   async updateState(id) {
     try {
       const [statusCode, data] = await getComplexInfo(id);
@@ -39,16 +39,16 @@ class ComplexModel {
   }
 
   /**
-   * Добавление наблюдателя
-   * @param {View} observer
-   */
+     * Добавление наблюдателя
+     * @param {View} observer
+     */
   addObserver(observer) {
     this.observers.push(observer);
   }
 
   /**
-   * Оповещение всех наблюдателей о изменениях
-   */
+     * Оповещение всех наблюдателей о изменениях
+     */
   notifyObservers(event) {
     this.observers.forEach((observer) => {
       observer.update(event);

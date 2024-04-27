@@ -132,7 +132,7 @@ export class Navbar extends BaseComponent {
     const queryParameters = {};
     queryParameters.dealtype = 'Sale';
     mainControler.updateMainModelWithParameters(queryParameters);
-    this.redirect('/');
+    this.redirect('/statistics/');
   }
 
   /**

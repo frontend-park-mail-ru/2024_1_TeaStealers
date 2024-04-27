@@ -1,0 +1,18 @@
+<div class="statistic" id="statistic">
+    {{#each statistic}}
+    <div class="statistic__list">
+        <span class="statistic__list_title">
+            {{title}}
+        </span>
+        <ul class="statistic__list_marks">
+            {{#each mark}}
+            <li class="statistic__list_mark">
+                <span class="statistic__mark_title">
+                    {{mark}}: {{mark_count}}
+                </span>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
