@@ -25,6 +25,7 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
+  GET_STATISTIC: `${BASE_URL}/statistic`,
 };
 
 /**
@@ -232,5 +233,13 @@ export const getMyAdverts = () => {
  */
 export const getGridAdverts = (queryParamenrts) => {
   const url = API_CONST.GET_GRID_ADVERTS + queryParamenrts;
+  return getRequest(url);
+};
+
+/**
+ * GET-запрос для получения статистки
+ */
+export const getStatistic = () => {
+  const url = API_CONST.GET_STATISTIC;
   return getRequest(url);
 };

@@ -26,7 +26,6 @@ router.register('/complex/', ComplexView);
 router.register('/new-advert/', NewAdvertView, true);
 router.register('/my-advert/', MyAdvertView, true);
 router.register('/edit-advert/', EditAdvertView, true);
-console.log(StatisticView);
-router.register('/statistics/', StatisticView, true);
+router.register('/statistics/', StatisticView);
 router.start();
 document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));

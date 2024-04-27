@@ -1,4 +1,5 @@
 import { events, globalVariables } from '@models';
+import { getStatistic } from '@modules';
 
 /**
  * Класс модели страницы статистики
@@ -10,32 +11,20 @@ class StatisticModel {
     this.observers = []; // Массив наблюдателей
   }
 
-  /**
-   * Обновление данных
-   */
-  //   async updateState() {
-  // try {
-  //   const [statusCode, data] = await getComplexInfo(id);
-  //   if (statusCode === globalVariables.HTTP_STATUS_OK) {
-  //     this.infoComplex = data.payload;
-  //     this.notifyObservers({ name: events.GET_COMPLEX_BY_ID, data: this.infoComplex });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  // try {
-  //   const [statusCode, data] = await getComplexAdverts(id);
-  //   if (statusCode === globalVariables.HTTP_STATUS_OK) {
-  //     this.complexAdverts = data.payload;
-  //     this.notifyObservers({
-  //       name: events.GET_COMPLEX_ADVERTS_BY_ID,
-  //       data: this.complexAdverts,
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  //   }
+  async updateState() {
+    try {
+      const [statusCode, data] = await getStatistic();
+      if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        this.statistic = data.payload;
+        this.notifyObservers({
+          name: events.GET_STATISTIC,
+          data: this.statistic,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   /**
    * Добавление наблюдателя

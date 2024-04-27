@@ -11,16 +11,12 @@ export class StatisticView {
     // statisticModel.getMeInfo();
   }
 
-  /**
-   * Обновление страницы объявлений
-   * @param {state} adverts
-   */
-  update(event) {
-    this.statisticPage.componentDidUpdate(event);
-  }
-
   render() {
     this.statisticPage.renderAndDidMount();
+  }
+
+  update(event) {
+    this.statisticPage.componentDidUpdate(event);
   }
 
   clean() {
