@@ -27,6 +27,6 @@ router.register('/complex/', ComplexView);
 router.register('/new-advert/', NewAdvertView, true);
 router.register('/my-advert/', MyAdvertView, true);
 router.register('/edit-advert/', EditAdvertView, true);
-router.register('/csat/', CsatView, true);
+router.register('/csat/', CsatView);
 router.start();
 document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));
