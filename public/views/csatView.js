@@ -1,17 +1,15 @@
 import { CsatPage } from '@pages';
-import { csatModel } from '@models';
+import { csatModel, authModel } from '@models';
 
 export class CsatView {
   constructor(tag) {
     this.tag = tag;
     this.parent = 'app';
+    authModel.addObserver(this);
     csatModel.addObserver(this);
     this.csatPage = new CsatPage(this.parent, {});
-    console.log(tag);
     tag = 'createAdvert';
     csatModel.updateState(tag);
-
-    // csatModel. // запрос к бэку
   }
 
   /**

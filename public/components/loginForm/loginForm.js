@@ -113,9 +113,12 @@ export class LoginForm extends BaseComponent {
     const [statusCode, ,] = await login(data);
     if (statusCode === globalVariables.HTTP_STATUS_OK) {
       this.state.closeModal();
-      const csat = new Csat('csat_navbar', { src: '/csat/profile' });
-      csat.renderAndDidMount();
       authModel.setAuth();
+      setTimeout(() => {
+        const csat = new Csat('csat_navbar', { src: '/csat/profile' });
+        csat.renderAndDidMount();
+      }, 1000);
+
       return;
     }
     this.addErr(ERROR_LOGIN);

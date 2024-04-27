@@ -24,6 +24,7 @@ class CsatModel {
         this.notifyObservers({ name: events.GET_QUESTIONS, data: this.questions });
       }
     } catch (error) {
+      console.log(error);
     }
   }
 
