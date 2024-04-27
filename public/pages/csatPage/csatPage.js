@@ -88,8 +88,9 @@ export class CsatPage extends BaseComponent {
     if (event.name === events.GET_QUESTIONS) {
       this.state.questionNumber = 0;
       this.questions = { ...event.data };
+      console.log(this.questions);
       this.state.questionTitle = this.questions[0].question_text;
-      this.state.question_id = this.questions[0].question_id;
+      this.state.question_id = this.questions[0].id;
     } else {
       this.state.questionNumber += 1;
       if (this.questions.len < this.state.questionNumber) {
