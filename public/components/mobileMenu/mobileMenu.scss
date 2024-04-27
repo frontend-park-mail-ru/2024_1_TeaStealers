@@ -1,0 +1,17 @@
+@use "@/variables.scss";
+
+.mobile-menu {
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+}
+
+.mobile-menu-links {
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+@media (max-width: 600px) {
+
+}

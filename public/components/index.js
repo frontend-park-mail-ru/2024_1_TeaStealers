@@ -16,3 +16,4 @@ export * from './paramsAdvert/paramsAdvert.js';
 export * from './numberPages/numberPages.js';
 export * from './footer/footer.js';
 export * from './modalWindow/modalWindow.js';
+export * from './mobileMenu/mobileMenu.js';

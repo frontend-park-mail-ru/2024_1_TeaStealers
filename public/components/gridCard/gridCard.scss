@@ -139,7 +139,6 @@
 
 @media screen and (max-width: 600px) {
     .gridCards {
-        // display: none;
 
         h2 {
             font-size: 16px;
@@ -156,6 +155,7 @@
             flex-direction: column;
             overflow: hidden;
             text-overflow: ellipsis;  
+            height: 100%;
         }
     
         span {
@@ -168,20 +168,29 @@
     
         img {
             width: 100%;
-            height: 280px;
-            min-height: 280px;
+            min-height: 0;
+            height: 50%;
             object-fit: cover;
             border-radius: 8px 8px 0 0;
         }
 
         &__container {
-            grid-template-columns: repeat(2, 45%);
+            grid-template-columns: repeat(2, 45vw);
+            grid-auto-rows: 70vw;
         }
 
         &__card {
             width: 100%;
             min-height: 100%;
-            grid-template-rows: 12em auto;
+            grid-template-rows: 100% auto;
+        }
+
+        &__description {
+            display: block;
+
+            span {
+                padding-top: 5px;
+            }
         }
     }
 }
