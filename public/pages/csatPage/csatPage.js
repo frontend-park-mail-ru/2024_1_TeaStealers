@@ -76,6 +76,7 @@ export class CsatPage extends BaseComponent {
       name: 'new_question',
       data: '',
     });
+    document.querySelector('.iframe').remove();
   }
 
   closeIframe() {
