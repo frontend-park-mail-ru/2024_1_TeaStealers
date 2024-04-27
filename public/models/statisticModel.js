@@ -13,6 +13,7 @@ class StatisticModel {
 
   async updateState() {
     try {
+      console.log('try');
       const [statusCode, data] = await getStatistic();
       if (statusCode === globalVariables.HTTP_STATUS_OK) {
         this.statistic = data.payload;
@@ -21,8 +22,16 @@ class StatisticModel {
           data: this.statistic,
         });
       }
+    //   this.notifyObservers({
+    //     name: '',
+    //     data: '',
+    //   });
     } catch (error) {
-      console.log(error);
+      console.log(error, error);
+      this.notifyObservers({
+        name: '',
+        data: '',
+      });
     }
   }
 
@@ -39,6 +48,7 @@ class StatisticModel {
    */
   notifyObservers(event) {
     this.observers.forEach((observer) => {
+      console.log('update observer', observer);
       observer.update(event);
     });
   }

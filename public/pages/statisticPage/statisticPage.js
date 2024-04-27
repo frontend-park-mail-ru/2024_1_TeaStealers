@@ -2,49 +2,8 @@ import { BaseComponent, Button } from '@components';
 import statisticPage from './statisticPage.hbs';
 import { statisticControler } from '@controllers';
 
-const DEFAULT_STATISTICS = {
-    statistic:
-        [
-            {
-            title: 'Интерфейс',
-            marks: [
-                {
-                    mark: '1',
-                    mark_count: '10',
-                },
-                {
-                    mark: '2',
-                    mark_count: '15',
-                },
-                {
-                    mark: '3',
-                    mark_count: '5',
-                }
-            ]
-            },
-            {
-                title: 'Формы',
-                marks: [
-                    {
-                        mark: '1',
-                        mark_count: '10',
-                    },
-                    {
-                        mark: '2',
-                        mark_count: '15',
-                    },
-                    {
-                        mark: '3',
-                        mark_count: '5',
-                    }
-                ]
-            }
-    ]
-}
-
 export class StatisticPage extends BaseComponent {
     constructor(parent, state) {
-        state = { ...DEFAULT_STATISTICS };
         console.log('зашёл в StatisticPage');
         const template = statisticPage;
         const refreshButton = new Button('statistic', {
@@ -65,7 +24,10 @@ export class StatisticPage extends BaseComponent {
 
       componentDidUpdate(event) {
         this.unmountAndClean();
-        this.state = { ...event.data };
+        // this.state = { ...event.data };
+        // event.data = [{"theme":"createAdvert","questions":[{"title":"Насколько вам было удобно создать объявление?","questions_stat":[{"count_answers":1,"mark":4}, {"count_answers":1,"mark":4}]}]}];
+        this.state.statistic = { ...event.data };
+        console.log(this.state);
         this.renderAndDidMount();
       }
 
@@ -74,6 +36,6 @@ export class StatisticPage extends BaseComponent {
       }
 
       componentWillUnmount() {
-        document.getElementById('refresh_button').removeEventListener('click', this.refresh.bind(this));
+        // document.getElementById('refresh_button').removeEventListener('click', this.refresh.bind(this));
       }
 }

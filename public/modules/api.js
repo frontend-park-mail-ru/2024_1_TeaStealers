@@ -25,7 +25,7 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
-  GET_STATISTIC: `${BASE_URL}/statistic`,
+  GET_STATISTIC: `${BASE_URL}/stat/theme`,
 };
 
 /**

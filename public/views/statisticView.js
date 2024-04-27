@@ -7,8 +7,8 @@ export class StatisticView {
     statisticModel.addObserver(this);
     authModel.addObserver(this);
     this.statisticPage = new StatisticPage(this.parent, {});
+    statisticModel.updateState();
     console.log(this.statisticPage);
-    // statisticModel.getMeInfo();
   }
 
   render() {
@@ -16,6 +16,7 @@ export class StatisticView {
   }
 
   update(event) {
+    console.log('пришлиприезали');
     this.statisticPage.componentDidUpdate(event);
   }
 

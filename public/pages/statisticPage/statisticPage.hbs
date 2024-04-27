@@ -2,17 +2,19 @@
     {{#each statistic}}
     <div class="statistic__list">
         <span class="statistic__list_title">
-            {{title}}
+            {{theme}}
         </span>
+        {{#each questions}}: {{title}}
         <ul class="statistic__list_marks">
-            {{#each marks}}
+            {{#each questions_stat}}
             <li class="statistic__list_mark">
                 <span class="statistic__mark_title">
-                    {{mark}}: {{mark_count}}
+                    {{mark}}: {{count_answers}}
                 </span>
             </li>
             {{/each}}
         </ul>
+        {{/each}}
     </div>
     {{/each}}
 </div>
