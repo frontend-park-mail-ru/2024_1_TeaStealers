@@ -69,7 +69,7 @@ export class CsatPage extends BaseComponent {
 
   sendAnswer() {
     postCsatAnswer({
-      question_id: this.state.id,
+      question_id: this.state.question_id,
       mark: this.selectedStarNumber,
     });
     this.componentDidUpdate({
