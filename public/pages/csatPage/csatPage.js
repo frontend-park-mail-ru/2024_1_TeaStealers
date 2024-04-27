@@ -102,5 +102,7 @@ export class CsatPage extends BaseComponent {
         this.closeIframe();
       }
     }
+    this.unmountAndClean();
+    this.renderAndDidMount();
   }
 }
