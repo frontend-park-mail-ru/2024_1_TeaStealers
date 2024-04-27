@@ -1,0 +1,26 @@
+@use "@/variables.scss";
+
+.statistic {
+    padding-top: 100px;
+    padding-left: 20px;
+
+    &__list {
+        
+    }
+
+    &__list_title {
+
+    }
+
+    &__list_marks {
+        list-style-type: none;
+    }
+
+    &__list_mark {
+        // text-decoration: none;
+    }
+
+    &__mark_title {
+
+    }
+}

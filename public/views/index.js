@@ -8,4 +8,5 @@ export * from './editAdvertView.js';
 export * from './errorView.js';
 export * from './navbarView.js';
 export * from './mobileView.js';
+export * from './statisticView.js';
 export * from './csatView.js';

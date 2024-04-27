@@ -8,4 +8,5 @@ export * from './myAdvert/myAdvert.js';
 export * from './editAdvert/editAdvert.js';
 export * from './errorPage/errorPage.js';
 export * from './mobilePage/mobilePage.js';
+export * from './statisticPage/statisticPage.js';
 export * from './csatPage/csatPage.js';

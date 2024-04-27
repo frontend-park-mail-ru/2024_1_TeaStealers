@@ -28,6 +28,8 @@ class Router {
       this.protectedRoutes[path] = view;
     }
     this.routes[path] = view;
+    console.log(path, view);
+    console.log(this.routes[path]);
   }
 
   /**
@@ -42,10 +44,14 @@ class Router {
     if (this.protectedRoutes[path] !== undefined && authModel.isAuth !== true) {
       this.error = true;
     }
+    console.log(path);
+    console.log(this.routes[path]);
     const id = path.substring(path.lastIndexOf('/') + 1);
     const pathWithoutId = path.replace(id, '');
 
     const prevView = this.curView;
+    console.log(this.routes[pathWithoutId]);
+    console.log(pathWithoutId);
     const CurrentView = this.routes[pathWithoutId];
     if (!CurrentView) {
       return;
@@ -59,6 +65,7 @@ class Router {
     } else {
       this.curView = new CurrentView();
     }
+    console.log(this.curView);
     if (this.error) {
       this.curPath = 'error';
       this.curView = new ErrorView();

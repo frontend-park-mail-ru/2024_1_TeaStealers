@@ -8,4 +8,6 @@ export * from './complexModel.js';
 export * from './newAdvertModel.js';
 export * from './myAdvertModel.js';
 export * from './editAdvertModel.js';
+
+export * from './statisticModel.js';
 export * from './csatModel.js';
