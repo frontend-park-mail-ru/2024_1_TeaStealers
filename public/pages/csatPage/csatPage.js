@@ -1,4 +1,5 @@
 import { BaseComponent, Button } from '@components/index';
+import { postCsatAnswer } from '@modules';
 import csatPage from './csatPage.hbs';
 
 export class CsatPage extends BaseComponent {
@@ -62,5 +63,12 @@ export class CsatPage extends BaseComponent {
     const number = parseInt(numberStr, 10);
     this.selectedStarNumber = number;
     // отправить ответ
+  }
+
+  sendAnswer() {
+    postCsatAnswer({
+      question_id: this.state.id,
+      mark: this.selectedStarNumber,
+    });
   }
 }
