@@ -1,5 +1,6 @@
 import { BaseComponent, Button } from '@components/index';
 import { postCsatAnswer } from '@modules';
+import { events } from '@models';
 import csatPage from './csatPage.hbs';
 
 export class CsatPage extends BaseComponent {
@@ -71,5 +72,34 @@ export class CsatPage extends BaseComponent {
       question_id: this.state.id,
       mark: this.selectedStarNumber,
     });
+    this.componentDidUpdate({
+      name: 'new_question',
+      data: '',
+    });
+  }
+
+  closeIframe() {
+    this.componentWillUnmount();
+    const iframe = document.getElementById('csat');
+    iframe.parentNode.removeChild(iframe);
+  }
+
+  componentDidUpdate(event) {
+    if (event.name === events.GET_QUESTIONS) {
+      this.state.questionNumber = 0;
+      this.questions = { ...event.data };
+      this.state.questionTitle = this.questions[0].question_text;
+      this.state.question_id = this.questions[0].question_id;
+    } else {
+      this.state.questionNumber += 1;
+      if (this.questions.len < this.state.questionNumber) {
+        this.state.questionTitle = this.questions[this.state.questionNumber].question_text;
+        this.state.question_id = this.questions[this.state.questionNumber].question_id;
+        this.unmountAndClean();
+        this.renderAndDidMount();
+      } else {
+        this.closeIframe();
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { } from '@modules';
+import { getQuestions } from '@modules';
 import { events, globalVariables } from '@models';
 
 /**
@@ -16,7 +16,13 @@ class CsatModel {
    */
   async updateState(tag) {
     try {
-
+      const [statusCode, data] = await getQuestions(tag);
+      if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        this.questions = data.payload;
+        console.log(tag);
+        console.log(data.payload);
+        this.notifyObservers({ name: events.GET_QUESTIONS, data: this.questions });
+      }
     } catch (error) {
     }
   }

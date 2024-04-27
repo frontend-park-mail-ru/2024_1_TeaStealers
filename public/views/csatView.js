@@ -7,6 +7,10 @@ export class CsatView {
     this.parent = 'app';
     csatModel.addObserver(this);
     this.csatPage = new CsatPage(this.parent, {});
+    console.log(tag);
+    tag = 'createAdvert';
+    csatModel.updateState(tag);
+
     // csatModel. // запрос к бэку
   }
 
