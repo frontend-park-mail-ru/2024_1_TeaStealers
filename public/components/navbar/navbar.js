@@ -1,4 +1,6 @@
-import { Button, BaseComponent, Avatar } from '@components';
+import {
+  Button, BaseComponent, Avatar, Csat,
+} from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { Router } from '@modules';
 import { globalVariables, events } from '@models';
@@ -83,7 +85,6 @@ export class Navbar extends BaseComponent {
    * Добавляет обработчик события
    */
   componentDidMount() {
-    console.log('didmount');
     this.addClickListener('buttonLogin', this.openModal.bind(this));
     this.addClickListener('buttonProfile', this.goToProfile.bind(this));
     this.addClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));
@@ -96,8 +97,6 @@ export class Navbar extends BaseComponent {
    * Удаление обработчиков
    */
   componentWillUnmount() {
-    console.log('unmount');
-
     this.removeClickListener('buttonLogin', this.openModal.bind(this));
     this.removeClickListener('buttonProfile', this.goToProfile.bind(this));
     this.removeClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));
@@ -175,7 +174,6 @@ export class Navbar extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   goToNewAdvert(event) {
-    console.log('go to advert');
     event.preventDefault();
     if (this.state.isAuthenticated) {
       this.redirect('/new-advert/');

@@ -19,7 +19,11 @@ class Events {
 
   GET_ADVERT_BY_ID_FOR_EDIT = 'GET_ADVERT_BY_ID_FOR_EDIT';
 
+
   GET_STATISTIC = 'GET_STATISTIC';
+
+  GET_QUESTIONS = 'GET_QUESTIONS';
+
 }
 
 export const events = new Events();

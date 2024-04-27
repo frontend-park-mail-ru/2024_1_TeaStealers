@@ -26,6 +26,8 @@ const API_CONST = {
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
   GET_STATISTIC: `${BASE_URL}/stat/theme`,
+  POST_ANSWER: `${BASE_URL}/stat/answer`,
+  GET_QUESTIONS: `${BASE_URL}/stat/{theme}/questions`,
 };
 
 /**
@@ -236,10 +238,16 @@ export const getGridAdverts = (queryParamenrts) => {
   return getRequest(url);
 };
 
+
+export const postCsatAnswer = (answer) => {
+  const url = API_CONST.POST_ANSWER;
+  return postRequest(url, answer);
+};
+
 /**
- * GET-запрос для получения статистки
+ * GET-запрос для получения вопросов
  */
-export const getStatistic = () => {
-  const url = API_CONST.GET_STATISTIC;
+export const getQuestions = (theme) => {
+  const url = API_CONST.GET_QUESTIONS.replace('{theme}', theme);
   return getRequest(url);
 };

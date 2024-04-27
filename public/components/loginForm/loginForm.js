@@ -1,4 +1,6 @@
-import { BaseComponent, Input, Button } from '@components';
+import {
+  BaseComponent, Input, Button, Csat,
+} from '@components';
 import {
   checkLogin, checkPassword, login, checkPhone,
 } from '@modules';
@@ -112,6 +114,11 @@ export class LoginForm extends BaseComponent {
     if (statusCode === globalVariables.HTTP_STATUS_OK) {
       this.state.closeModal();
       authModel.setAuth();
+      setTimeout(() => {
+        const csat = new Csat('csat_navbar', { src: '/csat/profile' });
+        csat.renderAndDidMount();
+      }, 1000);
+
       return;
     }
     this.addErr(ERROR_LOGIN);
