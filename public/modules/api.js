@@ -238,7 +238,6 @@ export const getGridAdverts = (queryParamenrts) => {
   return getRequest(url);
 };
 
-
 export const postCsatAnswer = (answer) => {
   const url = API_CONST.POST_ANSWER;
   return postRequest(url, answer);
@@ -249,5 +248,13 @@ export const postCsatAnswer = (answer) => {
  */
 export const getQuestions = (theme) => {
   const url = API_CONST.GET_QUESTIONS.replace('{theme}', theme);
+  return getRequest(url);
+};
+
+/**
+ * GET-запрос для получения статистки
+ */
+export const getStatistic = () => {
+  const url = API_CONST.GET_STATISTIC;
   return getRequest(url);
 };
