@@ -25,6 +25,7 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
+  POST_ANSWER: `${BASE_URL}/stat/answer`,
 };
 
 /**
@@ -234,3 +235,10 @@ export const getGridAdverts = (queryParamenrts) => {
   const url = API_CONST.GET_GRID_ADVERTS + queryParamenrts;
   return getRequest(url);
 };
+
+/**
+ * POST-запрос на оценку
+ */
+export const postCsatAnswer = (answer) => {
+  const url = API_CONST.
+}

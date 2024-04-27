@@ -1,5 +1,5 @@
 import {
-  BaseComponent, Footer, Search, GridCard,
+  BaseComponent, Footer, Search, GridCard, Csat,
 } from '@components';
 import { events } from '@models';
 import main from './main.hbs';
@@ -37,9 +37,11 @@ export class MainPage extends BaseComponent {
 
     const gridCard = new GridCard('gridCards', { title: 'Все объявления' });
 
+    const csat = new Csat('app', {});
+
     const footer = new Footer('app');
 
-    const innerComponents = [search, gridCard, footer];
+    const innerComponents = [search, gridCard, csat, footer];
     super({
       parent, template, state, innerComponents,
     });

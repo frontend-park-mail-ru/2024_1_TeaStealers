@@ -1,4 +1,6 @@
-import { Button, BaseComponent, Avatar } from '@components';
+import {
+  Button, BaseComponent, Avatar, Csat,
+} from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { Router } from '@modules';
 import { globalVariables, events } from '@models';

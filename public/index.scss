@@ -15,6 +15,7 @@
 @import "@components/editAdvert/editAdvert.scss"; 
 @import "@components/paramsAdvert/paramsAdvert.scss"; 
 @import "@components/numberPages/numberPages.scss"; 
+@import "@components/csat/csat.scss";
 @import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
 @import "@pages/profile/profile.scss";
 @import "@pages/mobilePage/mobilePage.scss";
@@ -25,7 +26,6 @@
 @import "@pages/myAdvert/myAdvert.scss";
 @import "@pages/editAdvert/editAdvert.scss";
 @import "@pages/errorPage/errorPage.scss";
-@import "@pages/csatPage/csatPage.scss";
 
 * {
     box-sizing: border-box;
