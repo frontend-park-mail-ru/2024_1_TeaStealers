@@ -35,7 +35,6 @@ class Router {
      * @param {string} path - путь URL
      */
   go(path, isReplace) {
-    console.log(this.curView);
     this.error = false;
     if (path === this.curPath) {
       return;

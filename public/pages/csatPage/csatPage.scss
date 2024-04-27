@@ -1,12 +1,11 @@
 @use "@/variables.scss";
 
 .csat {
-    position: absolute;
+    position: fixed;
     z-index: 200;
     width: 400px;
     height: 300px;
     display: flex;
-    border: 1px solid black;
     cursor: default;
     background-color: white;
 

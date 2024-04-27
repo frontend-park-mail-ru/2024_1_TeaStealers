@@ -25,6 +25,7 @@ export class Csat extends BaseComponent {
   }
 
   componentDidMount() {
+    this.addClickListener('iframe__close', this.closeIframe.bind(this));
     // const stars = document.querySelectorAll('.csat__star');
     // stars.forEach((star) => {
     //   star.addEventListener('mouseover', this.coloredStars.bind(this));
@@ -34,36 +35,7 @@ export class Csat extends BaseComponent {
     // document.getElementById('nextButton').addEventListener('click', this.sendAnswer.bind(this));
   }
 
-  coloredStars(event) {
-    event.preventDefault();
-    const numberStr = event.target.id.replace('csatStar', '');
-    const number = parseInt(numberStr, 10);
-    const stars = document.querySelectorAll('.csat__star');
-    stars.forEach((star) => {
-      star.src = '../../static/star.svg';
-    });
-    for (let i = 0; i < number; i += 1) {
-      stars[i].src = '../../static/starSelect.svg';
-    }
-  }
-
-  uncoloredStars(event) {
-    event.preventDefault();
-    const stars = document.querySelectorAll('.csat__star');
-    for (let i = this.selectedStarNumber; i < 5; i += 1) {
-      stars[i].src = '../../static/star.svg';
-    }
-    for (let i = 0; i < this.selectedStarNumber; i += 1) {
-      stars[i].src = '../../static/starSelect.svg';
-    }
-  }
-
-  selectStar(event) {
-    event.preventDefault();
-    const numberStr = event.target.id.replace('csatStar', '');
-    const number = parseInt(numberStr, 10);
-    this.selectedStarNumber = number;
-
-    // отправить ответ
+  closeIframe() {
+    this.unmountAndClean();
   }
 }
