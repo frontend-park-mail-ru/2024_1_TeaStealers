@@ -31,6 +31,7 @@ export class CsatPage extends BaseComponent {
       star.addEventListener('mouseout', this.uncoloredStars.bind(this));
       star.addEventListener('click', this.selectStar.bind(this));
     });
+    document.getElementById('nextButton').addEventListener('click', this.sendAnswer.bind(this));
   }
 
   coloredStars(event) {

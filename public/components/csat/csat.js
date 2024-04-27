@@ -25,25 +25,13 @@ export class Csat extends BaseComponent {
   }
 
   componentDidMount() {
-    const stars = document.querySelectorAll('.csat__star');
-    stars.forEach((star) => {
-      star.addEventListener('mouseover', this.coloredStars.bind(this));
-      star.addEventListener('mouseout', this.uncoloredStars.bind(this));
-      star.addEventListener('click', this.selectStar.bind(this));
-    });
-    document.getElementById('nextButton').addEventListener('click', this.sendAnswer.bind(this));
-    document.querySelector('.csat__close').addEventListener('click', this.closeIframe.bind(this));
-  }
-
-  componentWillUnmount() {
-    const stars = document.querySelectorAll('.csat__star');
-    stars.forEach((star) => {
-      star.removeEventListener('mouseover', this.coloredStars.bind(this));
-      star.removeEventListener('mouseout', this.uncoloredStars.bind(this));
-      star.removeEventListener('click', this.selectStar.bind(this));
-    });
-    document.getElementById('nextButton').removeEventListener('click', this.sendAnswer.bind(this));
-    document.querySelector('.csat__close').removeEventListener('click', this.closeIframe.bind(this));
+    // const stars = document.querySelectorAll('.csat__star');
+    // stars.forEach((star) => {
+    //   star.addEventListener('mouseover', this.coloredStars.bind(this));
+    //   star.addEventListener('mouseout', this.uncoloredStars.bind(this));
+    //   star.addEventListener('click', this.selectStar.bind(this));
+    // });
+    // document.getElementById('nextButton').addEventListener('click', this.sendAnswer.bind(this));
   }
 
   coloredStars(event) {
@@ -77,18 +65,5 @@ export class Csat extends BaseComponent {
     this.selectedStarNumber = number;
 
     // отправить ответ
-  }
-
-  sendAnswer() {
-    postCsatAnswer({
-      question_id: this.state.id,
-      mark: this.selectedStarNumber,
-    });
-  }
-
-  closeIframe() {
-    this.componentWillUnmount();
-    const iframe = document.getElementById('csat');
-    iframe.parentNode.removeChild(iframe);
   }
 }
