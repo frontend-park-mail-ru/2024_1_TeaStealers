@@ -9,7 +9,7 @@ export class ProfilePage extends BaseComponent {
   constructor(parent, state) {
     const template = profile;
     let menu;
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 600 && false) {
       menu = new MobileMenu('navbarMenu', {});
     } else {
       menu = new Menu('left-menu', { profile: true });

@@ -29,3 +29,16 @@
         margin-top: 40px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .myadvert-page {
+        padding: 0px;
+    }
+
+    .my-advert {
+        &__data {
+            margin-left: 0px;
+            padding: 30px 60px;
+        }
+    }
+}

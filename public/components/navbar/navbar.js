@@ -1,4 +1,6 @@
-import { Button, BaseComponent, Avatar } from '@components';
+import {
+  Button, BaseComponent, Avatar, MobileMenu,
+} from '@components';
 import { LoginAndSignupLayout } from '@pages';
 import { Router } from '@modules';
 import { globalVariables, events } from '@models';
@@ -51,11 +53,16 @@ export class Navbar extends BaseComponent {
         text: 'Мой профиль',
       });
     }
-    const innerComponents = [noticeButton, buttonLoginLogout];
+    let menu;
+    if (window.innerWidth <= 600) {
+      menu = new MobileMenu('navbar', {});
+    }
+    const innerComponents = [noticeButton, buttonLoginLogout, menu];
     super({
       parent, template, state, innerComponents,
     });
     this.btnLogin = buttonLoginLogout;
+    this.mobile = menu;
   }
 
   /**
@@ -84,6 +91,7 @@ export class Navbar extends BaseComponent {
    */
   componentDidMount() {
     console.log('didmount');
+    this.mobile.componentDidMount();
     this.addClickListener('buttonLogin', this.openModal.bind(this));
     this.addClickListener('buttonProfile', this.goToProfile.bind(this));
     this.addClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));

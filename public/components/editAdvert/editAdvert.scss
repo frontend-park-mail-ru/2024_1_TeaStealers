@@ -109,3 +109,10 @@
         color: $color_errors;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .edit-advert {
+        margin: 0;
+        padding: 10vw 2vw;
+    }
+}

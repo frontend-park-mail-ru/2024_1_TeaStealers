@@ -60,7 +60,10 @@
 }
 
 @media screen and (max-width: 600px) {
-    .menu span {
-        font-size: 14px;
+    .menu {
+        display: none;
+        span {
+            font-size: 14px;
+        }
     }
 }
