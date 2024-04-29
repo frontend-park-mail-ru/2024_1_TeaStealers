@@ -81,3 +81,27 @@ $ruble-code: '\20BD';
         align-items: center;
     }
 }
+
+@media (max-width: 600px) {
+    .card {
+        width: 100%;
+        padding: 4vw;
+        height: 100%;
+
+        &__picture {
+            display: none;
+        }
+
+        &__info {
+            min-width: 0px;
+
+            div {
+                padding: 2vw 0;
+            }
+        }
+
+        &__description {
+            height: 100%;
+        }
+    }
+}

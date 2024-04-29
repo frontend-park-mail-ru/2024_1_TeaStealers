@@ -57,12 +57,17 @@ export class Navbar extends BaseComponent {
     if (window.innerWidth <= 600) {
       menu = new MobileMenu('navbar', {});
     }
-    const innerComponents = [noticeButton, buttonLoginLogout, menu];
+    const innerComponents = [noticeButton, buttonLoginLogout];
+    if (menu) {
+      innerComponents.push(menu);
+    }
     super({
       parent, template, state, innerComponents,
     });
     this.btnLogin = buttonLoginLogout;
-    this.mobile = menu;
+    if (menu) {
+      this.mobile = menu;
+    }
   }
 
   /**
@@ -90,14 +95,15 @@ export class Navbar extends BaseComponent {
    * Добавляет обработчик события
    */
   componentDidMount() {
-    console.log('didmount');
-    this.mobile.componentDidMount();
+    this.mobile?.componentDidMount();
     this.addClickListener('buttonLogin', this.openModal.bind(this));
     this.addClickListener('buttonProfile', this.goToProfile.bind(this));
     this.addClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));
-    this.addClickListener('nabarBrand', this.goToMain.bind(this));
+    this.addClickListener('navbarBrand', this.goToMain.bind(this));
     this.addClickListener('sale', this.goToBuy.bind(this));
     this.addClickListener('rent', this.goToRent.bind(this));
+
+    console.log('didmount');
   }
 
   /**
@@ -109,7 +115,7 @@ export class Navbar extends BaseComponent {
     this.removeClickListener('buttonLogin', this.openModal.bind(this));
     this.removeClickListener('buttonProfile', this.goToProfile.bind(this));
     this.removeClickListener('buttonNewAdvert', this.goToNewAdvert.bind(this));
-    this.removeClickListener('nabarBrand', this.goToMain.bind(this));
+    this.removeClickListener('navbarBrand', this.goToMain.bind(this));
     this.removeClickListener('sale', this.goToBuy.bind(this));
     this.removeClickListener('rent', this.goToRent.bind(this));
   }

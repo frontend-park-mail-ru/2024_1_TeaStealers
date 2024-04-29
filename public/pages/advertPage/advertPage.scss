@@ -179,3 +179,29 @@
     color: $color-secondary;
     margin-bottom: 10px;
 }
+
+@media screen and (max-width: 600px) {
+    .advert-page {
+        display: block;
+        min-width: 100%;
+        margin-top: 5vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+
+        &__img {
+            height: 80vw;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        &__characteristics {
+            display: block;
+        }
+    }
+    
+    .characteristic-group {
+        padding-bottom: 4vw;
+    }
+}

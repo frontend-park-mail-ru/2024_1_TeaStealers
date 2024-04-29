@@ -69,3 +69,40 @@
     font-weight: $subtitle-font-weight;
     font-size: $subtitle-font-size;
 }
+
+@media (max-width: 600px) {
+    .complex-page {
+        padding: 0px;
+        padding-top: 20vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+
+        &__img {
+            height: 80vw;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        &__info { 
+            display: block;
+        }
+    }
+
+    .info {
+
+        &_characteristics {
+            display: block;
+        }
+        
+        &_description {
+            display: block;
+            
+        }
+
+        &_about-complex {
+            padding-bottom: 4vw;
+        }
+    }
+}
