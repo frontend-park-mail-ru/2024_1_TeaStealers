@@ -199,6 +199,11 @@
         &__characteristics {
             display: block;
         }
+
+        &__references {
+            position: relative;
+            width: 100%;
+        }
     }
     
     .characteristic-group {

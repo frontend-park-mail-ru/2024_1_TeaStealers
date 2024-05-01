@@ -122,6 +122,18 @@
             <h2>
                 {{price}}   &#x20bd;
             </h2>
+            <div class="gridCards__likes" id="likes">
+                <span class="material-symbols-outlined">
+                    favorite
+                </span>
+                <span>{{likeCounter}}</span>
+            </div>
+            <div class="gridCards__views">
+                <span class="material-symbols-outlined">
+                    visibility
+                </span>
+                <span>{{visibilityCounter}}</span>
+            </div>
         </div>
         {{#if complexProperties}}
         <div class="advert-page__box boxComplex">

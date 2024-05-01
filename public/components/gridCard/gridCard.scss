@@ -112,6 +112,18 @@
         }
     }
 
+    &__stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+    &__likes, &__views {
+        display: flex;
+        align-items: center; /* Центрирование содержимого по вертикали */
+        font-size: 14px; /* Размер шрифта для текста рядом с иконками */
+    }
+
     &__edit {
         background-color: $background-color-button-secondary;
         color: $color_text_highlight !important;
@@ -137,6 +149,10 @@
     }
 }
 
+.material-symbols-outlined {
+    text-align: center;
+}
+
 @media screen and (max-width: 600px) {
     .gridCards {
 
@@ -151,7 +167,8 @@
         a {
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            // justify-content: center;
             flex-direction: column;
             overflow: hidden;
             text-overflow: ellipsis;  
@@ -180,6 +197,12 @@
         }
 
         &__card {
+            width: 100%;
+            min-height: 100%;
+            grid-template-rows: 80% 20%;
+        }
+
+        &__Mycard {
             width: 100%;
             min-height: 100%;
             grid-template-rows: 80% 20%;

@@ -18,6 +18,13 @@ export class GridCard extends BaseComponent {
 
     state = { ...state };
 
+    state.miniCards?.forEach((card) => {
+      const spacedPrice = parseInt(card.price, 10).toLocaleString('ru-RU');
+      if (spacedPrice.length >= card.price.toString().length) {
+        card.price = spacedPrice;
+      }
+    });
+
     const innerComponents = [];
     super({
       parent, template, state, innerComponents,

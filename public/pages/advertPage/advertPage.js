@@ -47,7 +47,22 @@ export class AdvertPage extends BaseComponent {
     this.addClickListener('imageAdvert__next', this.nextSlide.bind(this));
     this.addClickListener('linkToComplex', this.goToComplex.bind(this));
     this.addClickListener('advert-page__back', this.goToList.bind(this));
+    this.addClickListener('likes', this.like.bind(this));
     this.footer.componentDidMount();
+  }
+
+  like() {
+    const likeDiv = document.getElementById('likes');
+    const likeSpan = likeDiv.querySelectorAll('span');
+    if (likeSpan[0].innerText === 'favorite') {
+      likeSpan[0].innerText = 'heart_check';
+      likeSpan[1].innerText = '1';
+      likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
+    } else {
+      likeSpan[0].innerText = 'favorite';
+      likeSpan[1].innerText = '0';
+      likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
+    }
   }
 
   viewContactListener(event) {

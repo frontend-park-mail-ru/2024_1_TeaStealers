@@ -10,7 +10,7 @@
     </div>
     <div class="gridCards__Mycontainer">
     {{#each miniCards}}
-        <div class="gridCards__card">
+        <div class="gridCards__Mycard">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
             <img src="/static/{{photo}}" alt="Фотография">
             <div class="gridCards__description">
@@ -31,8 +31,16 @@
             </a>
 
             <div class="gridCards__buttons">
-                <a href="/edit-advert/{{advertId}}" class="gridCards__edit">Изменить</a>
-                <a href="{{advertId}}" class="gridCards__delete">Удалить</a>
+                <a href="/edit-advert/{{advertId}}" class="gridCards__edit">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+                </a>
+                <a href="{{advertId}}" class="gridCards__delete">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </a>
             </div>
 
         </div>
@@ -50,8 +58,8 @@
     {{#each miniCards}}
         <div class="gridCards__card">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
-                <img src="/static/{{photo}}" alt="Фотография">
-                {{!-- <img src="../../static/fone.jpg" alt="Фотография"> --}}
+                {{!-- <img src="/static/{{photo}}" alt="Фотография"> --}}
+                <img src="../../static/fone.jpg" alt="Фотография">
                 
                 <div class="gridCards__description">
 
@@ -69,6 +77,20 @@
 
                 </div>
             </a>
+            <div class="gridCards__stats">
+                <div class="gridCards__likes">
+                    <span class="material-symbols-outlined">
+                        favorite
+                    </span>
+                    <span>{{likeCounter}}</span>
+                </div>
+                <div class="gridCards__views">
+                    <span class="material-symbols-outlined">
+                        visibility
+                    </span>
+                    <span>{{visibilityCounter}}</span>
+                </div>
+            </div>
         </div>
     {{/each}}
     </div>

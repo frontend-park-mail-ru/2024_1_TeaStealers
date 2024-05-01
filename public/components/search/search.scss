@@ -73,6 +73,28 @@
     &__input {
         border: none !important;
     }
+
+    &__button-expand-icon::after {
+
+        content: $expand-arrow;
+        font-family: $icon-font-family;
+        position: absolute;
+        right: 15px; 
+        top: 20%;
+        font-size: $icon-font-size;
+
+    }
+
+    &__button-close-icon::after {
+
+        content: $hide-arrow;
+        font-family: $icon-font-family;
+        position: absolute;
+        right: 15px; 
+        top: 20%;
+        font-size: $icon-font-size;
+
+    }
 }
 
 .filter-link {

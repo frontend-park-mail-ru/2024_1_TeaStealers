@@ -3,6 +3,7 @@ import {
 } from '@components';
 import { checkPriceFilter } from '@modules';
 import { mainControler } from '@controllers';
+import { blockParams } from 'handlebars';
 import search from './search.hbs';
 
 const DEFAULT_SEARCH = {
@@ -86,19 +87,21 @@ export class Search extends BaseComponent {
       ...buttonPattern,
       text: state.homeType,
       id: 'homeType',
-      blockClass: 'string_menu-button search__home-type',
+      blockClass: 'string_menu-button search__home-type search__button-expand-icon',
     });
 
     const roomNumber = new Button('searchString', {
       ...buttonPattern,
       text: state.roomNumber,
       id: 'roomNumber',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const price = new Button('searchString', {
       ...buttonPattern,
       text: state.price,
       id: 'price',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const inputMenu = new Input('searchString', {
@@ -216,6 +219,9 @@ export class Search extends BaseComponent {
    */
   openMenu(menuButton) {
     const parentDivForButton = menuButton.target.parentElement;
+    console.log(parentDivForButton);
+    parentDivForButton.classList.toggle('search__button-expand-icon');
+    parentDivForButton.classList.toggle('search__button-close-icon');
     const documentmenus = document.getElementsByClassName('dropMenu');
     Array.from(documentmenus).forEach((menu) => {
       if (!menu.classList.contains('hidden') && menu !== parentDivForButton.lastElementChild) {
