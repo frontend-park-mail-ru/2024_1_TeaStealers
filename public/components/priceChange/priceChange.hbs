@@ -1,0 +1,14 @@
+<div class="price-change hidden" id="price-change">
+    <ul class="price-change__history">
+        <span>
+            Дата
+        </span>
+        <span>
+            Цена
+        </span>
+        {{#each priceHistory}}
+        <span>{{this.data}}</span>
+        <span>{{this.price}}</span>
+        {{/each}}
+    </ul>
+</div>

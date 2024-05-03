@@ -271,7 +271,6 @@ export class Search extends BaseComponent {
         }
       }
     });
-    console.log(this.flatFilter);
     menuButton.firstElementChild.innerText = message;
   }
 

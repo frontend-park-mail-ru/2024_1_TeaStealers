@@ -1,0 +1,12 @@
+@use "@/variables.scss";
+
+.price-change {
+    &__history {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.hidden {
+    display: none;
+}

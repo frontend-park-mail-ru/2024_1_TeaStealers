@@ -1,4 +1,4 @@
-import { BaseComponent, Button, Footer } from '@components';
+import { BaseComponent, Button, PriceChange } from '@components';
 import { events } from '@models';
 import { router } from '@modules/router';
 import advertPage from './advertPage.hbs';
@@ -7,6 +7,33 @@ const VIEW_CONTACT_TEMPLATE = {
   mode: 'primary',
   text: 'Показать контакты',
   id: 'buttonViewContact',
+};
+
+const VIEW_PRICE_HISTORY = {
+  mode: 'secondary',
+  text: 'Показать изменение цены',
+  id: 'buttonViewPriceHistory',
+};
+
+const DEFAULT_PRICE_CHANGE = {
+  priceHistory: [
+    {
+      data: '27.03.23',
+      price: '1000',
+    },
+    {
+      data: '27.03.23',
+      price: '1000',
+    },
+    {
+      data: '27.03.23',
+      price: '1000',
+    },
+    {
+      data: '27.03.23',
+      price: '1000',
+    },
+  ],
 };
 
 /**
@@ -22,19 +49,34 @@ export class AdvertPage extends BaseComponent {
     */
   constructor(parent, state) {
     const template = advertPage;
-    state = { ...state };
+    state = { ...DEFAULT_PRICE_CHANGE, ...state };
     const buttonViewContact = new Button('price', {
       ...VIEW_CONTACT_TEMPLATE,
     });
+    const innerComponents = [buttonViewContact];
 
-    const footer = new Footer('app');
-
-    const innerComponents = [buttonViewContact, footer];
+    if (state.priceHistory) {
+      const priceHistory = new PriceChange('price', { priceHistory: state.priceHistory });
+      const buttonViewPriceHistory = new Button('price', {
+        ...VIEW_PRICE_HISTORY,
+      });
+      innerComponents.push(priceHistory);
+      innerComponents.push(buttonViewPriceHistory);
+    }
     super({
       parent, template, state, innerComponents,
     });
-    [this.buttonViewContact, this.footer] = innerComponents;
+    if (state.priceHistory) {
+      [this.buttonViewContact, this.priceHistory, this.buttonViewPriceHistory] = innerComponents;
+    } else {
+      [this.buttonViewContact] = innerComponents;
+    }
     this.slideIndex = 0;
+    this.history = false;
+    if (state.priceHistory) {
+      this.history = true;
+    }
+    console.log(this.state);
   }
 
   render() {
@@ -48,7 +90,17 @@ export class AdvertPage extends BaseComponent {
     this.addClickListener('linkToComplex', this.goToComplex.bind(this));
     this.addClickListener('advert-page__back', this.goToList.bind(this));
     this.addClickListener('likes', this.like.bind(this));
-    this.footer.componentDidMount();
+    if (this.history) {
+      this.addClickListener('buttonViewPriceHistory', this.showHistory.bind(this));
+    }
+  }
+
+  showHistory() {
+    document.querySelector('#price-change').classList.toggle('hidden');
+    this.showingHistory
+      ? this.buttonViewPriceHistory.self.firstElementChild.innerText = 'Показать изменение цены'
+      : this.buttonViewPriceHistory.self.firstElementChild.innerText = 'Скрыть изменение цены';
+    this.showingHistory = !this.showingHistory;
   }
 
   like() {
@@ -109,7 +161,11 @@ export class AdvertPage extends BaseComponent {
     this.removeClickListener('imageAdvert__prev', this.prevSlide.bind(this));
     this.removeClickListener('imageAdvert__next', this.nextSlide.bind(this));
     this.removeClickListener('linkToComplex', this.goToComplex.bind(this));
-    this.footer.componentWillUnmount();
+    this.removeClickListener('advert-page__back', this.goToList.bind(this));
+    this.removeClickListener('likes', this.like.bind(this));
+    if (this.history) {
+      this.removeClickListener('buttonViewPriceHistory', this.showHistory.bind(this));
+    }
   }
 
   componentDidUpdate(event) {
