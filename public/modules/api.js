@@ -25,6 +25,8 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
+  LIKE_ADVERT: `${BASE_URL}/{advert_id}/like`,
+  DISLIKE_ADVERT: `${BASE_URL}/{advert_id}/dislike`,
 };
 
 /**
@@ -232,5 +234,15 @@ export const getMyAdverts = () => {
  */
 export const getGridAdverts = (queryParamenrts) => {
   const url = API_CONST.GET_GRID_ADVERTS + queryParamenrts;
+  return getRequest(url);
+};
+
+export const likeAdvert = (advertId) => {
+  const url = API_CONST.LIKE_ADVERT.replace('{advert_id}', advertId);
+  return getRequest(url);
+};
+
+export const dislikeAdvert = (advertId) => {
+  const url = API_CONST.DISLIKE_ADVERT.replace('{advert_id}', advertId);
   return getRequest(url);
 };

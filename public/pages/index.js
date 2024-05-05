@@ -7,3 +7,4 @@ export * from './newAdvert/newAdvert.js';
 export * from './myAdvert/myAdvert.js';
 export * from './editAdvert/editAdvert.js';
 export * from './errorPage/errorPage.js';
+export * from './mobilePage/mobilePage.js';

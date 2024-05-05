@@ -3,6 +3,7 @@ import {
 } from '@components';
 import { checkPriceFilter } from '@modules';
 import { mainControler } from '@controllers';
+import { blockParams } from 'handlebars';
 import search from './search.hbs';
 
 const DEFAULT_SEARCH = {
@@ -86,18 +87,21 @@ export class Search extends BaseComponent {
       ...buttonPattern,
       text: state.homeType,
       id: 'homeType',
+      blockClass: 'string_menu-button search__home-type search__button-expand-icon',
     });
 
     const roomNumber = new Button('searchString', {
       ...buttonPattern,
       text: state.roomNumber,
       id: 'roomNumber',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const price = new Button('searchString', {
       ...buttonPattern,
       text: state.price,
       id: 'price',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const inputMenu = new Input('searchString', {
@@ -105,6 +109,7 @@ export class Search extends BaseComponent {
       type: 'text',
       blockClass: 'search__input',
       id: 'inputMenu',
+      containerClass: 'search__input-container',
     });
 
     const findButton = new Button('searchButton', {
@@ -176,12 +181,46 @@ export class Search extends BaseComponent {
     }
   }
 
+  componentDidUpdate(state) {
+    if (state.name !== 'GET_ADVERTS_MAIN') {
+      return;
+    }
+    if (state.data.pageInfo.title === 'Аренда') {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Снять') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+
+      this.state.firstFilterLinkStatus = 'passive';
+      this.state.secondFilterLinkStatus = 'active';
+    } else {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Купить') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+      this.state.firstFilterLinkStatus = 'active';
+      this.state.secondFilterLinkStatus = 'passive';
+    }
+  }
+
   /**
    * Обработчик открытия всплывающего меню
    * @param {Object} menuButton - Отслеживаемое событие
    */
   openMenu(menuButton) {
     const parentDivForButton = menuButton.target.parentElement;
+    parentDivForButton.classList.toggle('search__button-expand-icon');
+    parentDivForButton.classList.toggle('search__button-close-icon');
     const documentmenus = document.getElementsByClassName('dropMenu');
     Array.from(documentmenus).forEach((menu) => {
       if (!menu.classList.contains('hidden') && menu !== parentDivForButton.lastElementChild) {
@@ -197,7 +236,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseHomeType(event) {
-    this.flatFilter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -210,11 +248,17 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Квартиру в новостройке или вторичке';
     let checked = false;
+    this.flatFilter = '';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        if (this.flatFilter === '') {
+          this.flatFilter = input.value;
+        } else {
+          this.flatFilter = '';
+        }
         if (!checked) {
           checked = true;
           message = '';
@@ -234,7 +278,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseRoomNember(event) {
-    this.roomCounter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -247,11 +290,13 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Комнат';
     let checked = false;
+    this.roomCounter = 'undefined';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        this.roomCounter = input.value;
         if (!checked) {
           checked = true;
           message += `: ${labels[idx].innerText}`;
@@ -285,6 +330,9 @@ export class Search extends BaseComponent {
     }
     filterElement.classList.remove('filter-link_passive');
     filterElement.classList.add('filter-link_active');
+    const queryParameters = {};
+    queryParameters.dealtype = `${this.dealType}`;
+    mainControler.updateMainModelWithParameters(queryParameters);
   }
 
   /**
@@ -369,12 +417,22 @@ export class Search extends BaseComponent {
    */
   search() {
     const queryParameters = {};
-    queryParameters.adverttype = this.flatFilter;
-    queryParameters.adress = `${this.adress}`;
+    if (this.flatFilter) {
+      queryParameters.adverttype = this.flatFilter;
+    }
+    if (this.adress) {
+      queryParameters.adress = `${this.adress}`;
+    }
+    if (this.roomCounter) {
+      queryParameters.roomcount = `${this.roomCounter}`;
+    }
     queryParameters.dealtype = `${this.dealType}`;
-    queryParameters.roomcount = `${this.roomCounter}`;
-    queryParameters.minprice = `${this.prices[0]}`;
-    queryParameters.maxprice = `${this.prices[1]}`;
+    if (this.prices[0]) {
+      queryParameters.minprice = `${this.prices[0]}`;
+    }
+    if (this.prices[1]) {
+      queryParameters.minprice = `${this.prices[1]}`;
+    }
     mainControler.updateMainModelWithParameters(queryParameters);
   }
 

@@ -58,3 +58,12 @@
 .menu_logout{
     color: $color_text_basic_secondary !important;
 }
+
+@media screen and (max-width: 600px) {
+    .menu {
+        display: none;
+        span {
+            font-size: 14px;
+        }
+    }
+}

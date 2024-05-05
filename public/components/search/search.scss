@@ -2,6 +2,7 @@
 
 .search {
     height: 480px;
+    min-width: 1400px;
     background-image: url('../public/static/fone.jpg');
     background-size: cover;
     display: flex;
@@ -68,6 +69,32 @@
         grid-template-columns: 3fr 1fr 1fr 3fr;
         border-top-left-radius: 0 !important;
     }
+
+    &__input {
+        border: none !important;
+    }
+
+    &__button-expand-icon::after {
+
+        content: $expand-arrow;
+        font-family: $icon-font-family;
+        position: absolute;
+        right: 15px; 
+        top: 20%;
+        font-size: $icon-font-size;
+
+    }
+
+    &__button-close-icon::after {
+
+        content: $hide-arrow;
+        font-family: $icon-font-family;
+        position: absolute;
+        right: 15px; 
+        top: 20%;
+        font-size: $icon-font-size;
+
+    }
 }
 
 .filter-link {
@@ -82,4 +109,69 @@
         color: $color_filter_passive;
     }
     
+}
+
+@media screen and (max-width: 600px) {
+    .search {
+        // height: 10%;
+        min-width: 0px;
+        width: 100%;
+        background-image: url('../public/static/fone.jpg');
+        background-size: cover;
+        display: flex;
+        // display: none;
+        align-items: center;
+        justify-content: center;
+        color: $color_text_basic;
+        padding-top: 90px;
+
+        &__block {
+            height: 100%;
+        }
+
+        &__main-message {
+            display: none;
+        }
+
+        &__filter-and-search {
+            height: 75%;
+        }
+
+        &__filters {
+            justify-content: space-between;
+            height: 3rem;
+        }
+
+        &__filter-link {
+            width: 45%;
+            height: 100%;
+            border-radius: $button-border-radius_md;
+        }
+
+        &__string {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            padding-top: 20px;
+            background: none;
+            gap: 10px;
+        }
+
+        &__home-type {
+            grid-column: 1 / -1;
+        }
+
+        &__input-container {
+            grid-column: 1 / -1;
+            display: block !important;
+        }
+
+        &__input {
+            height: 3rem !important;
+        }
+    }
+
+    .string_menu-button {
+        height: 3rem;
+    }
 }

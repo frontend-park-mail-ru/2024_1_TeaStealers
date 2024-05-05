@@ -41,6 +41,7 @@
         height: 100%;
         text-decoration: none;
         color: inherit;
+        cursor: pointer;
     }
 
     &__rightside {
@@ -57,5 +58,70 @@
         align-self: center;
         justify-self: center;
         cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .nav {
+        height: 60px;
+        display: flex;
+        padding: 0 2%;
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+        box-shadow: 0px 5px 6px 0px rgba(34, 60, 80, 0.2);
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: $background-color-main;
+        z-index: 50;
+    
+        &__linkbar {
+            display: none;
+        }
+    
+        &__leftside {
+            padding: 0 20px;
+            margin: 0 auto 0 0;
+            height: 100%;
+            display: flex;
+        }
+    
+        &__link {
+            float: left;
+            display: flex;
+            align-items: center;
+        }
+    
+        &__link a {
+            padding: 0 8px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+    
+        &__rightside {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: auto auto auto;
+            align-items: center;
+            justify-content: flex-start;
+        }
+    
+        &__brand {
+            font-size: 32px;
+            color: $color_text_highlight;
+            align-self: center;
+            justify-self: center;
+            cursor: pointer;
+        }
+
+        #buttonNewAdvert {
+            display: none;
+        }
     }
 }

@@ -3,6 +3,53 @@ import {
 } from '@components';
 import myAdvert from './myAdvert.hbs';
 
+const mini = [
+  {
+    advertId: '123',
+    photo: '../../static/fone.jpg',
+    price: '1231231',
+    houseProperties: {
+      squareArea: 213,
+      roomCount: 2,
+    },
+    adress: 'dsadasda',
+  },
+  {
+    advertId: '123',
+    photo: '../../static/fone.jpg',
+    price: '1231231',
+    houseProperties: {
+      squareArea: 213,
+      roomCount: 2,
+      adress: 'dsadasda',
+    },
+    adress: 'dsadasda',
+  },
+  {
+    advertId: '123',
+    photo: '../../static/fone.jpg',
+    price: '1231231',
+    houseProperties: {
+      squareArea: 213,
+      roomCount: 2,
+      adress: 'dsadasda',
+    },
+    adress: `dsadasda
+    dsadsaasdsadasdasdasd`,
+  },
+  {
+    advertId: '123',
+    photo: '../../static/fone.jpg',
+    price: '1231231',
+    houseProperties: {
+      squareArea: 213,
+      roomCount: 2,
+      adress: 'dsadasda',
+    },
+    adress: 'dsadasda',
+  },
+];
+
 export class MyAdvertPage extends BaseComponent {
   state;
 

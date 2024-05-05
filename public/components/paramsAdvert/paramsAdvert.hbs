@@ -3,7 +3,7 @@
     {{#if flat}}
     <div class="radio-inputs">
         <div class="radio-inputs__container">
-            <div>Тип недвижимости</div>
+            <div class="label">Тип недвижимости</div>
             <div class="radio-inputs__group">
                 <div>
                     <input id="radioApartament" type="radio" name="apartament" value="false" checked>
@@ -21,7 +21,7 @@
     {{#if house}}
     <div class="radio-inputs">
         <div class="radio-inputs__container">
-            <div>Тип дома</div>
+            <div class="label">Тип дома</div>
             <div class="radio-inputs__group">
                 <div>
                     <input id="radioCottage" type="radio" name="cottage" value="false" checked>
@@ -37,7 +37,7 @@
     <div id="paramsHouseInputs" class="params-inputs"></div>
     <div class="radio-inputs">
         <div class="radio-inputs__container">
-            <div>Состояние дома</div>
+            <div class="label">Состояние дома</div>
             <div class="radio-inputs__group">
                 <div>
                     <input id="radioLive" type="radio" name="statusHome" value="Live" checked>
@@ -60,27 +60,27 @@
     </div>
         <div class="radio-inputs">
         <div class="radio-inputs__container">
-            <div>Статус участка</div>
+            <div class="label">Статус участка</div>
             <div class="radio-inputs__group">
                 <div>
                     <input id="radioIHC" type="radio" name="statusArea" value="IHC">
-                    <label for="radioIHC">ИЖС</label>
+                    <label for="radioIHC" title="Индивидуальное жилищное строительство">ИЖС</label>
                 </div>
                 <div>
                     <input id="radioDNP" type="radio" name="statusArea" value="DNP">
-                    <label for="radioDNP">ДНП</label>
+                    <label for="radioDNP" title="Дачное некоммерческое партнерство">ДНП</label>
                 </div>
                 <div>
                     <input id="radioG" type="radio" name="statusArea" value="G">
-                    <label for="radioG">Садоводство</label>
+                    <label for="radioG" title="Садоводство">Садоводство</label>
                 </div>
                 <div>
                     <input id="radioF" type="radio" name="statusArea" value="F">
-                    <label for="radioF">Фермерское хозяйство</label>
+                    <label for="radioF" title="Фермерское хозяйство">Фермерское хозяйство</label>
                 </div>
                 <div>
                     <input id="radioPSP" type="radio" name="statusArea" value="PSP" checked>
-                    <label for="radioPSP">ЛПХ</label>
+                    <label for="radioPSP" title="Личное подсобное хозяйство">ЛПХ</label>
                 </div>                
             </div>
         </div>

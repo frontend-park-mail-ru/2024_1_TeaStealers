@@ -1,4 +1,4 @@
-import { BaseComponent } from '@components';
+import { BaseComponent, Footer } from '@components';
 import { router } from '@modules';
 import errorPage from './errorPage.hbs';
 

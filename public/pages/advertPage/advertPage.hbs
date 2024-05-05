@@ -1,5 +1,9 @@
 <div class="advert-page">
     <div class="advert-page__info">
+        <span class="advert-page__btn-back" id="advert-page__back"> Вернуться к списку</span>
+
+
+        <h2>{{title}}</h2>
 
         <div class="advert-page__img">
             <div class="advert-page__slides">
@@ -12,13 +16,12 @@
         </div>
 
         <div class="advert-page__description">
-            <h2>{{title}}</h2>
-
+        
             <div class="advert-page__location">
                 <div class="location_inscription">
                     Расположение
                 </div>
-                <h2>{{adress}}</h2>
+                <span>{{adress}}</span>
             </div>
 
             <div class="advert-page__characteristics">
@@ -65,6 +68,46 @@
                 </div>                
                 {{/if}}
                 {{#if flatProperties}}
+                                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Общая площадь
+                    </div>
+                    <div class="characteristic-description">
+                        {{flatProperties.squareGeneral}} м<sup>2</sup>.
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Жилая площадь
+                    </div>
+                    <div class="characteristic-description">
+                        {{flatProperties.squareResidential}} м<sup>2</sup>
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Этаж
+                    </div>
+                    <div class="characteristic-description">
+                        {{flatProperties.floor}} из {{flatProperties.floorGeneral}}
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Комнат
+                    </div>
+                    <div class="characteristic-description">
+                        {{flatProperties.roomCount}}
+                    </div>
+                </div>
+                <div class="characteristic-group">
+                    <div class="characteristic-name">
+                        Год постройки
+                    </div>
+                    <div class="characteristic-description">
+                        {{yearCreation}}
+                    </div>
+                </div>    
                 {{/if}}
 
             </div>
@@ -79,6 +122,23 @@
             <h2>
                 {{price}}   &#x20bd;
             </h2>
+            <div class="gridCards__likes" id="likes">
+                <span class="material-symbols-outlined">
+                    {{#if isLiked}}
+                            heart_check
+                    {{/if}}
+                    {{#unless isLiked}}
+                        favorite
+                    {{/unless}}
+                </span>
+                <span>{{likeCounter}}</span>
+            </div>
+            <div class="gridCards__views">
+                <span class="material-symbols-outlined">
+                    visibility
+                </span>
+                <span>{{visibilityCounter}}</span>
+            </div>
         </div>
         {{#if complexProperties}}
         <div class="advert-page__box boxComplex">

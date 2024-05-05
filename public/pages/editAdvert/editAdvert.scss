@@ -11,3 +11,13 @@
 #body-page {
     width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+    .editadvert-page {
+        margin-top: 74px;
+        display: flex;
+        flex-direction: row;
+        padding: 0px;
+        height: 100%;
+    }
+}

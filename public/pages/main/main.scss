@@ -1,3 +1,11 @@
+
 #gridCards {
     padding: 30px 60px;
 }
+
+@media screen and (max-width: 600px) {
+    #gridCards {
+        padding: 10px;
+    }
+}
+

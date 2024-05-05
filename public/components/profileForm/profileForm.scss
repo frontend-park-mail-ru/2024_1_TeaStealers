@@ -73,3 +73,22 @@
     opacity: 1;
     transition: opacity 0.5s ease;
 }
+
+@media screen and (max-width: 600px) {
+    .profile-form {
+        margin-left: 0px;
+        padding: 0px;
+
+        &__main-info {
+            padding-left: auto;
+        }
+
+        &__password {
+            padding-left: auto;
+        }
+
+        &__content {
+            display: block;
+        }
+    }
+}

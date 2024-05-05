@@ -112,3 +112,11 @@ button {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .string_menu-button button {
+        overflow: hidden;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

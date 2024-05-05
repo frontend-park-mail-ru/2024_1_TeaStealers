@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@use "@/variables.scss";
 
 .profile-page {
     margin-top: 74px;
@@ -9,4 +9,10 @@
 }
 #body-page {
     width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .profile-page {
+        padding: 0px;
+    }
 }

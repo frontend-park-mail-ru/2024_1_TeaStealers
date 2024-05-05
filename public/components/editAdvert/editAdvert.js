@@ -2,8 +2,8 @@ import {
   BaseComponent, Button, Input, Params,
 } from '@components';
 import {
-  checkLogin, checkPassword, checkPhone, checkEmail, checkDateDirthday, uploadAvatar,
-  updateUserInfo, updateUserPassword, checkYear, checkFloor, createFlatAdvert, createHouseAdvert, uploadAdvertImage, updateAdvertById,
+  checkPhone, checkYear, checkFloor, createFlatAdvert,
+  createHouseAdvert, uploadAdvertImage, updateAdvertById, formatInteger, formatFloat,
 } from '@modules';
 import { events, globalVariables } from '@models';
 import editAdvert from './editAdvert.hbs';
@@ -39,19 +39,16 @@ export class EditAdvert extends BaseComponent {
       id: 'inputYear',
       placeholder: 'Год постройки',
       label: 'Год постройки здания',
-      type: 'number',
     });
     const inputHeight = new Input('aboutBuildIinputContainer', {
       id: 'inputHeight',
       placeholder: 'Высота потолков',
       label: 'Высота потолков, м',
-      type: 'number',
     });
     const inputGeneralFloor = new Input('aboutBuildIinputContainer', {
       id: 'inputGeneralFloor',
       placeholder: 'Этажей в доме',
       label: 'Этажей в доме',
-      type: 'number',
     });
     const params = new Params('editAdvertParams', {
       title: 'Параметры квартиры',
@@ -75,7 +72,6 @@ export class EditAdvert extends BaseComponent {
       id: 'inputPrice',
       placeholder: 'Введите цену в рублях',
       label: 'Цена',
-      type: 'number',
     });
     const inputPhone = new Input('descriptionSmallInput', {
       id: 'inputPhone',
@@ -134,11 +130,17 @@ export class EditAdvert extends BaseComponent {
     document.getElementById('house').addEventListener('change', this.changeObject.bind(this));
     this.addListener(this.inputYear, 'input', 'blur', this.validateYear.bind(this));
     this.addListener(this.inputGeneralFloor, 'input', 'blur', this.validateFloor.bind(this.inputGeneralFloor));
-    this.addListener(this.inputHeight, 'input', 'input', this.validateHeight.bind(this));
+    this.addListener(this.inputHeight, 'input', 'input', this.formatHeight.bind(this));
+    this.addListener(this.inputHeight, 'input', 'blur', this.validateHeight.bind(this));
     this.addClickListener('btnSave', this.saveHandler.bind(this));
     this.addClickListener('btnSaveEdit', this.editHandler.bind(this));
     this.addListener(this.inputPhone, '', 'input', this.formatPhoneNumber.bind(this));
     this.addListener(this.inputUploadImage, 'input', 'input', this.uploadImageHandler.bind(this));
+    this.addListener(this.inputYear, 'input', 'input', this.formatYear.bind(this));
+    this.addListener(this.inputGeneralFloor, 'input', 'input', this.formatFloor.bind(this));
+    this.addListener(this.inputAdress, 'input', 'blur', this.validateAddress.bind(this));
+    this.addListener(this.inputTitle, 'input', 'blur', this.validateTitle.bind(this));
+    this.addListener(this.inputPrice, 'input', 'input', this.formatPrice.bind(this));
     super.componentDidMount();
   }
 
@@ -199,6 +201,12 @@ export class EditAdvert extends BaseComponent {
     return true;
   }
 
+  formatYear() {
+    const year = this.inputYear.self.querySelector('input').value;
+    const formatedYear = formatInteger(year, 4);
+    this.inputYear.setValue(formatedYear);
+  }
+
   /**
    * Валидация этажа
    * @returns bool - Результат проверки валидности
@@ -214,18 +222,35 @@ export class EditAdvert extends BaseComponent {
     return true;
   }
 
+  formatFloor() {
+    const floor = this.inputGeneralFloor.self.querySelector('input').value;
+    const formatedFloor = formatInteger(floor, 3);
+    this.inputGeneralFloor.setValue(formatedFloor);
+  }
+
   /**
    * Валидация высоты потолка
    * @returns bool - Результат проверки валидности
    */
   validateHeight() {
-    const { value } = this.inputHeight.self.querySelector('input');
-    let formatedValue = '';
-    for (let i = 0; i < 4; i += 1) {
-      const char = value.charAt(i);
-      formatedValue += char;
+    const value = this.inputHeight.getValue();
+    const valueFloat = parseFloat(value);
+    if (valueFloat < 2.0) {
+      this.inputHeight.renderError('Слишком низкие потолки');
+      return false;
     }
-    this.inputHeight.self.querySelector('input').value = formatedValue;
+    if (valueFloat > 20.0) {
+      this.inputHeight.renderError('Слишком высокие потолки');
+      return false;
+    }
+    this.inputHeight.removeError();
+    return true;
+  }
+
+  formatHeight() {
+    const { value } = this.inputHeight.self.querySelector('input');
+    const formatedHeight = formatFloat(value, 2);
+    this.inputHeight.setValue(formatedHeight);
   }
 
   /**
@@ -240,6 +265,114 @@ export class EditAdvert extends BaseComponent {
     this.inputPhone.self.querySelector('input').value = formatValue;
     if (isValid) {
       this.inputPhone.removeError();
+      return true;
+    }
+    this.inputPhone.renderError('Неккоректный формат');
+    return false;
+  }
+
+  validateAddress() {
+    const value = this.inputAdress.getValue();
+    if (value.length === 0) {
+      this.inputAdress.renderError('Адрес не может быть пустым');
+      return false;
+    }
+    if (value.length > 500) {
+      this.inputAdress.renderError('Слишком длинный адрес');
+      return false;
+    }
+    this.inputAdress.removeError('');
+    return true;
+  }
+
+  validateTitle() {
+    const value = this.inputTitle.getValue();
+    if (value.length === 0) {
+      this.inputTitle.renderError('Напишите заголовок');
+      return false;
+    }
+    if (value.length > 100) {
+      this.inputTitle.renderError('Сократитье до 100 символов');
+      return false;
+    }
+    this.inputTitle.removeError('');
+    return true;
+  }
+
+  formatPrice() {
+    const { value } = this.inputPrice.self.querySelector('input');
+    const formatedPrice = formatInteger(value, 10);
+    this.inputPrice.setValue(formatedPrice);
+  }
+
+  checkMandatoryInput() {
+    let ok = true;
+    if (this.object === 'Flat') {
+      ok = this.params.checkMandatoryInputFlat();
+    } else {
+      ok = this.params.checkMandatoryInputHouse();
+    }
+    this.inputAdress.removeError();
+    this.inputYear.removeError();
+    this.inputHeight.removeError();
+    this.inputGeneralFloor.removeError();
+    this.inputTitle.removeError();
+    this.inputPrice.removeError();
+    this.inputPhone.removeError();
+
+    const adress = this.inputAdress.getValue();
+    if (adress.length === 0) {
+      this.inputAdress.renderError('Обязательное поле');
+      ok = false;
+    }
+    const year = this.inputYear.getValue();
+    if (year.length === 0) {
+      this.inputYear.renderError('Обязательное поле');
+      ok = false;
+    }
+    const height = this.inputHeight.getValue();
+    if (height.length === 0) {
+      this.inputHeight.renderError('Обязательное поле');
+      ok = false;
+    }
+    const floor = this.inputGeneralFloor.getValue();
+    if (floor.length === 0) {
+      this.inputGeneralFloor.renderError('Обязательное поле');
+      ok = false;
+    }
+    const title = this.inputTitle.getValue();
+    if (title.length === 0) {
+      this.inputTitle.renderError('Обязательное поле');
+      ok = false;
+    }
+    const price = this.inputPrice.getValue();
+    if (price.length === 0) {
+      this.inputPrice.renderError('Обязательное поле');
+      ok = false;
+    }
+    const phone = this.inputPhone.getValue();
+    if (phone.length === 0) {
+      this.inputPhone.renderError('Обязательное поле');
+      ok = false;
+    }
+    return ok;
+  }
+
+  validateAll() {
+    let ok = true;
+    if (this.object === 'Flat') {
+      ok = this.params.checkValidFlat();
+    } else {
+      ok = this.params.checkValidHouse();
+    }
+    const valAdress = this.validateAddress.bind(this);
+    const valYear = this.validateYear.bind(this);
+    const valHeight = this.validateHeight(this);
+    const valFloor = this.validateFloor.bind(this.inputGeneralFloor);
+    const valTitle = this.validateTitle(this);
+    const valPhone = this.formatPhoneNumber.bind(this);
+
+    if (valAdress && valYear && valHeight && valFloor && valTitle && ok && valPhone) {
       return true;
     }
     return false;
@@ -305,6 +438,14 @@ export class EditAdvert extends BaseComponent {
    */
   async saveHandler() {
     document.getElementById('saveInfo').textContent = '';
+    if (!this.checkMandatoryInput()) {
+      document.getElementById('saveInfo').textContent = 'Заполните обязательные поля!';
+      return;
+    }
+    if (!this.validateAll()) {
+      document.getElementById('saveInfo').textContent = 'Введите корректные данные';
+      return;
+    }
     if (!this.isValidImages) {
       document.getElementById('saveInfo').textContent = 'Загрузите хотя бы одну фотографию';
       return;
@@ -346,10 +487,19 @@ export class EditAdvert extends BaseComponent {
    */
   async editHandler() {
     document.getElementById('saveInfo').textContent = '';
+    if (!this.checkMandatoryInput()) {
+      document.getElementById('saveInfo').textContent = 'Заполните обяхательные поля!';
+      return;
+    }
+    if (!this.validateAll()) {
+      document.getElementById('saveInfo').textContent = 'Введите корректные данные';
+      return;
+    }
     if (!this.isValidImages && this.changeImages) {
       document.getElementById('saveInfo').textContent = 'Загрузите хотя бы одну фотографию';
       return;
     }
+
     let requestData;
     const data = this.getValues();
     const idAdvert = window.location.pathname.replace('/edit-advert/', '');
