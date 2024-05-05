@@ -12,6 +12,14 @@ class NewAdvertModel {
   async updateState() {
   }
 
+  setAddress(address, object) {
+    this.notifyObservers({ name: events.SET_ADDRESS_EDIT_ADVERT, data: { address, object } });
+  }
+
+  setAddressError() {
+    this.notifyObservers({ name: events.SET_ADDRESS_EDIT_ADVERT_ERROR });
+  }
+
   /**
    * Добавление наблюдателя
    * @param {View} observer

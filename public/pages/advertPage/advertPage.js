@@ -186,10 +186,10 @@ export class AdvertPage extends BaseComponent {
 
       const day = parseInt(dateParts[2], 10).toString(); // Первые два символа - день
       const month = months[dateParts[1]]; // Вторая часть - месяц
-      const year = dateParts[0]; // Третья часть - год
+      // const year = dateParts[0]; // Третья часть - год
 
       const newItem = {
-        data: `${day} ${month} ${year}`,
+        data: `${day} ${month}`,
       };
 
       if (prevPrice !== null) {

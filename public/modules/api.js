@@ -27,6 +27,12 @@ const API_CONST = {
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
   LIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/like`,
   DISLIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/dislike`,
+  GET_BUILDING_INFO: `${BASE_URL}/adverts/building/`,
+};
+
+export const getSagests = (text) => {
+  const url = `https://suggest-maps.yandex.ru/v1/suggest?text=${text}&apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c`;
+  return getRequest(url);
 };
 
 /**
@@ -245,4 +251,9 @@ export const likeAdvert = (advertId) => {
 export const dislikeAdvert = (advertId) => {
   const url = API_CONST.DISLIKE_ADVERT.replace('{advert_id}', advertId);
   return postRequest(url);
+};
+
+export const getBuildingInfo = (address) => {
+  const url = API_CONST.GET_BUILDING_INFO;
+  return postRequest(url, address);
 };

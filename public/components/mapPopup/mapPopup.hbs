@@ -1,0 +1,15 @@
+<div class="map-popup" id="about{{advertId}}" title="Перейти к объявлению">
+    <div class="map-popup__content">
+        <span class="map-popup__price">{{price}} &#8381;</span>
+
+        {{#if houseProperties}}
+        <span class="map-popup__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
+        {{/if}}
+
+        {{#if flatProperties}}
+        <span class="map-popup__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
+        {{/if}}
+
+        <span class="map-popup__adress">{{adress}}</span>
+    </div>
+</div>
