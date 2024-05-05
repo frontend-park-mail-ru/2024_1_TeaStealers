@@ -1,8 +1,8 @@
 import { getRequest, postRequest } from '@modules';
 import { deleteRequest, postRequestFormData } from './ajax.js';
 
-const BASE_URL = 'https://tean.homes/api';
-// const BASE_URL = 'http://localhost:8080/api';
+// const BASE_URL = 'https://tean.homes/api';
+const BASE_URL = 'http://localhost:8080/api';
 
 const API_CONST = {
   LOGIN: `${BASE_URL}/auth/login`,
@@ -25,8 +25,8 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
-  LIKE_ADVERT: `${BASE_URL}/{advert_id}/like`,
-  DISLIKE_ADVERT: `${BASE_URL}/{advert_id}/dislike`,
+  LIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/like`,
+  DISLIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/dislike`,
 };
 
 /**
@@ -239,10 +239,10 @@ export const getGridAdverts = (queryParamenrts) => {
 
 export const likeAdvert = (advertId) => {
   const url = API_CONST.LIKE_ADVERT.replace('{advert_id}', advertId);
-  return getRequest(url);
+  return postRequest(url);
 };
 
 export const dislikeAdvert = (advertId) => {
   const url = API_CONST.DISLIKE_ADVERT.replace('{advert_id}', advertId);
-  return getRequest(url);
+  return postRequest(url);
 };

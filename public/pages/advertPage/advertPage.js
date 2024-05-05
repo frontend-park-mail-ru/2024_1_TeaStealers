@@ -34,23 +34,11 @@ export class AdvertPage extends BaseComponent {
       ...VIEW_CONTACT_TEMPLATE,
     });
     const innerComponents = [buttonViewContact];
-
-    if (state.priceHistory) {
-      const priceHistory = new PriceChange('price', { priceHistory: state.priceHistory });
-      const buttonViewPriceHistory = new Button('price', {
-        ...VIEW_PRICE_HISTORY,
-      });
-      innerComponents.push(priceHistory);
-      innerComponents.push(buttonViewPriceHistory);
-    }
     super({
       parent, template, state, innerComponents,
     });
-    if (state.priceHistory) {
-      [this.buttonViewContact, this.priceHistory, this.buttonViewPriceHistory] = innerComponents;
-    } else {
-      [this.buttonViewContact] = innerComponents;
-    }
+
+    [this.buttonViewContact] = innerComponents;
     this.slideIndex = 0;
     this.history = false;
     if (state.priceHistory) {
@@ -69,9 +57,6 @@ export class AdvertPage extends BaseComponent {
     this.addClickListener('linkToComplex', this.goToComplex.bind(this));
     this.addClickListener('advert-page__back', this.goToList.bind(this));
     this.addClickListener('likes', this.like.bind(this));
-    if (this.history) {
-      this.addClickListener('buttonViewPriceHistory', this.showHistory.bind(this));
-    }
   }
 
   showHistory() {
@@ -90,12 +75,12 @@ export class AdvertPage extends BaseComponent {
     const likeSpan = likeDiv.querySelectorAll('span');
     if (likeSpan[0].innerText === 'favorite') {
       likeSpan[0].innerText = 'heart_check';
-      likeAdvert(this.state.advrt_id);
+      likeAdvert(this.state.advertId);
       likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
     } else {
       likeSpan[0].innerText = 'favorite';
-      dislikeAdvert(this.state.advrt_id);
-      likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
+      dislikeAdvert(this.state.advertId);
+      likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) - 1).toString();
     }
   }
 
@@ -159,6 +144,81 @@ export class AdvertPage extends BaseComponent {
         this.state.price = spacedPrice;
       }
       this.renderAndDidMount();
+      this.renderButtonPriceChange();
     }
+  }
+
+  renderButtonPriceChange() {
+    if (this.state.priceHistory.length === 1) {
+      return;
+    }
+    this.priceHistory = new PriceChange('price', { priceHistory: this.dataForPriceChange(this.state.priceHistory) });
+    this.buttonViewPriceHistory = new Button('price', {
+      ...VIEW_PRICE_HISTORY,
+    });
+    this.buttonViewPriceHistory.renderAndDidMount();
+    this.priceHistory.renderAndDidMount();
+    this.addClickListener('buttonViewPriceHistory', this.showHistory.bind(this));
+  }
+
+  dataForPriceChange(data) {
+    const newData = [];
+
+    const months = {
+      '01': 'янв',
+      '02': 'фев',
+      '03': 'мар',
+      '04': 'апр',
+      '05': 'мая',
+      '06': 'июня',
+      '07': 'июля',
+      '08': 'авг',
+      '09': 'сен',
+      10: 'окт',
+      11: 'ноя',
+      12: 'дек',
+    };
+
+    let prevPrice = null;
+
+    data.forEach((element) => {
+      const dateParts = element.data.split('-');
+
+      const day = parseInt(dateParts[2], 10).toString(); // Первые два символа - день
+      const month = months[dateParts[1]]; // Вторая часть - месяц
+      const year = dateParts[0]; // Третья часть - год
+
+      const newItem = {
+        data: `${day} ${month} ${year}`,
+      };
+
+      if (prevPrice !== null) {
+        const currentPrice = parseInt(element.price, 10);
+        let priceChange = currentPrice - prevPrice;
+        const spacedPrice = parseInt(priceChange, 10).toLocaleString('ru-RU');
+        if (spacedPrice.length >= priceChange.toString().length) {
+          priceChange = spacedPrice;
+        }
+        if (priceChange.includes('-')) {
+          priceChange = priceChange.replace('-', '');
+          newItem.down = true;
+        } else {
+          newItem.up = true;
+        }
+
+        newItem.priceChange = priceChange;
+      }
+
+      prevPrice = parseInt(element.price, 10);
+
+      const spacedPrice = parseInt(element.price, 10).toLocaleString('ru-RU');
+      if (spacedPrice.length >= element.price.toString().length) {
+        newItem.price = spacedPrice;
+      }
+
+      newData.push(newItem);
+    });
+
+    return newData.reverse();
   }
 }

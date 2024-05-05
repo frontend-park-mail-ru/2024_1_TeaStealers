@@ -122,23 +122,26 @@
             <h2>
                 {{price}}   &#x20bd;
             </h2>
-            <div class="gridCards__likes" id="likes">
-                <span class="material-symbols-outlined">
-                    {{#if isLiked}}
-                            heart_check
-                    {{/if}}
-                    {{#unless isLiked}}
-                        favorite
-                    {{/unless}}
-                </span>
-                <span>{{likeCounter}}</span>
+            <div class="advert-page__statistic" id="advertPageStatistic">
+                <div class="advert-page__likes" id="likes">
+                    <span class="material-symbols-outlined">
+                        {{#if isLiked}}
+                                heart_check
+                        {{/if}}
+                        {{#unless isLiked}}
+                            favorite
+                        {{/unless}}
+                    </span>
+                    <span>{{countLikes}}</span>
+                </div>
+                <div class="advert-page__views">
+                    <span class="material-symbols-outlined">
+                        visibility
+                    </span>
+                    <span>{{countViews}}</span>
+                </div>
             </div>
-            <div class="gridCards__views">
-                <span class="material-symbols-outlined">
-                    visibility
-                </span>
-                <span>{{visibilityCounter}}</span>
-            </div>
+            
         </div>
         {{#if complexProperties}}
         <div class="advert-page__box boxComplex">

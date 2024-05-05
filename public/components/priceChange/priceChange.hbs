@@ -1,14 +1,29 @@
 <div class="price-change hidden" id="price-change">
     <ul class="price-change__history">
-        <span>
+        {{!-- <span>
             Дата
         </span>
         <span>
             Цена
-        </span>
+        </span> --}}
         {{#each priceHistory}}
         <span>{{this.data}}</span>
-        <span>{{this.price}}</span>
+        <span>{{this.price}}  &#8381;</span>
+        <span class="price-change__diff {{#if down}}price-change__diff-down{{/if}} {{#if up}}price-change__diff-up{{/if}}">
+            {{#if down}}
+            <span class="material-symbols-outlined">
+                expand_more
+            </span>
+            {{/if}}
+
+            {{#if up}}
+            <span class="material-symbols-outlined">
+                expand_less
+            </span>
+            {{/if}} 
+            {{#if this.priceChange}}<span>{{this.priceChange}} &#8381;</span>{{/if}}     
+
+        </span>
         {{/each}}
     </ul>
 </div>
