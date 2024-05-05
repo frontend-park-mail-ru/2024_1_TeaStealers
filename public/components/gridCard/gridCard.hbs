@@ -58,7 +58,9 @@
     {{#each miniCards}}
         <div class="gridCards__card">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
-                <img src="../../static/fone.jpg" alt="Фотография">
+                {{!-- <img src="../../static/fone.jpg" alt="Фотография"> --}}
+                <img src="/static/{{photo}}" alt="Фотография">
+
                 
                 <div class="gridCards__description">
 
@@ -76,7 +78,7 @@
 
                 </div>
             </a>
-            <div class="gridCards__stats">
+            {{!-- <div class="gridCards__stats">
                 <div class="gridCards__likes">
                     <span class="material-symbols-outlined">
                         {{#if isLiked}}
@@ -94,7 +96,7 @@
                     </span>
                     <span>{{visibilityCounter}}</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
     {{/each}}
     </div>
