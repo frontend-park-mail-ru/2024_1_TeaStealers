@@ -433,8 +433,6 @@ export class Search extends BaseComponent {
     if (this.prices[1]) {
       queryParameters.minprice = `${this.prices[1]}`;
     }
-
-    console.log(queryParameters);
     mainControler.updateMainModelWithParameters(queryParameters);
   }
 
