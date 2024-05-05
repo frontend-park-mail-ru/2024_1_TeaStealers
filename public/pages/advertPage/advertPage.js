@@ -1,6 +1,7 @@
 import { BaseComponent, Button, PriceChange } from '@components';
-import { events } from '@models';
+import { events, authModel } from '@models';
 import { router } from '@modules/router';
+import { likeAdvert, dislikeAdvert } from '@modules';
 import advertPage from './advertPage.hbs';
 
 const VIEW_CONTACT_TEMPLATE = {
@@ -13,27 +14,6 @@ const VIEW_PRICE_HISTORY = {
   mode: 'secondary',
   text: 'Показать изменение цены',
   id: 'buttonViewPriceHistory',
-};
-
-const DEFAULT_PRICE_CHANGE = {
-  priceHistory: [
-    {
-      data: '27.03.23',
-      price: '1000',
-    },
-    {
-      data: '27.03.23',
-      price: '1000',
-    },
-    {
-      data: '27.03.23',
-      price: '1000',
-    },
-    {
-      data: '27.03.23',
-      price: '1000',
-    },
-  ],
 };
 
 /**
@@ -49,7 +29,7 @@ export class AdvertPage extends BaseComponent {
     */
   constructor(parent, state) {
     const template = advertPage;
-    state = { ...DEFAULT_PRICE_CHANGE, ...state };
+    state = { ...state };
     const buttonViewContact = new Button('price', {
       ...VIEW_CONTACT_TEMPLATE,
     });
@@ -76,7 +56,6 @@ export class AdvertPage extends BaseComponent {
     if (state.priceHistory) {
       this.history = true;
     }
-    console.log(this.state);
   }
 
   render() {
@@ -104,15 +83,18 @@ export class AdvertPage extends BaseComponent {
   }
 
   like() {
+    if (!authModel.isAuth) {
+      return;
+    }
     const likeDiv = document.getElementById('likes');
     const likeSpan = likeDiv.querySelectorAll('span');
     if (likeSpan[0].innerText === 'favorite') {
       likeSpan[0].innerText = 'heart_check';
-      likeSpan[1].innerText = '1';
+      likeAdvert(this.state.advrt_id);
       likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
     } else {
       likeSpan[0].innerText = 'favorite';
-      likeSpan[1].innerText = '0';
+      dislikeAdvert(this.state.advrt_id);
       likeSpan[1].innerText = (parseInt(likeSpan[1].innerText, 10) + 1).toString();
     }
   }

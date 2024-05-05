@@ -219,7 +219,6 @@ export class Search extends BaseComponent {
    */
   openMenu(menuButton) {
     const parentDivForButton = menuButton.target.parentElement;
-    console.log(parentDivForButton);
     parentDivForButton.classList.toggle('search__button-expand-icon');
     parentDivForButton.classList.toggle('search__button-close-icon');
     const documentmenus = document.getElementsByClassName('dropMenu');

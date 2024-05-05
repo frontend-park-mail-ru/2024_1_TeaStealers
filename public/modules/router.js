@@ -66,11 +66,6 @@ class Router {
       this.curPath = path;
     }
 
-    if (window.innerWidth <= 600 && false) {
-      this.curPath = 'mobile';
-      this.curView = new MobileView();
-    }
-
     this.curView.render();
 
     if (isReplace) {

@@ -56,7 +56,7 @@ export class MyAdvertPage extends BaseComponent {
   constructor(parent, state) {
     const template = myAdvert;
     const menu = new Menu('left-menu', { myAdverts: true });
-    const cards = new GridCard('myAdvertContainer', { myAdverts: true, title: 'Мои объявления', miniCards: mini });
+    const cards = new GridCard('myAdvertContainer', { myAdverts: true, title: 'Мои объявления' });
     const innerComponents = [menu, cards];
     super({
       parent, template, state, innerComponents,

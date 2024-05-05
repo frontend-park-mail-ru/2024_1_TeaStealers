@@ -124,7 +124,12 @@
             </h2>
             <div class="gridCards__likes" id="likes">
                 <span class="material-symbols-outlined">
-                    favorite
+                    {{#if isLiked}}
+                            heart_check
+                    {{/if}}
+                    {{#unless isLiked}}
+                        favorite
+                    {{/unless}}
                 </span>
                 <span>{{likeCounter}}</span>
             </div>
