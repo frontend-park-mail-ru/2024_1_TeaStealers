@@ -4,4 +4,3 @@ node_modules/
 public/templates/
 public/componentrs/templates.js
 dist/
-public/static
