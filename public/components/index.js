@@ -18,3 +18,7 @@ export * from './footer/footer.js';
 export * from './modalWindow/modalWindow.js';
 export * from './mobileMenu/mobileMenu.js';
 export * from './priceChange/priceChange.js';
+export * from './map/map.js';
+export * from './dropdown/dropdown.js';
+export * from './mapPopup/mapPopup.js';
+export * from './editAdvert/geocoder/geocoder.js';

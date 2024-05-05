@@ -40,6 +40,15 @@ button {
         background-color: $background-color-button-error-hover;
     }
 
+    &_white {
+        background-color: $background-color-button-white;
+        color: $color-button-white;
+    }
+
+    &_white:hover {
+        background-color: $background-color-button-white-hover;
+    }
+
     &_size {
         &_sm {
             padding: $button-padding_sm;
@@ -86,8 +95,7 @@ button {
     display: flex;
     width: 100%;
     flex-direction: row-reverse;
-
-
+    gap: 10px;
 }
 
 .string_menu-button {

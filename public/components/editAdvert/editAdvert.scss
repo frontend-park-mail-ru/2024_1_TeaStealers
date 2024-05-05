@@ -60,9 +60,11 @@
         flex-direction: column;
         gap: 25px;
     }
+    
 
     .input-adress {
-        max-width: 400px;
+        position: relative;
+        height: 430px;
     }
 
     .about-build__input-container {

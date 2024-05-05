@@ -1,9 +1,9 @@
 import {
-  BaseComponent, Button, Input, Params,
+  BaseComponent, Button, Dropdown, Input, MapGeocoder, Params,
 } from '@components';
 import {
   checkPhone, checkYear, checkFloor, createFlatAdvert,
-  createHouseAdvert, uploadAdvertImage, updateAdvertById, formatInteger, formatFloat,
+  createHouseAdvert, uploadAdvertImage, updateAdvertById, getSagests, formatInteger, formatFloat, getBuildingInfo,
 } from '@modules';
 import { events, globalVariables } from '@models';
 import editAdvert from './editAdvert.hbs';
@@ -22,6 +22,16 @@ export class EditAdvert extends BaseComponent {
 
   editAdvert;
 
+  prevSearchAddress;
+
+  currentAddress;
+
+  currentObjectAddress;
+
+  sagestData;
+
+  dropdown;
+
   /**
     * Создает новый экземпляр страницы редактирования объявления
     * @param {HTMLElement} parent - Родительский элемент
@@ -32,7 +42,7 @@ export class EditAdvert extends BaseComponent {
     state = { ...state };
     const inputAdress = new Input('inputAdress-container', {
       id: 'inputAdress',
-      placeholder: 'Укажите город, улицу и дом',
+      placeholder: 'Введите адрес вручную или передвиньте маркер на карте',
       label: 'Адрес',
     });
     const inputYear = new Input('aboutBuildIinputContainer', {
@@ -91,6 +101,7 @@ export class EditAdvert extends BaseComponent {
       };
     }
     const btnSave = new Button('buttonSave', { ...stateButtonSave });
+    const geocoder = new MapGeocoder('inputAdress-container', {});
     const innerComponents = [
       inputAdress,
       inputYear,
@@ -102,6 +113,7 @@ export class EditAdvert extends BaseComponent {
       inputPrice,
       inputPhone,
       btnSave,
+      geocoder,
     ];
     super({
       parent, template, state, innerComponents,
@@ -115,7 +127,8 @@ export class EditAdvert extends BaseComponent {
       this.inputTitle,
       this.inputPrice,
       this.inputPhone,
-      this.btnSave] = innerComponents;
+      this.btnSave,
+      this.geocoder] = innerComponents;
     this.object = 'Flat';
     this.isValidImages = false;
     this.editADvert = state.editAdvert;
@@ -141,6 +154,9 @@ export class EditAdvert extends BaseComponent {
     this.addListener(this.inputAdress, 'input', 'blur', this.validateAddress.bind(this));
     this.addListener(this.inputTitle, 'input', 'blur', this.validateTitle.bind(this));
     this.addListener(this.inputPrice, 'input', 'input', this.formatPrice.bind(this));
+    this.addListener(this.inputAdress, 'input', 'input', this.sadgestAddress.bind(this));
+    this.addClickListener('newadvert-page', this.closeSaggest.bind(this));
+    this.addClickListener('editadvert-page', this.closeSaggest.bind(this));
     super.componentDidMount();
   }
 
@@ -151,6 +167,21 @@ export class EditAdvert extends BaseComponent {
   componentDidUpdate(event) {
     if (event.name === events.GET_ADVERT_BY_ID_FOR_EDIT) {
       this.setValues(event.data);
+    }
+    if (event.name === events.SET_ADDRESS_EDIT_ADVERT) {
+      this.inputAdress.removeError();
+      this.inputAdress.setValue(event.data.address);
+      this.currentAddress = event.data.address;
+      this.currentObjectAddress = event.data.object;
+      setTimeout(async () => {
+        await this.responseBuilding();
+      }, 200);
+    }
+    if (event.name === events.SET_ADDRESS_EDIT_ADVERT_ERROR) {
+      this.inputAdress.setValue('');
+      this.currentAddress = '';
+      this.currentObjectAddress = null;
+      this.inputAdress.renderError('Укажите корректный адрес');
     }
   }
 
@@ -184,6 +215,119 @@ export class EditAdvert extends BaseComponent {
       this.object = 'House';
     }
     this.params.componentDidUpdate({ name: events.CHANGE_OBJECT, data: state });
+  }
+
+  async sadgestAddress() {
+    setTimeout(async () => {
+      const addressInput = this.inputAdress.getValue().trim();
+      if (this.prevSearchAddress === undefined) {
+        this.prevSearchAddress = addressInput;
+      } else if (this.prevSearchAddress === addressInput) {
+        return;
+      }
+      this.prevSearchAddress = addressInput;
+      this.currentAddress = '';
+      if (addressInput === '') {
+        this.dropdown.unmountAndClean();
+        return;
+      }
+      // const response = await fetch(`https://suggest-maps.yandex.ru/v1/suggest?text=${addressInput}&lang=ru&type=province,locality,street,metro,province&apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c`);
+      const response = await fetch(`https://suggest-maps.yandex.ru/v1/suggest?apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c&text=${addressInput}&print_address=1&attrs=uri&lang=ru&type=locality,street`);
+      if (!response.ok) {
+        return;
+      }
+
+      this.sagestData = await response.json();
+      if (this.dropdown === undefined) {
+        this.dropdown = new Dropdown('inputAdress', { items: this.sagestData.results, id: 'dropdownAddress' });
+        this.dropdown.renderAndDidMount();
+      } else {
+        this.dropdown.unmountAndClean();
+        this.dropdown = new Dropdown('inputAdress', { items: this.sagestData.results, id: 'dropdownAddress' });
+        this.dropdown.renderAndDidMount();
+      }
+      const itemsSagest = document.querySelectorAll('.dropdown__item');
+      itemsSagest.forEach((item) => {
+        item.addEventListener('click', this.setAddress.bind(this));
+      });
+    }, 400);
+  }
+
+  async setAddress(event) {
+    this.inputAdress.removeError();
+    event.preventDefault();
+    if (event.target.classList.contains('dropdown__item')) {
+      return false;
+    }
+    const idItem = event.target.parentNode.id.replace('dropdownItem-', '');
+    const id = parseInt(idItem, 10);
+    this.currentObjectAddress = this.sagestData.results[id];
+    const element = event.target;
+    this.inputAdress.setValue(element.textContent);
+    this.currentAddress = element.textContent;
+    this.inputAdress.self.querySelector('input').focus();
+    this.inputAdress.self.querySelector('input').setSelectionRange(this.inputAdress.getValue().length, this.inputAdress.getValue().length);
+    if (this.currentObjectAddress.tags.includes('business') || this.currentObjectAddress.tags.includes('house')) {
+      await this.addressToCoordinate(this.currentAddress);
+      return true;
+    }
+    this.inputAdress.renderError('Обязательно укажите улицу и номер дома! Если у дома нет номера - укажите ближайший');
+    return false;
+  }
+
+  async responseBuilding() {
+    const address = this.parseAddress();
+    const data = {
+      province: address.province,
+      town: address.town,
+      street: address.street,
+      house: address.house,
+      metro: '',
+      addressPoint: address.pos,
+    };
+    try {
+      const [statusCode, response] = await getBuildingInfo(data);
+      if (statusCode !== globalVariables.HTTP_STATUS_OK) {
+        return;
+      }
+      if (response.payload === null) {
+        return;
+      }
+      const info = response.payload;
+      this.inputGeneralFloor.setValue(info.floor);
+      this.inputYear.setValue(info.yearCreation);
+      if (info.complexName !== '') {
+        const complex = document.createElement('span');
+        complex.style.marginTop = '-25px';
+        complex.textContent = `Дом принадлежит ЖК "${info.complexName}`; // Устанавливаем текстовое содержимое span
+        this.inputAdress.self.insertAdjacentHTML('beforeend', complex.outerHTML); // Вставляем span в элемент
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async addressToCoordinate(address) {
+    const response = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=4df46c00-ebef-47d8-9642-9e3d7773eef0&geocode=${address}&format=json`);
+    if (!response.ok) {
+      return;
+    }
+
+    const coord = await response.json();
+    const { pos } = coord.response.GeoObjectCollection.featureMember[0].GeoObject.Point;
+    const [long, lat] = pos.split(' ');
+    this.geocoder.addMarker(long, lat);
+    this.geocoder.coordinateToAdress(pos);
+  }
+
+  closeSaggest(event) {
+    if (event.target.closest('.inputAdress')) {
+      return;
+    }
+    if (this.dropdown !== undefined) {
+      this.inputAdress.setValue(this.currentAddress);
+      this.dropdown.unmountAndClean();
+    }
   }
 
   /**
@@ -461,7 +605,7 @@ export class EditAdvert extends BaseComponent {
     try {
       const [statusCode, response] = await request(data);
       if (statusCode !== globalVariables.HTTP_STATUS_CREATED) {
-        document.getElementById('saveInfo').textContent = 'Произошла ошибка при создании объявления';
+        document.getElementById('saveInfo').textContent = 'Произошла неизвестная ошибка. Попробуйте позже';
         return;
       }
 
@@ -472,23 +616,23 @@ export class EditAdvert extends BaseComponent {
         postData.append('file', this.files[i]);
         const [statusCodeImage, ,] = await uploadAdvertImage(postData);
         if (statusCodeImage !== globalVariables.HTTP_STATUS_CREATED) {
-          document.getElementById('saveInfo').textContent = 'Произошла ошибка при создании объявления';
+          document.getElementById('saveInfo').textContent = 'Произошла неизвестная ошибка. Попробуйте позже';
           return;
         }
       }
       this.redirect(`/adverts/${idAdvert}`);
     } catch (error) {
-      document.getElementById('saveInfo').textContent = 'Произошла ошибка при создании объявления';
+      document.getElementById('saveInfo').textContent = 'Произошла неизвестная ошибка. Попробуйте позже';
     }
   }
 
   /**
-   * Валидация возможности и изменение данных
+   * Обработчик кнопки изменить объявление
    */
   async editHandler() {
     document.getElementById('saveInfo').textContent = '';
     if (!this.checkMandatoryInput()) {
-      document.getElementById('saveInfo').textContent = 'Заполните обяхательные поля!';
+      document.getElementById('saveInfo').textContent = 'Заполните обязательные поля!';
       return;
     }
     if (!this.validateAll()) {
@@ -502,6 +646,7 @@ export class EditAdvert extends BaseComponent {
 
     let requestData;
     const data = this.getValues();
+    const address = this.parseAddress();
     const idAdvert = window.location.pathname.replace('/edit-advert/', '');
     if (this.object === 'Flat') {
       requestData = {
@@ -512,8 +657,6 @@ export class EditAdvert extends BaseComponent {
         price: data.price,
         phone: data.phone,
         isAgent: data.isAgent,
-        adress: data.address,
-        adressPoint: data.addressPoint,
         flatProperties: {
           floor: data.floor,
           floorGeneral: data.floorGeneral,
@@ -525,6 +668,14 @@ export class EditAdvert extends BaseComponent {
         },
         yearCreation: data.yearCreation,
         material: data.material,
+        address: {
+          province: address.province,
+          town: address.town,
+          street: address.street,
+          house: address.house,
+          metro: '',
+          addressPoint: `POINT(${address.pos})`,
+        },
       };
     } else {
       requestData = {
@@ -535,8 +686,6 @@ export class EditAdvert extends BaseComponent {
         price: data.price,
         phone: data.phone,
         isAgent: data.isAgent,
-        adress: data.address,
-        adressPoint: data.addressPoint,
         houseProperties: {
           ceilingHeight: data.ceilingHeight,
           squareArea: data.squareArea,
@@ -549,6 +698,14 @@ export class EditAdvert extends BaseComponent {
         },
         yearCreation: data.yearCreation,
         material: data.material,
+        address: {
+          province: address.province,
+          town: address.town,
+          street: address.street,
+          house: address.house,
+          metro: '',
+          addressPoint: `POINT(${address.pos})`,
+        },
 
       };
     }
@@ -584,7 +741,6 @@ export class EditAdvert extends BaseComponent {
   getValues() {
     const isAgent = this.getValueRadio('isAgent');
     const typeDeal = this.getValueRadio('deal');
-    const adress = this.inputAdress.getValue();
     const year = this.inputYear.getValue();
     const height = this.inputHeight.getValue();
     const generalFloor = this.inputGeneralFloor.getValue();
@@ -592,15 +748,14 @@ export class EditAdvert extends BaseComponent {
     const description = document.getElementById('description').value;
     const price = this.inputPrice.getValue();
     const phone = this.inputPhone.getValue();
-    const max = 9999999999;
-    const min = 1000000000;
-    const point = `0101000020E61000007593180456265230172934${Math.floor(Math.random() * (max - min + 1)) + min}`;
     let data;
     if (this.object === 'Flat') {
       const [apartament, floor, generalSquare, livingSquare, rooms] = this.params.getFLatParams();
+      const address = this.parseAddress();
+
       data = {
         advertTypeSale: typeDeal,
-        advertTypePlacement: 'Flat',
+        // advertTypePlacement: 'Flat',
         title,
         description,
         phone,
@@ -614,9 +769,17 @@ export class EditAdvert extends BaseComponent {
         price: Number(price),
         floorGeneral: Number(generalFloor),
         material: 'Brick',
-        address: adress,
+        // address: adress,
         yearCreation: Number(year),
-        addressPoint: point,
+        // addressPoint: point,
+        address: {
+          province: address.province,
+          town: address.town,
+          street: address.street,
+          house: address.house,
+          metro: '',
+          addressPoint: `POINT(${address.pos})`,
+        },
       };
     } else {
       const [
@@ -626,14 +789,16 @@ export class EditAdvert extends BaseComponent {
         bedrooms,
         statusHome,
         statusArea] = this.params.getHouseParams();
+      const address = this.parseAddress();
+
       data = {
         advertTypeSale: typeDeal,
-        advertTypePlacement: 'House',
+        // advertTypePlacement: 'House',
         title,
         description,
         phone,
         isAgent: Boolean(isAgent),
-        floor: Number(generalFloor),
+        // floor: Number(generalFloor),
         ceilingHeight: Number(height),
         squareArea: Number(squareArea),
         squareHouse: Number(squareHouse),
@@ -644,9 +809,15 @@ export class EditAdvert extends BaseComponent {
         price: Number(price),
         floorGeneral: Number(generalFloor),
         material: 'Brick',
-        address: adress,
         yearCreation: Number(year),
-        addressPoint: point,
+        address: {
+          province: address.province,
+          town: address.town,
+          street: address.street,
+          house: address.house,
+          metro: '',
+          addressPoint: `POINT(${address.pos})`,
+        },
       };
     }
     return data;
@@ -669,6 +840,11 @@ export class EditAdvert extends BaseComponent {
     this.inputPhone.setValue(state.phone);
     this.setValueRadio('object', state.advertType);
     this.object = state.advertType;
+    const [long, lat] = this.parsePoint(state.adressPoint);
+    this.geocoder.coordinateToAdress(`${long} ${lat}`);
+    setTimeout(() => {
+      this.geocoder.addMarker(long, lat);
+    }, 200);
     if (this.object === 'Flat') {
       this.params.componentDidUpdate({
         name: events.CHANGE_OBJECT,
@@ -707,5 +883,45 @@ export class EditAdvert extends BaseComponent {
         state.houseProperties.statusArea,
       );
     }
+  }
+
+  parseAddress() {
+    const { Components } = this.currentObjectAddress.response.GeoObjectCollection.featureMember[0]
+      .GeoObject.metaDataProperty.GeocoderMetaData.Address;
+    let province; let town; let street; let
+      house;
+
+    Components.forEach((component) => {
+      switch (component.kind) {
+        case 'province':
+          if (!province) province = component.name;
+          break;
+        case 'locality':
+          if (!town) town = component.name;
+          break;
+        case 'street':
+          if (!street) street = component.name;
+          break;
+        case 'house':
+          if (!house) house = component.name;
+          break;
+        default:
+          break;
+      }
+    });
+
+    const { pos } = this.currentObjectAddress.response.GeoObjectCollection.featureMember[0]
+      .GeoObject.Point;
+
+    return {
+      province, town, street, house, pos,
+    };
+  }
+
+  parsePoint(point) {
+    const coordinates = point.replace('POINT(', '').replace(')', '').split(' ');
+    const long = parseFloat(coordinates[0]);
+    const lat = parseFloat(coordinates[1]);
+    return [long, lat];
   }
 }

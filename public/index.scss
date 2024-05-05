@@ -27,6 +27,10 @@
 @import "@pages/myAdvert/myAdvert.scss";
 @import "@pages/editAdvert/editAdvert.scss";
 @import "@pages/errorPage/errorPage.scss";
+@import "@components/map/map.scss";
+@import "@components/dropdown/dropdown.scss";
+@import "@components/mapPopup/mapPopup.scss";
+@import "@components/editAdvert/geocoder/geocoder.scss";
 
 * {
     box-sizing: border-box;
