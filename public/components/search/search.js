@@ -429,7 +429,7 @@ export class Search extends BaseComponent {
   }
 
   closeSaggest(event) {
-    event.preventDefault();
+    // event.preventDefault();
     if (event.target.closest('.input-container')) {
       return;
     }
