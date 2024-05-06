@@ -249,6 +249,8 @@ export class Search extends BaseComponent {
     Array.from(documentmenus).forEach((menu) => {
       if (!menu.classList.contains('hidden') && menu !== parentDivForButton.lastElementChild) {
         menu.classList.add('hidden');
+        menu.parentElement.classList.toggle('search__button-expand-icon');
+        menu.parentElement.classList.toggle('search__button-close-icon');
       }
     });
     const menu = parentDivForButton.lastElementChild;
