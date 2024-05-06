@@ -201,7 +201,8 @@
         &__card {
             width: 100%;
             min-height: 100%;
-            grid-template-rows: 80% 20%;
+        grid-template-rows: 100% 0%;
+        // grid-template-rows: 80% 20%;
         }
 
         &__Mycard {
