@@ -434,6 +434,7 @@ export class Search extends BaseComponent {
       return;
     }
     if (this.dropdown !== undefined) {
+      console.log(this.currentAddress);
       this.inputMenu?.setValue(this.currentAddress);
       this.dropdown.unmountAndClean();
     }
@@ -448,7 +449,7 @@ export class Search extends BaseComponent {
         return;
       }
       this.prevSearchAddress = addressInput;
-      this.currentAddress = '';
+      this.currentAddress = addressInput;
       if (addressInput === '') {
         this.dropdown.unmountAndClean();
         return;

@@ -888,13 +888,14 @@ export class EditAdvert extends BaseComponent {
   parseAddress() {
     const { Components } = this.currentObjectAddress.response.GeoObjectCollection.featureMember[0]
       .GeoObject.metaDataProperty.GeocoderMetaData.Address;
-    let province; let town; let street; let
+    let province = 'Область'; let town; let street; let
       house;
-
+    console.log(Components);
     Components.forEach((component) => {
       switch (component.kind) {
         case 'province':
-          if (!province) province = component.name;
+          province = component.name;
+          // province = component.name;
           break;
         case 'locality':
           if (!town) town = component.name;
@@ -909,6 +910,7 @@ export class EditAdvert extends BaseComponent {
           break;
       }
     });
+    console.log(province, town, street, house);
 
     const { pos } = this.currentObjectAddress.response.GeoObjectCollection.featureMember[0]
       .GeoObject.Point;
