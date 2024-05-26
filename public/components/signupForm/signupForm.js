@@ -17,6 +17,8 @@ const PHONE_INPUT = {
   id: 'signup_phone',
   type: 'text',
   placeholder: 'Телефон',
+  autocomplete: 'tel',
+  name: 'login',
 };
 const EMAIL_INPUT = {
   id: 'signup_email',
@@ -32,6 +34,7 @@ const PASSWORD_REPEAT_INPUT = {
   id: 'signup_password_repeat',
   type: 'password',
   placeholder: 'Повторите пароль',
+  blockClass: 'passwordInput',
 };
 const SIGNUP_ERROR = 'Такой логиин уже существует';
 
@@ -79,6 +82,7 @@ export class SignupForm extends BaseComponent {
     this.addListener(this.password, 'input', 'input', this.validatePasswordInput.bind(this));
     this.addListener(this.repeatPassword, 'input', 'input', this.validatePasswordRepeatInput.bind(this));
     this.signupButton.self.addEventListener('click', this.signupHandler.bind(this));
+    this.repeatPassword.componentDidMount();
   }
 
   /**
