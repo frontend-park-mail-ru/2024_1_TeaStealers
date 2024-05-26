@@ -25,6 +25,14 @@ const API_CONST = {
   UPDATE_USER_INFO: `${BASE_URL}/users/info`,
   UPDATE_USER_PASSWORD: `${BASE_URL}/users/password`,
   GET_MY_ADVERTS: `${BASE_URL}/users/myadverts`,
+  LIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/like`,
+  DISLIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/dislike`,
+  GET_BUILDING_INFO: `${BASE_URL}/adverts/building/`,
+};
+
+export const getSagests = (text) => {
+  const url = `https://suggest-maps.yandex.ru/v1/suggest?text=${text}&apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c`;
+  return getRequest(url);
 };
 
 /**
@@ -233,4 +241,19 @@ export const getMyAdverts = () => {
 export const getGridAdverts = (queryParamenrts) => {
   const url = API_CONST.GET_GRID_ADVERTS + queryParamenrts;
   return getRequest(url);
+};
+
+export const likeAdvert = (advertId) => {
+  const url = API_CONST.LIKE_ADVERT.replace('{advert_id}', advertId);
+  return postRequest(url);
+};
+
+export const dislikeAdvert = (advertId) => {
+  const url = API_CONST.DISLIKE_ADVERT.replace('{advert_id}', advertId);
+  return postRequest(url);
+};
+
+export const getBuildingInfo = (address) => {
+  const url = API_CONST.GET_BUILDING_INFO;
+  return postRequest(url, address);
 };

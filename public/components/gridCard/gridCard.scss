@@ -8,6 +8,7 @@
     h2 {
         font-size: 22px;
         color: $color_text_basic;
+        padding-top: 5px;
         margin: 0;
         font-weight: bold;
     }
@@ -30,6 +31,7 @@
     img {
         width: 100%;
         height: 280px;
+        min-height: 280px;
         object-fit: cover;
         border-radius: 8px 8px 0 0;
     }
@@ -46,6 +48,12 @@
         grid-gap: 1rem;
     }
 
+    &__Mycontainer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+    }
+
     &__card {
         width: 320px;
         min-height: 400px;
@@ -59,15 +67,32 @@
         }
     }
 
+    &__Mycard {
+        width: 320px;
+        min-height: 400px;
+        display: grid;
+        grid-template-rows: 380px 60px auto;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        transition-duration: 0.3s;
+        &:hover {
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        }
+    }
+
     &__description {
         display: flex;
         flex-direction: column;
         gap: 10px;
         padding: 0 10px;
+        max-width: 320px;
     }
 
     &__adress {
         color: $color_text_basic_secondary !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &__buttons {
@@ -81,10 +106,24 @@
         font-weight: bold;
 
         a {
-            display: block;
+            display: flex;
+            justify-content: center;
             padding: 8px 15px;
-            border-radius: 4px;
+            border-radius: 4px;  
+            width: 50%;
         }
+    }
+
+    &__stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+    &__likes, &__views {
+        display: flex;
+        align-items: center; /* Центрирование содержимого по вертикали */
+        font-size: 14px; /* Размер шрифта для текста рядом с иконками */
     }
 
     &__edit {
@@ -100,6 +139,106 @@
         color: $color_errors !important;
         &:hover {
             background-color: $background-color-button-error-hover;
+        }
+    }
+
+    &_hidden {
+        display: none !important;
+    }
+
+    &_clear-filters {
+        cursor: pointer;
+    }
+}
+
+.material-symbols-outlined {
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .gridCards {
+
+        h2 {
+            font-size: 16px;
+            color: $color_text_basic;
+            padding-top: 5px;
+            margin: 0;
+            font-weight: bold;
+        }
+    
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            // justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-overflow: ellipsis;  
+            height: 100%;
+        }
+    
+        span {
+            font-size: 14px;
+            color: $color_text_basic;
+            margin: 0;
+            font-weight: normal;
+            display: block;
+        }
+    
+        img {
+            width: 100%;
+            min-height: 0;
+            height: 50%;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        &__container {
+            grid-template-columns: repeat(2, 45vw);
+            grid-auto-rows: 70vw;
+        }
+
+        &__card {
+            width: 100%;
+            min-height: 100%;
+        grid-template-rows: 100% 0%;
+        // grid-template-rows: 80% 20%;
+        }
+
+        &__Mycard {
+            width: 100%;
+            min-height: 100%;
+            grid-template-rows: 80% 20%;
+        }
+
+        &__description {
+            display: block;
+            padding: 0 1vw;
+
+            span {
+                padding-top: 5px;
+            }
+        }
+
+        &__Mycontainer {
+            display: grid;
+            grid-template-columns: repeat(2, 45vw);
+            grid-auto-rows: 70vw;
+        }
+
+        &__buttons {
+            // flex-direction: column;
+            font-size: 12px;
+            font-weight: normal;
+            gap: 2vw;
+            padding: 2vw;
+            width: 45vw;
+            justify-content: space-around;
+            padding: auto;
+            a {
+                padding: 2vw 2vw;
+                width: 45%;
+            }
         }
     }
 }

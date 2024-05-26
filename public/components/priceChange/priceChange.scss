@@ -1,0 +1,32 @@
+@use "@/variables.scss";
+
+.price-change {
+    font-size: 16px;
+
+    &__history {
+        display: grid;
+        grid-template-columns: 1fr 2fr 2fr;
+    }
+
+    &__diff {
+        display: flex;
+        align-items: center;
+
+        &-down {
+            color: #3ac500;
+        }
+        &-up {
+            color: $color_errors;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    padding: 0;
+    display: flex;
+    align-items: center;
+}

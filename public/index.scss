@@ -9,20 +9,28 @@
 @import "@components/navbar/navbar.scss";
 @import "@components/signupForm/signupForm.scss";
 @import "@components/menu/menu.scss";
-@import "components/profileForm/profileForm.scss";
-@import "@pages/profile/profile.scss";
+@import "@components/profileForm/profileForm.scss";
 @import "@components/avatar/avatar.scss";
-@import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
-@import "@pages/main/main.scss";
-@import "@pages/advertPage/advertPage.scss"; 
-@import "@pages/newAdvert/newAdvert.scss"; 
+@import "@components/footer/footer.scss";
+@import "@components/mobileMenu/mobileMenu.scss";
 @import "@components/editAdvert/editAdvert.scss"; 
 @import "@components/paramsAdvert/paramsAdvert.scss"; 
 @import "@components/numberPages/numberPages.scss"; 
+@import "@components/priceChange/priceChange.scss";
+@import "@pages/loginAndSignupLayout/loginAndSignupLayout.scss";
+@import "@pages/profile/profile.scss";
+@import "@pages/mobilePage/mobilePage.scss";
+@import "@pages/main/main.scss";
+@import "@pages/advertPage/advertPage.scss"; 
+@import "@pages/newAdvert/newAdvert.scss"; 
 @import "@pages/complexPage/complexPage.scss";
 @import "@pages/myAdvert/myAdvert.scss";
 @import "@pages/editAdvert/editAdvert.scss";
 @import "@pages/errorPage/errorPage.scss";
+@import "@components/map/map.scss";
+@import "@components/dropdown/dropdown.scss";
+@import "@components/mapPopup/mapPopup.scss";
+@import "@components/editAdvert/geocoder/geocoder.scss";
 
 * {
     box-sizing: border-box;
@@ -65,4 +73,12 @@ h2 {
 	to {
 		background-position: right -1 * $shine-width top 0;
 	}
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }

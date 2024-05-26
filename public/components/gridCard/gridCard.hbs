@@ -3,11 +3,14 @@
 <div class="gridCards">
     <div class="gridCards__information">
         <h2>{{title}}</h2>
-        <span>Всего объявлений: {{totalElements}}</span> 
+        {{#if miniCards}}
+        {{else}}
+        <span>Вы не создали еще ни одного объявления</span> 
+        {{/if}}
     </div>
-    <div class="gridCards__container">
+    <div class="gridCards__Mycontainer">
     {{#each miniCards}}
-        <div class="gridCards__card">
+        <div class="gridCards__Mycard">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
             <img src="/static/{{photo}}" alt="Фотография">
             <div class="gridCards__description">
@@ -28,8 +31,16 @@
             </a>
 
             <div class="gridCards__buttons">
-                <a href="/edit-advert/{{advertId}}" class="gridCards__edit">Изменить</a>
-                <a href="{{advertId}}" class="gridCards__delete">Удалить</a>
+                <a href="/edit-advert/{{advertId}}" class="gridCards__edit">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+                </a>
+                <a href="{{advertId}}" class="gridCards__delete">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </a>
             </div>
 
         </div>
@@ -41,28 +52,51 @@
     <div class="gridCards__information">
         <h2>{{title}}</h2>
         <span>Всего объявлений: {{totalElements}}</span> 
+        <span id="clearFilters" class="gridCards_hidden gridCards_clear-filters">Очистить фильтры</span>
     </div>
     <div class="gridCards__container">
     {{#each miniCards}}
         <div class="gridCards__card">
             <a href="/adverts/{{advertId}}" class="gridCard__link">
-            <img src="/static/{{photo}}" alt="Фотография">
-            <div class="gridCards__description">
+                {{!-- <img src="../../static/fone.jpg" alt="Фотография"> --}}
+                <img src="/static/{{photo}}" alt="Фотография">
 
-                <h2>{{price}} &#8381;</h2>
+                
+                <div class="gridCards__description">
 
-                {{#if houseProperties}}
-                <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
-                {{/if}}
+                    <h2>{{price}} &#8381;</h2>
 
-                {{#if flatProperties}}
-                <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
-                {{/if}}
+                    {{#if houseProperties}}
+                    <span class="gridCards__properties"> Дом · {{houseProperties.squareArea}} сот. · {{houseProperties.squareHouse}} м<sup>2</sup> · {{houseProperties.floor}} эт. · {{houseProperties.bedroomCount}} комн.</span>
+                    {{/if}}
 
-                <span class="gridCards__adress">{{adress}}</span>    
+                    {{#if flatProperties}}
+                    <span class="gridCards__properties"> {{flatProperties.roomCount}}к. квартира · {{flatProperties.squareGeneral}} м<sup>2</sup> · {{flatProperties.floor}} этаж</span>
+                    {{/if}}
 
-            </div>
+                    <span class="gridCards__adress">{{adress}}</span>    
+
+                </div>
             </a>
+            {{!-- <div class="gridCards__stats">
+                <div class="gridCards__likes">
+                    <span class="material-symbols-outlined">
+                        {{#if isLiked}}
+                            heart_check
+                        {{/if}}
+                        {{#unless isLiked}}
+                            favorite
+                        {{/unless}}
+                    </span>
+                    <span>{{likeCounter}}</span>
+                </div>
+                <div class="gridCards__views">
+                    <span class="material-symbols-outlined">
+                        visibility
+                    </span>
+                    <span>{{visibilityCounter}}</span>
+                </div>
+            </div> --}}
         </div>
     {{/each}}
     </div>

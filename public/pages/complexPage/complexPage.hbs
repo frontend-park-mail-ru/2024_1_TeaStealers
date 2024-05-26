@@ -1,40 +1,47 @@
 <div class="complex-page">
-
+    <h2>ЖК "{{name}}"</h2>
+    <div class="info_location">
+            <span>{{address}}</span>
+        </div>
     <div class="complex-page__img">
         <img src="/static/{{photo}}" alt="Фото ЖК">
     </div>
 
     <div class="complex-page__info">
 
-        <h2>{{name}}</h2>
+        
 
-        <div class="info_location">
-            <span>Расположение</span>
-            <h2>{{address}}</h2>
-        </div>
+        
 
         <div class="info_characteristics">
-            {{#if dateBeginBuild}}
-                <div>
+                <div class="complex-page__characteristic-block">
                     <div class="characteristic-name">
                         Начало строительства
                     </div>
                     <div class="characteristic-description">
-                        {{dateBeginBuild}}
+                        {{#if dateBeginBuild}}
+                            {{dateBeginBuild}}
+                        {{else}}
+                            Не указано
+                        {{/if}}
                     </div>
                 </div>
-            {{/if}}
-            {{#if dateEndBuild}}
-                <div>
+            
+            
+                <div class="complex-page__characteristic-block">
                     <div class="characteristic-name">
                         Конец строительства
                     </div>
                     <div class="characteristic-description">
+                    {{#if dateEndBuild}}
                         {{dateEndBuild}}
+                    {{else}}
+                            Не указано
+                    {{/if}}
                     </div>
                 </div>
-            {{/if}}
-                <div>
+            
+                <div class="complex-page__characteristic-block">
                     <div class="characteristic-name">
                         Варианты отделки
                     </div>
@@ -42,17 +49,21 @@
                         {{#if withoutFinishingOption}}Без отделки {{/if}}{{#if finishingOption}}Чистовая {{/if}}{{#if preFinishingOption}}Предчистовая{{/if}}
                     </div>
                 </div>
-            {{#if classHousing}}
-                <div>
+            
+                <div class="complex-page__characteristic-block">
                     <div class="characteristic-name">
                         Класс
                     </div>
                     <div class="characteristic-description">
-                        {{classHousing}}
+                        {{#if classHousing}}
+                            {{classHousing}}
+                        {{else}}
+                            Не указано
+                        {{/if}}
                     </div>
                 </div>
-            {{/if}}
-            <div>
+            
+            <div class="complex-page__characteristic-block">
                 <div class="characteristic-name">
                     Паркинг
                 </div>
@@ -60,7 +71,7 @@
                     {{#if parking}}Есть{{else}}Нет{{/if}}
                 </div>
             </div>
-            <div>
+            <div class="complex-page__characteristic-block">
                 <div class="characteristic-name">
                     Охрана
                 </div>

@@ -1,0 +1,15 @@
+<div class="dropdown" id="{{id}}">
+    {{#if items}}
+    <div class="dropdown__container">
+        {{#each items as |item id|}}
+            <div class="dropdown__item" id="dropdownItem-{{id}}">
+                <div class="dropdown__item-title">{{item.address.formatted_address}}</div>
+            </div>
+        {{/each}}
+    </div>
+    {{else}}
+        <div class="dropdown__address-not-found">
+            <div class="dropdown__item-title">Не нашли такого адреса</div>
+        </div>
+    {{/if}}
+</div>

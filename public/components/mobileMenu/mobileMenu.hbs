@@ -1,0 +1,14 @@
+<div class="mobile-menu">
+    &#9776;
+</div>
+<div class="mobile-menu__modal">
+    <ul class="mobile-menu__links">
+        <li id="closeMenu">
+            &#9776;
+        </li>
+        <span {{#if profile}} class="current-page"{{/if}} id="menu_profile">Профиль</span>
+        <span {{#if newAdvert}} class="current-page"{{/if}} id="menu_new-advert">Создать объявление</span>
+        <span {{#if myAdverts}} class="current-page"{{/if}} id="menu_my-advert">Мои объявления</span>
+        <span class="menu_logout" id="menu_logout">Выйти</span>
+    </ul>
+</div>

@@ -1,5 +1,5 @@
 import { authModel } from '@models';
-import { ErrorView } from '@views';
+import { ErrorView, MobileView } from '@views';
 /**
  * класс Роутера
  */
@@ -36,13 +36,11 @@ class Router {
      */
   go(path, isReplace) {
     this.error = false;
-    console.log(path, this.curPath);
-    console.log(path === this.curPath);
     if (path === this.curPath) {
       return;
     }
     if (this.protectedRoutes[path] !== undefined && authModel.isAuth !== true) {
-      this.error = true;
+      // this.error = true;
     }
     const id = path.substring(path.lastIndexOf('/') + 1);
     const pathWithoutId = path.replace(id, '');
@@ -67,6 +65,7 @@ class Router {
     } else {
       this.curPath = path;
     }
+
     this.curView.render();
 
     if (isReplace) {

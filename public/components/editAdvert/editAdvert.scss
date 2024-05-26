@@ -60,9 +60,11 @@
         flex-direction: column;
         gap: 25px;
     }
+    
 
     .input-adress {
-        max-width: 400px;
+        position: relative;
+        height: 430px;
     }
 
     .about-build__input-container {
@@ -107,5 +109,12 @@
     #saveInfo {
         font-size: 14px;
         color: $color_errors;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .edit-advert {
+        margin: 0;
+        padding: 10vw 2vw;
     }
 }

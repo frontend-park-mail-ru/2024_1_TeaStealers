@@ -29,3 +29,32 @@
         margin-top: 40px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .myadvert-page {
+        padding: 0px;
+
+        
+    }
+
+    .my-advert {
+        &__data {
+            margin-left: 0px;
+            padding: 0px 2vw;
+        }
+
+        &__container {
+            margin-top: 0px;
+        }
+
+        h2 {
+            font-size: 16px;
+            color: $color_text_basic;
+            padding-top: 5px;
+            margin: 0;
+            font-weight: bold;
+        }
+    }
+
+    
+}

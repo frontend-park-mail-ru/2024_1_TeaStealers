@@ -1,8 +1,10 @@
 import {
-  Button, Input, BaseComponent, DropMenu,
+  Button, Input, BaseComponent, DropMenu, MapComponent, Dropdown,
 } from '@components';
-import { checkPriceFilter } from '@modules';
+import { checkPriceFilter, getSagests } from '@modules';
 import { mainControler } from '@controllers';
+import { blockParams } from 'handlebars';
+import { events } from '@models';
 import search from './search.hbs';
 
 const DEFAULT_SEARCH = {
@@ -73,6 +75,18 @@ const buttonPattern = {
  * Класс компонента блока поиска
  */
 export class Search extends BaseComponent {
+  mapModal;
+
+  sagestData;
+
+  dropdown;
+
+  prevSearchAddress;
+
+  currentAddress;
+
+  searchedAdverts;
+
   /**
      * Создает новый экземпляр блока поиска
      * @param {HTMLElement} parent - Родительский элемент
@@ -86,18 +100,21 @@ export class Search extends BaseComponent {
       ...buttonPattern,
       text: state.homeType,
       id: 'homeType',
+      blockClass: 'string_menu-button search__home-type search__button-expand-icon',
     });
 
     const roomNumber = new Button('searchString', {
       ...buttonPattern,
       text: state.roomNumber,
       id: 'roomNumber',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const price = new Button('searchString', {
       ...buttonPattern,
       text: state.price,
       id: 'price',
+      blockClass: 'string_menu-button search__button-expand-icon',
     });
 
     const inputMenu = new Input('searchString', {
@@ -105,6 +122,7 @@ export class Search extends BaseComponent {
       type: 'text',
       blockClass: 'search__input',
       id: 'inputMenu',
+      containerClass: 'search__input-container',
     });
 
     const findButton = new Button('searchButton', {
@@ -114,6 +132,13 @@ export class Search extends BaseComponent {
       borderRadius: 'sm',
       id: 'searchBtn',
     });
+    const mapButton = new Button('searchButton', {
+      text: 'Показать на карте',
+      mode: 'white',
+      size: 'sm',
+      borderRadius: 'sm',
+      id: 'mapBtn',
+    });
 
     const homeTypeMenu = new DropMenu('homeType', DEFAULT_DROP_HOMETYPE_MENU);
 
@@ -122,13 +147,13 @@ export class Search extends BaseComponent {
     const priceMenu = new DropMenu('price', DEFAULT_DROP_PRICE_MENU);
 
     const innerComponents = [homeType, roomNumber,
-      price, inputMenu, findButton,
+      price, inputMenu, findButton, mapButton,
       homeTypeMenu, roomNumberMenu, priceMenu];
     super({
       parent, template, state, innerComponents,
     });
 
-    [this.homeType, this.roomNumber, this.price, this.inputMenu, this.findButton,
+    [this.homeType, this.roomNumber, this.price, this.inputMenu, this.findButton, this.mapButton,
       this.homeTypeMenu, this.roomNumberMenu, this.priceMenu] = this.innerComponents;
     this.menus = [this.homeTypeMenu, this.roomNumberMenu, this.priceMenu];
     this.buttons = [this.homeType, this.roomNumber, this.price];
@@ -143,6 +168,8 @@ export class Search extends BaseComponent {
    * Добавление обработчиков
    */
   componentDidMount() {
+    this.addListener(this.inputMenu, 'input', 'input', this.sadgestAddress.bind(this));
+    this.addClickListener('mapBtn', this.openMapModal.bind(this));
     document.querySelector('#searchBtn').addEventListener('click', this.search.bind(this));
     this.addListener(this.homeType, 'button', 'click', this.openMenu.bind(this.homeType));
     this.addListener(this.roomNumber, 'button', 'click', this.openMenu.bind(this.roomNumber));
@@ -162,6 +189,7 @@ export class Search extends BaseComponent {
     });
     this.addListener(this.inputMenu, 'input', 'change', this.saveInput.bind(this));
     this.addClickListener('main-page', this.closeMenu.bind(this));
+    this.addClickListener('main-page', this.closeSaggest.bind(this));
     if (this.state.typeSale === 'Rent') {
       this.filters.forEach((filter) => {
         if (filter.firstElementChild.innerText === 'Снять') {
@@ -176,12 +204,47 @@ export class Search extends BaseComponent {
     }
   }
 
+  componentDidUpdate(state) {
+    if (state.name !== 'GET_ADVERTS_MAIN') {
+      return;
+    }
+    this.searchedAdverts = state.data.adverts;
+    if (state.data.pageInfo.title === 'Аренда') {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Снять') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+
+      this.state.firstFilterLinkStatus = 'passive';
+      this.state.secondFilterLinkStatus = 'active';
+    } else {
+      this.filters.forEach((filter) => {
+        if (filter.firstElementChild.innerText === 'Купить') {
+          filter.classList.remove('filter-link_passive');
+          filter.classList.add('filter-link_active');
+        } else {
+          filter.classList.remove('filter-link_active');
+          filter.classList.add('filter-link_passive');
+        }
+      });
+      this.state.firstFilterLinkStatus = 'active';
+      this.state.secondFilterLinkStatus = 'passive';
+    }
+  }
+
   /**
    * Обработчик открытия всплывающего меню
    * @param {Object} menuButton - Отслеживаемое событие
    */
   openMenu(menuButton) {
     const parentDivForButton = menuButton.target.parentElement;
+    parentDivForButton.classList.toggle('search__button-expand-icon');
+    parentDivForButton.classList.toggle('search__button-close-icon');
     const documentmenus = document.getElementsByClassName('dropMenu');
     Array.from(documentmenus).forEach((menu) => {
       if (!menu.classList.contains('hidden') && menu !== parentDivForButton.lastElementChild) {
@@ -197,7 +260,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseHomeType(event) {
-    this.flatFilter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -210,11 +272,17 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Квартиру в новостройке или вторичке';
     let checked = false;
+    this.flatFilter = '';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        if (this.flatFilter === '') {
+          this.flatFilter = input.value;
+        } else {
+          this.flatFilter = '';
+        }
         if (!checked) {
           checked = true;
           message = '';
@@ -234,7 +302,6 @@ export class Search extends BaseComponent {
    * @param {Object} event - Отслеживаемое событие
    */
   chooseRoomNember(event) {
-    this.roomCounter = event.target.value;
     let menuButton = event.target;
     let dropMenu;
     while (!menuButton.classList.contains('string_menu-button')) {
@@ -247,11 +314,13 @@ export class Search extends BaseComponent {
     const labels = dropMenu.querySelectorAll('label');
     let message = 'Комнат';
     let checked = false;
+    this.roomCounter = 'undefined';
     inputs.forEach((input, idx) => {
       if (input !== event.target) {
         input.checked = false;
       }
       if (input.checked) {
+        this.roomCounter = input.value;
         if (!checked) {
           checked = true;
           message += `: ${labels[idx].innerText}`;
@@ -285,6 +354,9 @@ export class Search extends BaseComponent {
     }
     filterElement.classList.remove('filter-link_passive');
     filterElement.classList.add('filter-link_active');
+    const queryParameters = {};
+    queryParameters.dealtype = `${this.dealType}`;
+    mainControler.updateMainModelWithParameters(queryParameters);
   }
 
   /**
@@ -356,6 +428,67 @@ export class Search extends BaseComponent {
     });
   }
 
+  closeSaggest(event) {
+    // event.preventDefault();
+    if (event.target.closest('.input-container')) {
+      return;
+    }
+    if (this.dropdown !== undefined) {
+      console.log(this.currentAddress);
+      this.inputMenu?.setValue(this.currentAddress);
+      this.dropdown.unmountAndClean();
+    }
+  }
+
+  async sadgestAddress() {
+    setTimeout(async () => {
+      const addressInput = this.inputMenu.getValue().trim();
+      if (this.prevSearchAddress === undefined) {
+        this.prevSearchAddress = addressInput;
+      } else if (this.prevSearchAddress === addressInput) {
+        return;
+      }
+      this.prevSearchAddress = addressInput;
+      this.currentAddress = addressInput;
+      if (addressInput === '') {
+        this.dropdown.unmountAndClean();
+        return;
+      }
+      // const response = await fetch(`https://suggest-maps.yandex.ru/v1/suggest?text=${addressInput}&lang=ru&type=province,locality,street,metro,province&apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c`);
+      const response = await fetch(`https://suggest-maps.yandex.ru/v1/suggest?apikey=f7cb9ad6-83ff-41aa-9000-55578209c95c&text=${addressInput}&print_address=1&attrs=uri&lang=ru&type=locality,street`);
+      if (!response.ok) {
+        return;
+      }
+
+      this.sagestData = await response.json();
+      if (this.dropdown === undefined) {
+        this.dropdown = new Dropdown('inputMenu', { items: this.sagestData.results, id: 'dropdownAddress' });
+        this.dropdown.renderAndDidMount();
+      } else {
+        this.dropdown.unmountAndClean();
+        this.dropdown = new Dropdown('inputMenu', { items: this.sagestData.results, id: 'dropdownAddress' });
+        this.dropdown.renderAndDidMount();
+      }
+      const itemsSagest = document.querySelectorAll('.dropdown__item');
+      itemsSagest.forEach((item) => {
+        item.addEventListener('click', this.setAddress.bind(this));
+      });
+    }, 400);
+  }
+
+  setAddress(event) {
+    event.preventDefault();
+    if (event.target.classList.contains('dropdown__item')) {
+      return;
+    }
+    const element = event.target;
+    this.inputMenu.setValue(element.textContent);
+    this.currentAddress = element.textContent;
+    this.inputMenu.self.querySelector('input').focus();
+    this.inputMenu.self.querySelector('input').setSelectionRange(this.inputMenu.getValue().length, this.inputMenu.getValue().length);
+    this.adress = this.currentAddress;
+  }
+
   /**
    * Сохранение записанных в поисковую строку данных
    * @param {Object} event - Отслеживаемое событие
@@ -369,13 +502,38 @@ export class Search extends BaseComponent {
    */
   search() {
     const queryParameters = {};
-    queryParameters.adverttype = this.flatFilter;
-    queryParameters.adress = `${this.adress}`;
+    if (this.flatFilter) {
+      queryParameters.adverttype = this.flatFilter;
+    }
+    if (this.adress) {
+      queryParameters.adress = `${this.adress}`;
+    }
+    if (this.roomCounter) {
+      queryParameters.roomcount = `${this.roomCounter}`;
+    }
     queryParameters.dealtype = `${this.dealType}`;
-    queryParameters.roomcount = `${this.roomCounter}`;
-    queryParameters.minprice = `${this.prices[0]}`;
-    queryParameters.maxprice = `${this.prices[1]}`;
+    if (this.prices[0]) {
+      queryParameters.minprice = `${this.prices[0]}`;
+    }
+    if (this.prices[1]) {
+      queryParameters.minprice = `${this.prices[1]}`;
+    }
     mainControler.updateMainModelWithParameters(queryParameters);
+  }
+
+  openMapModal(event) {
+    event.preventDefault();
+    this.mapModal = new MapComponent('search__modal', { adverts: this.searchedAdverts });
+    this.mapModal.renderAndDidMount();
+    this.addClickListener('mapModal', this.closeMapModal.bind(this));
+  }
+
+  closeMapModal(event) {
+    event.preventDefault();
+    if (event.target.id !== 'mapModalBody') {
+      return;
+    }
+    this.mapModal.unmountAndClean();
   }
 
   /**
