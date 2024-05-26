@@ -174,5 +174,8 @@
 
     .string_menu-button {
         height: 3rem;
+        border-radius: $button-border-radius_md;
+        border-right: 0px solid gray;
+        background-color: $background-color-main;
     }
 }

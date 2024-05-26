@@ -3,8 +3,8 @@
         <ul class="home-type_list">
             {{#each flatTypes}}
                 <li class="home-type_checkbox">
-                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
-                    <label>
+                    <input type="checkbox" id={{this.label}} class="checkbox_form" value="{{this.value}}">
+                    <label for={{this.label}}>
                         {{this.label}}
                     </label>
                 </li>
@@ -13,8 +13,8 @@
         <ul class="home-type_list" id="house">
             {{#each homeTypes}}
                 <li class="home-type_checkbox">
-                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
-                    <label>
+                    <input type="checkbox" id={{this.label}} class="checkbox_form" value="{{this.value}}">
+                    <label for={{this.label}}>
                         {{this.label}}
                     </label>
                 </li>
@@ -27,8 +27,8 @@
         <ul class="room-number_list">
             {{#each roomCount}}
                 <li class="room-number_checkbox">
-                    <input type="checkbox" class="checkbox_form" value="{{this.value}}">
-                    <label>
+                    <input type="checkbox" id={{this.label}} class="checkbox_form" value="{{this.value}}">
+                    <label for={{this.label}}>
                         {{this.label}}
                     </label>
                 </li>

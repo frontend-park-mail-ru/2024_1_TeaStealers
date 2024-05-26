@@ -11,7 +11,6 @@ export class MapPopup extends BaseComponent {
     super({ parent, template, state });
     this.state = state;
     this.parent = parent;
-    console.log(state);
   }
 
   componentDidMount() {

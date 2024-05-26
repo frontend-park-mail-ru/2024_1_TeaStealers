@@ -61,9 +61,6 @@ export class MapComponent extends BaseComponent {
     // }
 
     this.adverts.forEach((advert, index) => {
-      console.log(advert);
-      console.log(advert.adressPoint);
-      console.log(advert.adressPoint.replace('POINT(', '').replace(')', '').replace(' ', ', '));
       const [long, lat] = this.parsePoint(advert.adressPoint);
       const markerElement = document.createElement('img');
       markerElement.className = 'icon-marker';
@@ -125,8 +122,6 @@ export class MapComponent extends BaseComponent {
     const coordinates = point.replace('POINT(', '').replace(')', '').split(' ');
     const long = parseFloat(coordinates[0]);
     const lat = parseFloat(coordinates[1]);
-    // Возвращаем координаты точки в виде массива чисел
-    console.log(long, lat);
     return [long, lat];
   }
 }

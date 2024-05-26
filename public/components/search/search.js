@@ -100,21 +100,24 @@ export class Search extends BaseComponent {
       ...buttonPattern,
       text: state.homeType,
       id: 'homeType',
-      blockClass: 'string_menu-button search__home-type search__button-expand-icon',
+      blockClass: 'string_menu-button search__home-type ',
+      mode: ' search__button-expand-icon',
     });
 
     const roomNumber = new Button('searchString', {
       ...buttonPattern,
       text: state.roomNumber,
       id: 'roomNumber',
-      blockClass: 'string_menu-button search__button-expand-icon',
+      blockClass: 'string_menu-button',
+      mode: ' search__button-expand-icon',
     });
 
     const price = new Button('searchString', {
       ...buttonPattern,
       text: state.price,
       id: 'price',
-      blockClass: 'string_menu-button search__button-expand-icon',
+      blockClass: 'string_menu-button ',
+      mode: ' search__button-expand-icon',
     });
 
     const inputMenu = new Input('searchString', {
@@ -242,16 +245,18 @@ export class Search extends BaseComponent {
    * @param {Object} menuButton - Отслеживаемое событие
    */
   openMenu(menuButton) {
-    const parentDivForButton = menuButton.target.parentElement;
+    const parentDivForButton = menuButton.target;
     parentDivForButton.classList.toggle('search__button-expand-icon');
     parentDivForButton.classList.toggle('search__button-close-icon');
     const documentmenus = document.getElementsByClassName('dropMenu');
     Array.from(documentmenus).forEach((menu) => {
-      if (!menu.classList.contains('hidden') && menu !== parentDivForButton.lastElementChild) {
+      if (!menu.classList.contains('hidden') && menu !== parentDivForButton.parentElement.lastElementChild) {
         menu.classList.add('hidden');
+        menu.parentElement.querySelector('button').classList.toggle('search__button-expand-icon');
+        menu.parentElement.querySelector('button').classList.toggle('search__button-close-icon');
       }
     });
-    const menu = parentDivForButton.lastElementChild;
+    const menu = parentDivForButton.parentElement.lastElementChild;
     menu.classList.toggle('hidden');
   }
 
@@ -434,7 +439,6 @@ export class Search extends BaseComponent {
       return;
     }
     if (this.dropdown !== undefined) {
-      console.log(this.currentAddress);
       this.inputMenu?.setValue(this.currentAddress);
       this.dropdown.unmountAndClean();
     }

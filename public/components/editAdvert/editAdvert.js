@@ -393,7 +393,11 @@ export class EditAdvert extends BaseComponent {
 
   formatHeight() {
     const { value } = this.inputHeight.self.querySelector('input');
-    const formatedHeight = formatFloat(value, 2);
+    let formatedHeight = formatFloat(value, 2);
+    const regex = /^(\d{1,2}([.,]\d{0,2})?)?$/;
+    if (!regex.test(value)) {
+      formatedHeight = value.slice(0, -1);
+    }
     this.inputHeight.setValue(formatedHeight);
   }
 
@@ -577,6 +581,21 @@ export class EditAdvert extends BaseComponent {
     }
   }
 
+  validateNumberParams() {
+    if (this.object === 'Flat') {
+      const [apartament, floor, generalSquare, livingSquare, rooms] = this.params.getFLatParams();
+      if (floor > this.inputGeneralFloor.getValue()) {
+        document.getElementById('saveInfo').textContent = 'Этаж выше этажности дома';
+        return false;
+      }
+      if (generalSquare < livingSquare) {
+        document.getElementById('saveInfo').textContent = 'Жилая площадь больше общей площади';
+        return false;
+      }
+      return true;
+    }
+  }
+
   /**
    * Валидация возможности и сохранение данных
    */
@@ -592,6 +611,9 @@ export class EditAdvert extends BaseComponent {
     }
     if (!this.isValidImages) {
       document.getElementById('saveInfo').textContent = 'Загрузите хотя бы одну фотографию';
+      return;
+    }
+    if (!this.validateNumberParams()) {
       return;
     }
     let request;
@@ -890,7 +912,6 @@ export class EditAdvert extends BaseComponent {
       .GeoObject.metaDataProperty.GeocoderMetaData.Address;
     let province = 'Область'; let town; let street; let
       house;
-    console.log(Components);
     Components.forEach((component) => {
       switch (component.kind) {
         case 'province':
@@ -910,7 +931,6 @@ export class EditAdvert extends BaseComponent {
           break;
       }
     });
-    console.log(province, town, street, house);
 
     const { pos } = this.currentObjectAddress.response.GeoObjectCollection.featureMember[0]
       .GeoObject.Point;

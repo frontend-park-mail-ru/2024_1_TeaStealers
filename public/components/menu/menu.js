@@ -26,6 +26,7 @@ export class Menu extends BaseComponent {
     this.addClickListener('menu_profile', this.toProfile.bind(this));
     this.addClickListener('menu_new-advert', this.toNewAdvert.bind(this));
     this.addClickListener('menu_my-advert', this.toMyAdvert.bind(this));
+    this.addClickListener('menu_saved-advert', this.toSavedAdvert.bind(this));
     super.componentDidMount();
   }
 
@@ -37,6 +38,7 @@ export class Menu extends BaseComponent {
     this.removeClickListener('menu_profile', this.toProfile.bind(this));
     this.removeClickListener('menu_new-advert', this.toNewAdvert.bind(this));
     this.removeClickListener('menu_my-advert', this.toMyAdvert.bind(this));
+    this.removeClickListener('menu_saved-advert', this.toSavedAdvert.bind(this));
     super.componentWillUnmount();
   }
 
@@ -70,5 +72,9 @@ export class Menu extends BaseComponent {
    */
   toNewAdvert() {
     this.redirect('/new-advert/');
+  }
+
+  toSavedAdvert() {
+    this.redirect('/saved-advert/');
   }
 }

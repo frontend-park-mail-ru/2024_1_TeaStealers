@@ -17,12 +17,16 @@ class MainModel {
     try {
       const [statusCode, response] = await getGridAdverts(queryParametersURL);
       if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        response.payload.adverts = response.payload;
+        response.payload.pageInfo = {};
+
         this.cardsData = response.payload;
+
         this.cardsData.pageInfo.title = 'Все объявления';
         if (filter) {
           if (filter === 'Rent') {
             this.cardsData.pageInfo.title = 'Аренда';
-          } else {
+          } else if (filter === 'Sale') {
             this.cardsData.pageInfo.title = 'Продажа';
           }
         }
