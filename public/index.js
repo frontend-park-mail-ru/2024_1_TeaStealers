@@ -5,17 +5,19 @@ import {
   MainView, ProfileView,
   NewAdvertView, MyAdvertView,
   EditAdvertView, NavbarView,
-  ErrorView, MobileView,
+  ErrorView, MobileView, SavedAdvertView,
 } from '@views';
 import { authModel } from '@models';
 
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('sw.js', { scope: '/' })
-//     .then((reg) => {
-//     })
-//     .catch((e) => {
-//     });
-// }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' })
+    .then((reg) => {
+      // console.log(reg);
+    })
+    .catch((e) => {
+      // console.log(e);
+    });
+}
 
 // import { ex } from './components/example/ex.tsx';
 // import { h } from './pragma.ts';
@@ -32,5 +34,6 @@ router.register('/complex/', ComplexView);
 router.register('/new-advert/', NewAdvertView, true);
 router.register('/my-advert/', MyAdvertView, true);
 router.register('/edit-advert/', EditAdvertView, true);
+router.register('/saved-advert/', SavedAdvertView, true);
 router.start();
 document.addEventListener('DOMContentLoaded', authModel.checkAuthentication.bind(authModel));

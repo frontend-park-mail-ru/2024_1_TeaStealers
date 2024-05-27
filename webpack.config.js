@@ -1,8 +1,10 @@
 const path = require('path');
-const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: './public/index.js',
@@ -18,13 +20,30 @@ module.exports = {
   resolve: {
     alias: {
       '@components': path.resolve(__dirname, './public/components/'),
-      '@modules': path.resolve(__dirname, './public/modules/'),
       '@pages': path.resolve(__dirname, './public/pages/'),
       '@models': path.resolve(__dirname, './public/models/'),
       '@views': path.resolve(__dirname, './public/views/'),
       '@controllers': path.resolve(__dirname, './public/controllers/'),
+      '@modules': path.resolve(__dirname, './public/modules/'),
       '@': path.resolve(__dirname, './public/'),
     },
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        test: /\.m?js$/,
+        exclude: /(node_modules|dist)/,
+        minify: TerserPlugin.uglifyJsMinify,
+        terserOptions: {
+          compress: true,
+          mangle: true,
+        },
+      }),
+      new CssMinimizerPlugin({
+        minify: CssMinimizerPlugin.esbuildMinify,
+      }),
+    ],
+    minimize: true,
   },
   plugins: [
     new CleanWebpackPlugin(),

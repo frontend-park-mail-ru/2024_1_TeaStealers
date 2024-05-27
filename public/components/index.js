@@ -22,3 +22,4 @@ export * from './map/map.js';
 export * from './dropdown/dropdown.js';
 export * from './mapPopup/mapPopup.js';
 export * from './editAdvert/geocoder/geocoder.js';
+export * from './donateModal/donateModal.js';

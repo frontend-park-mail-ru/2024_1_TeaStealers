@@ -16,7 +16,7 @@ class ProfileModel {
       this.data = await getMe();
       this.notifyObservers({ name: events.ME, data: this.data });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -28,7 +28,7 @@ class ProfileModel {
         this.notifyObservers({ name: events.ME, data: this.info });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

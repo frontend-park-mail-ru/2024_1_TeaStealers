@@ -42,6 +42,11 @@ export class Input extends BaseComponent {
     }
   }
 
+  componentDidMount() {
+    if (this.self.classList.contains('passwordInput')) {
+    }
+  }
+
   /**
    * Получение значения
    * @returns {string} - Значение поля

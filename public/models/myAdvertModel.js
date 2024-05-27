@@ -1,6 +1,6 @@
 // import { getMe } from '@modules';
 import { events, globalVariables } from '@models';
-import { getMyAdverts } from '@modules/api';
+import { getMyAdverts, getSavedAdverts } from '@modules/api';
 
 class MyAdvertModel {
   myAdverts;
@@ -19,6 +19,18 @@ class MyAdvertModel {
   async getMyAdverts() {
     try {
       const [statusCode, data] = await getMyAdverts();
+      if (statusCode === globalVariables.HTTP_STATUS_OK) {
+        this.myAdverts = data.payload;
+        this.notifyObservers({ name: events.GET_MY_ADVERTS, data: this.myAdverts });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getSavedAdverts() {
+    try {
+      const [statusCode, data] = await getSavedAdverts();
       if (statusCode === globalVariables.HTTP_STATUS_OK) {
         this.myAdverts = data.payload;
         this.notifyObservers({ name: events.GET_MY_ADVERTS, data: this.myAdverts });

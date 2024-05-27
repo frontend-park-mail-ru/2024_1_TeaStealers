@@ -239,15 +239,21 @@ export class ProfileForm extends BaseComponent {
     if (event.name !== events.ME) {
       return;
     }
-    this.inputName.self.querySelector('input').value = event.data.firstName;
-    this.inputSecondName.self.querySelector('input').value = event.data.secondName;
-    this.inputPhone.self.querySelector('input').value = event.data.phone;
-    this.inputEmail.self.querySelector('input').value = event.data.email;
-    if (event.data.photo === '') {
-      document.getElementById('profileFormAvatar').src = '../../static/defaultAvatar.png';
-    } else {
-      document.getElementById('profileFormAvatar').src = `/static/${event.data.photo}`;
-    }
+    this.inputName.setValue(event.data.firstName);
+    this.inputSecondName.setValue(event.data.secondName);
+    this.inputPhone.setValue(event.data.phone);
+    this.inputEmail.setValue(event.data.email);
+    // this.inputName.self.querySelector('input').value = event.data.firstName;
+    // this.inputSecondName.self.querySelector('input').value = event.data.secondName;
+    // this.inputPhone.self.querySelector('input').value = event.data.phone;
+    // this.inputEmail.self.querySelector('input').value = event.data.email;
+    document.getElementById('profileFormAvatar').src = '../../static/defaultAvatar.png';
+
+    // if (event.data.photo === '') {
+    //   document.getElementById('profileFormAvatar').src = '../../static/defaultAvatar.png';
+    // } else {
+    //   document.getElementById('profileFormAvatar').src = `/static/${event.data.photo}`;
+    // }
   }
 
   /**
@@ -291,6 +297,10 @@ export class ProfileForm extends BaseComponent {
     const isValOld = this.validatePassword.bind(this.inputOldPassword);
     const isValNew = this.validatePassword.bind(this.inputNewPassword);
     if (!isValNew() || !isValOld()) {
+      return;
+    }
+    if (this.inputOldPassword.self.querySelector('input').value === this.inputNewPassword.self.querySelector('input').value) {
+      this.inputNewPassword.renderError('Пароли не должны совпадать');
       return;
     }
     const info = {
@@ -352,7 +362,7 @@ export class ProfileForm extends BaseComponent {
    */
   renderOkMessage(text, elementId) {
     const okMessage = document.createElement('div');
-    okMessage.id = 'okMessage';
+    okMessage.id = 'okeyMessage';
     okMessage.textContent = text;
     okMessage.classList.add('okMessage');
 

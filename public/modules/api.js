@@ -28,6 +28,9 @@ const API_CONST = {
   LIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/like`,
   DISLIKE_ADVERT: `${BASE_URL}/adverts/{advert_id}/dislike`,
   GET_BUILDING_INFO: `${BASE_URL}/adverts/building/`,
+  GET_SAVED_ADVERTS: `${BASE_URL}/users/likedadverts`,
+  DONATE: `${BASE_URL}/adverts/{advert_id}/donate`,
+  GET_RATING: `${BASE_URL}/adverts/{advert_id}/rating`,
 };
 
 export const getSagests = (text) => {
@@ -256,4 +259,19 @@ export const dislikeAdvert = (advertId) => {
 export const getBuildingInfo = (address) => {
   const url = API_CONST.GET_BUILDING_INFO;
   return postRequest(url, address);
+};
+
+export const getSavedAdverts = () => {
+  const url = API_CONST.GET_SAVED_ADVERTS;
+  return getRequest(url);
+};
+
+export const donate = (advertId, donateInfo) => {
+  const url = API_CONST.DONATE.replace('{advert_id}', advertId);
+  return postRequest(url, donateInfo);
+};
+
+export const gerRating = (advertId) => {
+  const url = API_CONST.GET_RATING.replace('{advert_id}', advertId);
+  return getRequest(url);
 };

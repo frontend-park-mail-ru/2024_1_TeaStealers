@@ -89,6 +89,96 @@ export class Params extends BaseComponent {
     }
   }
 
+  componentDidMount() {
+    this.addListener(this.inputFloor, 'input', 'input', this.formatInputFloor.bind(this));
+    this.addListener(this.inputGeneralSquare, 'input', 'input', this.formatInputGeneralSquare.bind(this));
+    this.addListener(this.inputLiveSquare, 'input', 'input', this.formatInputLiveSquare.bind(this));
+    this.addListener(this.inputRooms, 'input', 'input', this.formatInputRooms.bind(this));
+    this.addListener(this.inputSquareHouse, 'input', 'input', this.formatInputSquareHouse.bind(this));
+    this.addListener(this.inputSquareArea, 'input', 'input', this.formatInputSquareArea.bind(this));
+    this.addListener(this.inputBedrooms, 'input', 'input', this.formatInputBedrooms.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.removeListener(this.inputFloor, 'input', 'input', this.formatInputFloor.bind(this));
+    this.removeListener(this.inputGeneralSquare, 'input', 'input', this.formatInputGeneralSquare.bind(this));
+    this.removeListener(this.inputLiveSquare, 'input', 'input', this.formatInputLiveSquare.bind(this));
+    this.removeListener(this.inputRooms, 'input', 'input', this.formatInputRooms.bind(this));
+    this.removeListener(this.inputSquareHouse, 'input', 'input', this.formatInputSquareHouse.bind(this));
+    this.removeListener(this.inputSquareArea, 'input', 'input', this.formatInputSquareArea.bind(this));
+    this.removeListener(this.inputBedrooms, 'input', 'input', this.formatInputBedrooms.bind(this));
+  }
+
+  formatInputFloor() {
+    const { value } = this.inputFloor.self.querySelector('input');
+    let formatedinputFloor = formatFloat(value, 2);
+    const regex = /^\d{0,3}$/;
+    if (!regex.test(value)) {
+      formatedinputFloor = value.slice(0, -1);
+    }
+    this.inputFloor.setValue(formatedinputFloor);
+  }
+
+  formatInputGeneralSquare() {
+    const { value } = this.inputGeneralSquare.self.querySelector('input');
+    let formatedInputGeneralSquare = formatFloat(value, 2);
+    const regex = /^(\d{1,4}([.,]\d{0,2})?)?$/;
+    if (!regex.test(value)) {
+      formatedInputGeneralSquare = value.slice(0, -1);
+    }
+    this.inputGeneralSquare.setValue(formatedInputGeneralSquare);
+  }
+
+  formatInputLiveSquare() {
+    const { value } = this.inputLiveSquare.self.querySelector('input');
+    let formatedInputLiveSquare = formatFloat(value, 2);
+    const regex = /^(\d{1,4}([.,]\d{0,2})?)?$/;
+    if (!regex.test(value)) {
+      formatedInputLiveSquare = value.slice(0, -1);
+    }
+    this.inputLiveSquare.setValue(formatedInputLiveSquare);
+  }
+
+  formatInputRooms() {
+    const { value } = this.inputRooms.self.querySelector('input');
+    let formatedInputRooms = formatFloat(value, 2);
+    const regex = /^\d{0,2}$/;
+    if (!regex.test(value)) {
+      formatedInputRooms = value.slice(0, -1);
+    }
+    this.inputRooms.setValue(formatedInputRooms);
+  }
+
+  formatInputSquareHouse() {
+    const { value } = this.inputSquareHouse.self.querySelector('input');
+    let formatedInputSquareHouse = formatFloat(value, 2);
+    const regex = /^(\d{1,4}([.,]\d{0,2})?)?$/;
+    if (!regex.test(value)) {
+      formatedInputSquareHouse = value.slice(0, -1);
+    }
+    this.inputSquareHouse.setValue(formatedInputSquareHouse);
+  }
+
+  formatInputSquareArea() {
+    const { value } = this.inputSquareArea.self.querySelector('input');
+    let formatedInputSquareArea = formatFloat(value, 2);
+    const regex = /^(\d{1,4}([.,]\d{0,2})?)?$/;
+    if (!regex.test(value)) {
+      formatedInputSquareArea = value.slice(0, -1);
+    }
+    this.inputSquareArea.setValue(formatedInputSquareArea);
+  }
+
+  formatInputBedrooms() {
+    const { value } = this.inputBedrooms.self.querySelector('input');
+    let formatedInputBedrooms = formatFloat(value, 2);
+    const regex = /^\d{0,2}$/;
+    if (!regex.test(value)) {
+      formatedInputBedrooms = value.slice(0, -1);
+    }
+    this.inputBedrooms.setValue(formatedInputBedrooms);
+  }
+
   formatInteger() {
     const value = this.getValue();
     const formatedValue = formatInteger(value, 3);

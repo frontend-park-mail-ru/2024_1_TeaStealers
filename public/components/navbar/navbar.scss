@@ -29,7 +29,8 @@
 
     &__link {
         float: left;
-        display: flex;
+        // display: flex;
+        display: none;
         align-items: center;
     }
 
@@ -89,7 +90,8 @@
     
         &__link {
             float: left;
-            display: flex;
+            // display: flex;
+            display: none;
             align-items: center;
         }
     

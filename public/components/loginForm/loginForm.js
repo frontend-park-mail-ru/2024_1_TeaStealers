@@ -14,6 +14,7 @@ const LOGIN_INPUT = {
   id: 'login_input',
   type: 'text',
   placeholder: 'Телефон',
+  autocomplete: 'tel',
 };
 const PASSWORD_INPUT = {
   id: 'password_input',
