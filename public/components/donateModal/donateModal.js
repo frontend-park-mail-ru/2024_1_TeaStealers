@@ -37,8 +37,8 @@ export class DonateModal extends BaseComponent {
     });
     const donationAmount = new Input('donationForm', {
       id: 'donationAmount',
-      placeholder: 'Сумма в рублях',
-      label: 'Сумма доната',
+      placeholder: 'Количество баллов продвижения',
+      label: '1 балл = 1 рубль',
     });
     const donateButton = new Button('donationForm', {
       mode: 'primary',
