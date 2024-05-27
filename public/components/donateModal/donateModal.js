@@ -146,8 +146,11 @@ export class DonateModal extends BaseComponent {
       this.donationAmount.setValue('');
       return;
     }
-    if (formatDonationAmount.length >= 6) {
-      formatDonationAmount = formatDonationAmount.slice(0, 6);
+    if (formatDonationAmount.length >= 4) {
+      formatDonationAmount = formatDonationAmount.slice(0, 4);
+    }
+    if (formatDonationAmount > 5000) {
+      this.donationAmount.renderError('Сумма не может превышать 5 000 рублей');
     }
     formatDonationAmount = parseInt(formatDonationAmount, 10).toLocaleString('ru-RU').toString();
     if (formatDonationAmount) {
@@ -200,6 +203,10 @@ export class DonateModal extends BaseComponent {
   validateDonationAmount() {
     if (this.self.querySelector('input').value === '') {
       this.renderError('Введите сумму пожертвования');
+      return false;
+    }
+    if (this.self.querySelector('input').value.replace(' ', '') > 5000) {
+      this.renderError('Сумма не может быть больше 5000');
       return false;
     }
     this.removeError();
