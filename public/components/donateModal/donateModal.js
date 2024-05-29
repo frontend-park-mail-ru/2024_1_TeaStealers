@@ -81,10 +81,10 @@ export class DonateModal extends BaseComponent {
   }
 
   closeModal() {
-    this.formatCardNumber.setValue = '';
-    this.formatCardNumber.cardExpiry = '';
-    this.formatCardNumber.cardCVC = '';
-    this.formatCardNumber.donationAmount = '';
+    this.formatCardNumber.setValue('');
+    this.formatCardNumber.cardExpiry.setValue('');
+    this.formatCardNumber.cardCVC.setValue('');
+    this.formatCardNumber.donationAmount.setValue('');
     document.querySelector('#donationModal').classList.toggle('hidden');
   }
 
@@ -274,7 +274,6 @@ export class DonateModal extends BaseComponent {
         this.renderErrorMessage('Произошла ошибка, проверьте поля', 'confirmDonate');
         return;
       }
-      this.renderErrorMessage('Рейтинг вашего объявления повышен', 'confirmDonate', true);
     } catch (error) {
       this.renderErrorMessage('Произошла ошибка, проверьте поля', 'confirmDonate');
       return;
