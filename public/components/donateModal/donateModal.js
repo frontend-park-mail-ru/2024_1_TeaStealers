@@ -279,6 +279,6 @@ export class DonateModal extends BaseComponent {
       this.renderErrorMessage('Произошла ошибка, проверьте поля', 'confirmDonate');
       return;
     }
-    setTimeout(() => { this.closeModal(); }, 3000);
+    this.closeModal();
   }
 }
