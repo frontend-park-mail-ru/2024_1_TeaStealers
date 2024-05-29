@@ -81,10 +81,10 @@ export class DonateModal extends BaseComponent {
   }
 
   closeModal() {
-    this.formatCardNumber.setValue('');
-    this.formatCardNumber.cardExpiry.setValue('');
-    this.formatCardNumber.cardCVC.setValue('');
-    this.formatCardNumber.donationAmount.setValue('');
+    this.cardNumber.setValue('');
+    this.cardExpiry.setValue('');
+    this.cardCVC.setValue('');
+    this.donationAmount.setValue('');
     document.querySelector('#donationModal').classList.toggle('hidden');
   }
 
