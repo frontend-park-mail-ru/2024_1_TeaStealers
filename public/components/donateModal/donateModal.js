@@ -207,16 +207,23 @@ export class DonateModal extends BaseComponent {
   }
 
   validateInput() {
-    if (this.cardNumber.self.querySelector('input').value.length !== 19) {
+    if (this.cardNumber.getValue().length !== 19) {
       return false;
     }
-    if (this.cardExpiry.self.querySelector('input').value.length === 5) {
+    if (this.cardExpiry.getValue().length === 5) {
       const date = this.cardExpiry.self.querySelector('input').value;
       if (Number(date.slice(0, 2)) > 12) {
         return false;
       }
+
       if (Number(date.slice(3, 5)) < 25) {
-        return false;
+        if (Number(date.slice(3, 5)) === 24) {
+          if (Number(date.slice(0, 2)) < 5) {
+            return false;
+          }
+        } else {
+          return false;
+        }
       }
     } else {
       return false;
