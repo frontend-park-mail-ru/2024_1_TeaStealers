@@ -1,10 +1,19 @@
 # 2024_1_TeaStealers
-CIAN reimagined
+Проект Циан команды Похитители чая
 
-## Backend
+### Состав команды
+* [Жидков Антон](https://github.com/FZTOtt)
+* [Маленко Владимир](https://github.com/vovangy)
+* [Алцыбеева Маргарита](https://github.com/marrgancovka)
+* [Шагаев Максим](https://github.com/Maxorella)
 
-[backend](https://github.com/go-park-mail-ru/2024_1_TeaStealers) - ссылка на репозиторий бэкенда.
+### Ссылки
+* [tean.homes](http://5.35.16.157) - деплой приложения
+* [backend](https://github.com/go-park-mail-ru/2024_1_TeaStealers) - репозиторий бэкенда
 
-## Deploy
-
-[Tean](https://tean.homes) - ссылка на деплой.
+### Как запустить
+Для локального запуска
+```makefile
+npm i
+npm start
+```
