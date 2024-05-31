@@ -189,6 +189,24 @@ export class EditAdvert extends BaseComponent {
      * Удаление обработчиков
      */
   componentWillUnmount() {
+    document.getElementById('flat').removeEventListener('change', this.changeObject.bind(this));
+    document.getElementById('house').removeEventListener('change', this.changeObject.bind(this));
+    this.removeListener(this.inputYear, 'input', 'blur', this.validateYear.bind(this));
+    this.removeListener(this.inputGeneralFloor, 'input', 'blur', this.validateFloor.bind(this.inputGeneralFloor));
+    this.removeListener(this.inputHeight, 'input', 'input', this.formatHeight.bind(this));
+    this.removeListener(this.inputHeight, 'input', 'blur', this.validateHeight.bind(this));
+    this.removeClickListener('btnSave', this.saveHandler.bind(this));
+    this.removeClickListener('btnSaveEdit', this.editHandler.bind(this));
+    this.removeListener(this.inputPhone, '', 'input', this.formatPhoneNumber.bind(this));
+    this.removeListener(this.inputUploadImage, 'input', 'input', this.uploadImageHandler.bind(this));
+    this.removeListener(this.inputYear, 'input', 'input', this.formatYear.bind(this));
+    this.removeListener(this.inputGeneralFloor, 'input', 'input', this.formatFloor.bind(this));
+    this.removeListener(this.inputAdress, 'input', 'blur', this.validateAddress.bind(this));
+    this.removeListener(this.inputTitle, 'input', 'blur', this.validateTitle.bind(this));
+    this.removeListener(this.inputPrice, 'input', 'input', this.formatPrice.bind(this));
+    this.removeListener(this.inputAdress, 'input', 'input', this.sadgestAddress.bind(this));
+    this.removeClickListener('newadvert-page', this.closeSaggest.bind(this));
+    this.removeClickListener('editadvert-page', this.closeSaggest.bind(this));
     super.componentWillUnmount();
   }
 
@@ -294,8 +312,17 @@ export class EditAdvert extends BaseComponent {
         return;
       }
       const info = response.payload;
-      this.inputGeneralFloor.setValue(info.floor);
-      this.inputYear.setValue(info.yearCreation);
+      if (info.floor) {
+        this.inputGeneralFloor.setValue(info.floor);
+      } else {
+        this.inputGeneralFloor.setValue('');
+      }
+      if (info.yearCreation) {
+        this.inputYear.setValue(info.yearCreation);
+      } else {
+        this.inputYear.setValue('');
+      }
+
       if (info.complexName !== '') {
         const complex = document.createElement('span');
         complex.style.marginTop = '-25px';
@@ -368,7 +395,8 @@ export class EditAdvert extends BaseComponent {
 
   formatFloor() {
     const floor = this.inputGeneralFloor.self.querySelector('input').value;
-    const formatedFloor = formatInteger(floor, 3);
+    const dim = this.object === 'Flat' ? 3 : 1;
+    const formatedFloor = formatInteger(floor, dim);
     this.inputGeneralFloor.setValue(formatedFloor);
   }
 
@@ -864,6 +892,7 @@ export class EditAdvert extends BaseComponent {
     this.setValueRadio('isAgent', state.isAgent);
     this.setValueRadio('deal', state.typeSale);
     this.inputAdress.setValue(state.adress);
+    console.log(state.yearCreation);
     this.inputYear.setValue(state.yearCreation);
     this.inputTitle.setValue(state.title);
     document.getElementById('description').value = state.description;

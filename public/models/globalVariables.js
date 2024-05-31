@@ -9,6 +9,8 @@ class GlobalVariables {
 
   HTTP_STATUS_NOT_FOUND = 404;
 
+  HTTP_CONFLICT = 409;
+
   HTTP_INTERNAL_SERVER_ERROR = 500;
 
   MOBILE_WIDTH = 600;

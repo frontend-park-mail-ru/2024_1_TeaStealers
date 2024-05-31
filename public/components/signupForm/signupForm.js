@@ -168,7 +168,8 @@ export class SignupForm extends BaseComponent {
     try {
       const [statusCode, ,] = await signup(data);
       if (statusCode === globalVariables.HTTP__INTERNAL_SERVER_ERROR
-        || statusCode === globalVariables.HTTP_BAD_REQUEST) {
+        || statusCode === globalVariables.HTTP_BAD_REQUEST
+        || statusCode === globalVariables.HTTP_CONFLICT) {
         this.addErr(SIGNUP_ERROR);
         return;
       }
