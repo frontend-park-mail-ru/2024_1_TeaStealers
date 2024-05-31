@@ -379,7 +379,7 @@ export class Search extends BaseComponent {
     }
     const fromToArray = [' от ', ' до '];
 
-    let message = window.innerWidth > 600 ? 'Цена' : '';
+    let message = 'Цена';
 
     const inputs = dropMenu.querySelectorAll('input');
     inputs.forEach((input, idx) => {
