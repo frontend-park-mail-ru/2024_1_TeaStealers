@@ -378,7 +378,9 @@ export class Search extends BaseComponent {
       menuButton = menuButton.parentElement;
     }
     const fromToArray = [' от ', ' до '];
-    let message = 'Цена';
+
+    let message = window.innerWidth > 600 ? 'Цена' : '';
+
     const inputs = dropMenu.querySelectorAll('input');
     inputs.forEach((input, idx) => {
       if (input.value !== '') {
@@ -391,6 +393,9 @@ export class Search extends BaseComponent {
         input.value = price;
       }
     });
+    if (window.innerWidth <= 600) {
+      message = 'Цена';
+    }
     const maxLength = 20;
     if (message.length > maxLength) {
       message = `${message.slice(0, maxLength)}...`;
