@@ -449,8 +449,16 @@ export class EditAdvert extends BaseComponent {
 
   formatPrice() {
     const { value } = this.inputPrice.self.querySelector('input');
-    const formatedPrice = formatInteger(value, 10);
-    this.inputPrice.setValue(formatedPrice);
+    let formatedPrice = formatInteger(value, 10);
+    if (formatedPrice === '') {
+      this.inputPrice.setValue('');
+      return;
+    }
+    formatedPrice = parseInt(formatedPrice, 10).toLocaleString('ru-RU').toString();
+    if (formatedPrice) {
+      this.inputPrice.setValue(formatedPrice);
+    }
+    // this.inputPrice.setValue(formatedPrice);
   }
 
   checkMandatoryInput() {
@@ -584,7 +592,8 @@ export class EditAdvert extends BaseComponent {
   validateNumberParams() {
     if (this.object === 'Flat') {
       const [apartament, floor, generalSquare, livingSquare, rooms] = this.params.getFLatParams();
-      if (floor > this.inputGeneralFloor.getValue()) {
+      console.log(Number(floor), Number(this.inputGeneralFloor.getValue()));
+      if (Number(floor) > Number(this.inputGeneralFloor.getValue())) {
         document.getElementById('saveInfo').textContent = 'Этаж выше этажности дома';
         return false;
       }
@@ -768,7 +777,7 @@ export class EditAdvert extends BaseComponent {
     const generalFloor = this.inputGeneralFloor.getValue();
     const title = this.inputTitle.getValue();
     const description = document.getElementById('description').value;
-    const price = this.inputPrice.getValue();
+    const price = this.inputPrice.getValue().replace(/\s+/g, '');
     const phone = this.inputPhone.getValue();
     let data;
     if (this.object === 'Flat') {

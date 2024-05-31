@@ -63,7 +63,7 @@ export class GridCard extends BaseComponent {
       document.querySelectorAll('.gridCards__rating-up').forEach((card) => {
         card.addEventListener('click', this.donate.bind(this));
       });
-      this.modal.componentDidMount();
+      this.modal?.componentDidMount();
     }
     if (!this.state.myAdverts && !this.state.savedAdverts) {
       document.querySelector('#clearFilters').addEventListener('click', this.clearFilters.bind(this));
