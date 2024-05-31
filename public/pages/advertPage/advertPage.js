@@ -69,6 +69,7 @@ export class AdvertPage extends BaseComponent {
 
   like() {
     if (!authModel.isAuth) {
+      document.querySelector('#buttonNewAdvert').click();
       return;
     }
     const likeDiv = document.getElementById('likes');

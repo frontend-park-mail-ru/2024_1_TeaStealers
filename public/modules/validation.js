@@ -50,7 +50,10 @@ export const checkRepeatPassword = (password, repeatPassword) => {
 };
 
 export const checkPriceFilter = (priceFrom, priceTo) => {
-  if (priceFrom > priceTo) {
+  if (!priceFrom || !priceTo) {
+    return ['', true];
+  }
+  if (Number(priceFrom) > Number(priceTo)) {
     return ['Неверное использование фильтра', false];
   }
   return ['', true];

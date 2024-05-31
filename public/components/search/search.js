@@ -382,8 +382,13 @@ export class Search extends BaseComponent {
     const inputs = dropMenu.querySelectorAll('input');
     inputs.forEach((input, idx) => {
       if (input.value !== '') {
-        message += fromToArray[idx] + input.value;
-        this.prices[idx] = input.value;
+        let price = input.value.replace(/\s+/g, '');
+        this.prices[idx] = price;
+        if (price !== '') {
+          price = parseInt(price, 10).toLocaleString('ru-RU').toString();
+        }
+        message += fromToArray[idx] + price;
+        input.value = price;
       }
     });
     const maxLength = 20;
@@ -520,7 +525,7 @@ export class Search extends BaseComponent {
       queryParameters.minprice = `${this.prices[0]}`;
     }
     if (this.prices[1]) {
-      queryParameters.minprice = `${this.prices[1]}`;
+      queryParameters.maxprice = `${this.prices[1]}`;
     }
     mainControler.updateMainModelWithParameters(queryParameters);
   }
