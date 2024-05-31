@@ -39,14 +39,14 @@
     &__img {
         border: 1px solid rgb(210, 210, 210);
         max-width: 100%;
-        height: 400px;
+        height: 500px;
         position: relative;
         display: flex;
         justify-content: center;
 
         img {
             width: 100%;
-            height: 400px;
+            height: 100%;
             object-fit: cover;
             display: none;
         }
