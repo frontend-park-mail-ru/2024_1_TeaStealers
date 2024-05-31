@@ -44,6 +44,7 @@ export class MobileMenu extends BaseComponent {
     this.addClickListener('menu_profile', this.toProfile.bind(this));
     this.addClickListener('menu_new-advert', this.toNewAdvert.bind(this));
     this.addClickListener('menu_my-advert', this.toMyAdvert.bind(this));
+    this.addClickListener('menu_saved-advert', this.toSavedAdvert.bind(this));
     super.componentDidMount();
   }
 
@@ -55,6 +56,7 @@ export class MobileMenu extends BaseComponent {
     this.removeClickListener('menu_profile', this.toProfile.bind(this));
     this.removeClickListener('menu_new-advert', this.toNewAdvert.bind(this));
     this.removeClickListener('menu_my-advert', this.toMyAdvert.bind(this));
+    this.removeClickListener('menu_saved-advert', this.toSavedAdvert.bind(this));
     super.componentWillUnmount();
   }
 
@@ -82,6 +84,11 @@ export class MobileMenu extends BaseComponent {
    */
   toMyAdvert() {
     this.redirect('/my-advert/');
+    this.closeModal();
+  }
+
+  toSavedAdvert() {
+    this.redirect('/saved-advert/');
     this.closeModal();
   }
 

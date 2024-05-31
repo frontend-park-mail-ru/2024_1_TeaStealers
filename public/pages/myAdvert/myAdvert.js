@@ -34,7 +34,7 @@ const mini = [
     photo: '../../static/fone.jpg',
     price: '1231231',
     houseProperties: {
-      squareArea: 213,
+      squareArea: 2132342342342342343,
       roomCount: 2,
       adress: 'dsadasda',
     },

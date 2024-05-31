@@ -675,13 +675,13 @@ export class EditAdvert extends BaseComponent {
         postData.append('file', this.files[i]);
         const [statusCodeImage, ,] = await uploadAdvertImage(postData);
         if (statusCodeImage !== globalVariables.HTTP_STATUS_CREATED) {
-          document.getElementById('saveInfo').textContent = 'Произошла неизвестная ошибка. Попробуйте позже';
+          document.getElementById('saveInfo').textContent = 'Произошла ошибка в загрузке фотографии. Попробуйте позже';
           return;
         }
       }
       this.redirect(`/adverts/${idAdvert}`);
     } catch (error) {
-      document.getElementById('saveInfo').textContent = 'Произошла неизвестная ошибка. Попробуйте позже';
+      document.getElementById('saveInfo').textContent = 'Произошла ошибка в переходе к объявлению. Попробуйте позже';
     }
   }
 

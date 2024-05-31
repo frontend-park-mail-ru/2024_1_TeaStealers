@@ -26,6 +26,9 @@
         margin: 0;
         font-weight: normal;
         display: block;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     img {

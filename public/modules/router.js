@@ -40,7 +40,7 @@ class Router {
       return;
     }
     if (this.protectedRoutes[path] !== undefined && authModel.isAuth !== true) {
-      // this.error = true;
+      this.error = true;
     }
     const id = path.substring(path.lastIndexOf('/') + 1);
     const pathWithoutId = path.replace(id, '');
