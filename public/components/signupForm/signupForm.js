@@ -36,7 +36,7 @@ const PASSWORD_REPEAT_INPUT = {
   placeholder: 'Повторите пароль',
   blockClass: 'passwordInput',
 };
-const SIGNUP_ERROR = 'Такой логиин уже существует';
+const SIGNUP_ERROR = 'Такой логин уже существует';
 
 /**
  * Класс компонента формы авторизации.
