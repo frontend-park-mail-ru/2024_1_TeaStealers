@@ -29,7 +29,7 @@ export class MainPage extends BaseComponent {
       secondFilterLinkStatus: 'passive',
       firstFilterLinkDesc: 'Купить',
       secondFilterLinkDesc: 'Снять',
-      homeType: 'Квартиру в новостройке или вторичке',
+      homeType: 'Квартиру или дом',
       roomNumber: 'Комнат',
       price: 'Цена',
       skeleton: state.skeleton,

@@ -275,7 +275,7 @@ export class Search extends BaseComponent {
     }
     const inputs = dropMenu.querySelectorAll('input');
     const labels = dropMenu.querySelectorAll('label');
-    let message = 'Квартиру в новостройке или вторичке';
+    let message = 'Квартиру или дом';
     let checked = false;
     this.flatFilter = '';
     inputs.forEach((input, idx) => {
