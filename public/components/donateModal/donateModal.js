@@ -81,10 +81,10 @@ export class DonateModal extends BaseComponent {
   }
 
   closeModal() {
-    this.formatCardNumber.setValue = '';
-    this.formatCardNumber.cardExpiry = '';
-    this.formatCardNumber.cardCVC = '';
-    this.formatCardNumber.donationAmount = '';
+    this.cardNumber.setValue('');
+    this.cardExpiry.setValue('');
+    this.cardCVC.setValue('');
+    this.donationAmount.setValue('');
     document.querySelector('#donationModal').classList.toggle('hidden');
   }
 
@@ -207,16 +207,23 @@ export class DonateModal extends BaseComponent {
   }
 
   validateInput() {
-    if (this.cardNumber.self.querySelector('input').value.length !== 19) {
+    if (this.cardNumber.getValue().length !== 19) {
       return false;
     }
-    if (this.cardExpiry.self.querySelector('input').value.length === 5) {
+    if (this.cardExpiry.getValue().length === 5) {
       const date = this.cardExpiry.self.querySelector('input').value;
       if (Number(date.slice(0, 2)) > 12) {
         return false;
       }
+
       if (Number(date.slice(3, 5)) < 25) {
-        return false;
+        if (Number(date.slice(3, 5)) === 24) {
+          if (Number(date.slice(0, 2)) < 5) {
+            return false;
+          }
+        } else {
+          return false;
+        }
       }
     } else {
       return false;
@@ -267,11 +274,10 @@ export class DonateModal extends BaseComponent {
         this.renderErrorMessage('Произошла ошибка, проверьте поля', 'confirmDonate');
         return;
       }
-      this.renderErrorMessage('Рейтинг вашего объявления повышен', 'confirmDonate', true);
     } catch (error) {
       this.renderErrorMessage('Произошла ошибка, проверьте поля', 'confirmDonate');
       return;
     }
-    setTimeout(() => { this.closeModal(); }, 3000);
+    this.closeModal();
   }
 }

@@ -584,16 +584,17 @@ export class EditAdvert extends BaseComponent {
   validateNumberParams() {
     if (this.object === 'Flat') {
       const [apartament, floor, generalSquare, livingSquare, rooms] = this.params.getFLatParams();
-      if (floor > this.inputGeneralFloor.getValue()) {
-        document.getElementById('saveInfo').textContent = 'Этаж выше этажности дома';
-        return false;
-      }
+      // if (floor > this.inputGeneralFloor.getValue()) {
+      //   document.getElementById('saveInfo').textContent = 'Этаж выше этажности дома';
+      //   return false;
+      // }
       if (generalSquare < livingSquare) {
         document.getElementById('saveInfo').textContent = 'Жилая площадь больше общей площади';
         return false;
       }
       return true;
     }
+    return true;
   }
 
   /**
