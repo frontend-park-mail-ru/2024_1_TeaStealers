@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from '@modules';
 import { deleteRequest, postRequestFormData } from './ajax.js';
 
-const BASE_URL = 'https://tean.homes/api';
+const BASE_URL = 'http://193.108.54.41/api';
 // const BASE_URL = 'http://localhost:8080/api';
 
 const API_CONST = {
